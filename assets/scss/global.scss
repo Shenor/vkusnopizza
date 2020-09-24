@@ -1,0 +1,171 @@
+body {
+  font-family:
+    'Montserrat',
+    -apple-system,
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+a{
+  color: $primary-color;
+
+  &:hover{
+    color: darken($primary-color, 10);
+  }
+}
+
+.font-weight-semibold{
+  font-weight: 600;
+}
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.bg-dark-custom {
+  background-color: $bg-color !important;
+}
+
+/* Sidebar Menu */
+#cart-sidebar{
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  .cart-sidebar__title {
+    strong {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.btn-secondary{
+  outline: none;
+  color: #fff;
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+
+   &.focus,
+   &:focus,
+   &:not(:disabled):not(.disabled):active:focus {
+     background-color: $secondary-color;
+     border-color: $secondary-color;
+     box-shadow: none;
+   }
+
+  &:hover,
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active:active {
+    outline: none;
+    color: white;
+    background-color: $secondary-color;
+    border-color: $secondary-color;
+  }
+}
+
+.btn-outline-primary{
+  outline: none;
+  color: $primary-color;
+  border-color: $primary-color;
+  box-shadow: none;
+  border-radius: 10px;
+  font-size: .9rem;
+  transition: all .1s;
+
+  &:hover{
+    outline: none;
+    color: white;
+    border-color: $primary-color;
+    background-color: $primary-color;
+
+    @media (max-width: 576px) {
+      background-color: transparent;
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+
+  &.focus,
+  &:focus,
+  &:not(:disabled):not(.disabled):active:focus{
+    box-shadow: none;
+  }
+
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active:active {
+    outline: none;
+    color: white;
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+}
+
+.form-control:focus{
+  box-shadow: none;
+  border-color: darken(#ced4da, 10);
+}
+
+.custom-control-input:checked~.custom-control-label::before{
+  color: #fff;
+  border-color: $primary-color;
+  background-color: $primary-color;
+
+  box-shadow: none;
+}
+
+.custom-control-input:not(:disabled):active~.custom-control-label::before {
+  background-color: $primary-color;
+  box-shadow: none
+}
+
+.card-header{
+  background-color: transparent;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  background-color: $primary-color;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link{
+  color: $bg-color;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.show>.btn-outline-primary.dropdown-toggle{
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
+.dropdown-item.active,
+.dropdown-item:active{
+  background-color: $primary-color;
+}
+
+.b-sidebar>.b-sidebar-header{
+  .close {
+    @media (max-width: 576px) {
+      font-size: 2rem;
+    }
+  }
+}
