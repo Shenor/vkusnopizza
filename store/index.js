@@ -1,6 +1,7 @@
 
 export const state = () => ({
   cart: [],
+  modParentCart: [],
   user: '',
   authorization: false,
   token: ''
@@ -20,6 +21,9 @@ export const mutations = {
   updateCartItem(state, payload) {
     const candidate = state.cart.find(item => {return item.id == payload.id});
     candidate.count = +payload.count
+  },
+  clearCart(state){
+    state.cart = []
   },
   setToken(state, payload){
     state.token = payload
@@ -63,4 +67,3 @@ export const getters = {
     return state.authorization
   }
 }
-

@@ -34,12 +34,12 @@
                 :tag="'div'"
                 :viewportTag="'div'">
                 <div class="panel" v-for="item in uploadData.newsItems" :key="item.key">
-                  <b-card img-src="/pizza.png" img-alt="Card image" img-left fluid class="slider-news__card mb-3 p-2">
+                  <b-card :img-src="imageUrl(item)" img-alt="Card image" img-left fluid class="slider-news__card mb-3 p-2">
                     <b-card-text class="d-flex flex-column">
                       <div style="min-height: 45px;">
                         {{item.name}}
                       </div>
-                      <b-button class="mt-2" variant="outline-primary" @click="showProductCard(item)">от {{item.price}} ₽</b-button>
+                      <b-button class="mt-2" variant="outline-primary" @click="showProductCard(item)">Выбрать</b-button>
                     </b-card-text>
                   </b-card>
                 </div>
@@ -105,6 +105,28 @@
         </b-card>
     </b-container>
 
+    <b-container id="drinks" class="main-title mb-4 justify-content-start">Напитки</b-container>
+      <b-container class="main-content flex-wrap mb-4">
+        <b-card
+          :title="item.name"
+          :img-src="imageUrl(item)"
+          img-top
+          align="left"
+          tag="article"
+          class="mb-5"
+          v-for="item in uploadData.drinksItems"
+          :key="item.key"
+        >
+          <b-card-text>
+            Some quick example text to build on the card title and make up the bulk of the card's content.
+          </b-card-text>
+
+          <div class="text-right">
+            <b-button href="#" variant="outline-primary" class="ml-auto" @click="add(item)">Выбрать</b-button>
+          </div>
+        </b-card>
+    </b-container>
+
     <b-container class="main-title mb-4 delivery-title justify-content-start">Доставка и оплата</b-container>
     <b-container class="text-left flex-column delivery mb-5">
      <p>Суши и роллы с доставкой по  <br>
@@ -163,7 +185,7 @@
     <b-modal id="modal-product" centered size="lg">
        <b-container class='wrapper-modal' v-if="modalInfo.selectedItem">
         <b-col lg="6" md="10">
-          <b-img src="/pizza.png" fluid alt="Responsive image"></b-img>
+          <b-img :src="imageUrl(modalInfo.selectedItem)" fluid alt="Responsive image"></b-img>
         </b-col>
         <b-col lg="6" md="10" class="text-left">
           <p class="title font-weight-semibold">{{modalInfo.selectedItem.name}}</p>
@@ -180,12 +202,12 @@
               name="radio-btn-outline"
             ></b-form-radio-group>
           </b-form-group>
-
+          <p>{{modalInfo.selectedItem.description}}</p>
         </b-col>
        </b-container>
-      <template v-slot:modal-footer="{ add }">
-        <b-button size="md" variant="outline-primary" @click="add()">
-          Добавить в корзину - {{priceSelectedModifiers}} ₽
+      <template v-slot:modal-footer="">
+        <b-button size="md" variant="outline-primary" @click="add(null)">
+          Добавить в корзину - <b>{{priceSelectedModifiers}} ₽</b>
         </b-button>
       </template>
     </b-modal>
@@ -203,12 +225,14 @@ export default {
       },
       loadCategoryID: {
         newsCategoryID: '7ba3f2a8-fa96-c6ad-0174-b5ba1356019a',
-        comboCaregoryID: '5227397c-488b-80bb-0173-e84e5495da4a'
+        comboCategoryID: '5227397c-488b-80bb-0173-e84e5495da4a',
+        drinksCategoryID: 'f07bedd4-fbfa-4203-0174-be6eb197baf5'
       },
       uploadData: {
         nomenclature: null,
         newsItems: null,
-        comboItems: null
+        comboItems: null,
+        drinksItems: null
       },
       height: 380,
       sliders: {
@@ -257,11 +281,6 @@ export default {
       ]
     }
   },
-  // async asyncData({ $http }){
-  //   const nomenclature = await $http.$get('https://api.rijet.ru/api/v1/nomenclature')
-  //   console.log(nomenclature)
-  //   return { nomenclature }
-  // },
   mounted: function () {
     this.visibleSliders = true
     this.$nextTick(function () {
@@ -314,16 +333,34 @@ export default {
     onCollapseDelivery(){
       document.querySelector('.delivery').classList.add('delivery--isActive')
     },
+    imageUrl(item){
+      return item.images[item.images.length - 1] ? item.images[item.images.length - 1].imageUrl : '/default.png'
+    },
     showProductCard(payload){
       this.modalInfo.selectedItem = payload
       this.$bvModal.show('modal-product')
-      // this.$root.$emit('bv::show::modal', 'modal-product', '#focusThisOnClose')
-      // this.$eventHub.$emit('viewBuyMsg')
-      // this.$store.commit('addToCart', {...payload, count: 1})
-      // console.log(this.$store.getters.getCart)
     },
     add(payload){
-
+      if(payload){
+        this.$eventHub.$emit('viewBuyMsg')
+        this.$store.commit('addToCart', {...payload, count: 1})
+        this.$bvModal.hide('modal-product')
+        console.log(this.$store.getters.getCart)
+      } else {
+        const candidate = this.modalInfo.groupModifiers.find((item) => {
+          if(item.id == this.modalInfo.selectedModifiers){
+            const parent = this.uploadData.nomenclature.products.find((product) => {
+              return product.groupModifiers[0].childModifiers.find(modify => {return modify.modifierId ==item.id})
+            })
+            item.images = parent.images
+            return item
+          }
+        });
+        this.$eventHub.$emit('viewBuyMsg')
+        this.$store.commit('addToCart', {...candidate, count: 1})
+        this.$bvModal.hide('modal-product')
+        console.log(this.$store.getters.getCart)
+      }
     },
     changeModifiers(){
       console.log('object')
@@ -331,11 +368,14 @@ export default {
     async dataApi(){
       this.$http.setHeader('Organization', process.env.ORGANIZATION_ID)
       const nomenclature = await this.$http.$get('https://api.rijet.ru/api/v1/nomenclature')
-      console.log(nomenclature)
+      // console.log(nomenclature)
       this.uploadData.nomenclature = nomenclature;
       this.uploadData.newsItems = nomenclature.products.filter(element => {
         return element.productCategoryId == this.loadCategoryID.newsCategoryID
         && element.type == "dish"
+      });
+      this.uploadData.drinksItems = nomenclature.products.filter(element => {
+        return element.productCategoryId == this.loadCategoryID.drinksCategoryID
       });
     }
   }
@@ -494,6 +534,12 @@ export default {
   position: relative;
   outline: none;
   width: 100%;
+
+  &__card{
+    img{
+      max-width: 40%
+    }
+  }
 
   .panel{
     width: 330px;

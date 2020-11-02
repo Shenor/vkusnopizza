@@ -45,7 +45,7 @@
                   <div class="d-flex">
                     <b-form-input class="pt-3 pb-3 mr-2" :class="{'is-invalid': $v.adress.home.$error }" v-model.trim="$v.adress.home.$model" placeholder="Дом"></b-form-input>
                     <b-form-input class="pt-3 pb-3 mr-2" placeholder="Подъезд"></b-form-input>
-                    <b-form-input class="pt-3 pb-3"  placeholder="Квартира"></b-form-input>
+                    <b-form-input class="pt-3 pb-3"  placeholder="Квартира"  v-model.trim="adress.apartment"></b-form-input>
                   </div>
                 </div>
               </div>
@@ -66,9 +66,10 @@
                 class="error-alert"
                 v-if="error"
                 variant="danger"><small>{{error}}</small></b-alert>
-              <div class="order__footer__btn-action d-flex justify-content-between px-3 py-2 mb-2" @click="createOrder">
-                <span>Заказать</span>
-                <span>{{totalSumCart}} ₽</span>
+              <div class="order__footer__btn-action d-flex px-3 py-2 mb-2" :class="[loading ? 'justify-content-center':'justify-content-between']" @click="createOrder">
+                <b-spinner v-if="loading" style="width: 1.3rem; height: 1.3rem;" variant="light" label="Spinning"></b-spinner>
+                <span v-if="!loading">Заказать</span>
+                <span v-if="!loading">{{totalSumCart}} ₽</span>
               </div>
               <div class="text-muted">*Нажимая кнопку 'Заказать' вы соглашаетесь с политикой
               конфиденциальности и  публичной офертой</div>
@@ -100,6 +101,7 @@ export default {
     return {
       user: null,
       error: null,
+      loading: false,
       listAdress: [
         {street: 'Краснодар, Восточно-Кругликовская', home: '53', apartments: '1'},
         {street: 'Краснодар, Caдовая', home: '112', apartments: '23'},
@@ -113,6 +115,7 @@ export default {
       },
       activeAdress: 'С',
       delivery: 0,
+      nomenclature: null,
       streetState: true,
       paymentType: 'CASH',
       selected: 'delivery',
@@ -141,25 +144,34 @@ export default {
       const {user} = await this.$http.$get(`users`)
       this.user = user;
     }
-    $('#street').fias({
-      type: $.fias.type.street,
-      parentType: $.fias.type.city,
-      parentId: 2300000200000,
-      spinner: false,
-      verify: true,
-      select: function () {
-        $('#street').val('');
-      },
-      check: (city) => {
-        if(!city) return this.streetState = false
-        this.adress.street = city.name
-        this.streetState = true
-      },
-      change: (city) => {
-        this.adress.street = city.name
-      }
+    this.$nextTick(function () {
+      this.dataApi();
+      $('#street').fias({
+        type: $.fias.type.street,
+        parentType: $.fias.type.city,
+        parentId: 2300000200000,
+        spinner: false,
+        verify: true,
+        select: function () {
+          $('#street').val('');
+        },
+        check: (city) => {
+          if(!city) return this.streetState = false
+          this.adress.street = city.name
+          this.streetState = true
+        },
+        change: (city) => {
+          this.adress.street = city.name
+        }
+      })
     });
   },
+  // async asyncData({$http}){
+  //   $http.setHeader('Organization', process.env.ORGANIZATION_ID)
+  //   $http.setHeader('Origin', 'http://localhost:3000')
+  //   const res = await $http.$get('https://api.rijet.ru/api/v1/nomenclature')
+  //   console.log(res)
+  // },
   computed: {
     totalSumCartWithDelivery(){
       return this.$store.getters.getTotalSumCart + this.delivery
@@ -176,13 +188,46 @@ export default {
     fullAdress(adress){
       return `${adress.street}, д. ${adress.home}, кв. ${adress.apartments}`
     },
-    createOrder({env}){
+    async createOrder({env}){
       if(!this.$store.getters.isAuthorization) return this.$bvModal.show('modal-enter')
-      if(!this.isValidForm()) return this.error = 'Некорректно заполнена форма'
-      this.error = null
+      // if(!this.isValidForm()) return this.error = 'Некорректно заполнена форма'
+      // this.error = null
+      this.loading = true;
+      const transformCart = () => {
+        let cart = this.$store.getters.getCart.filter(({type}) => {return type != 'modifier'})
+        const modifier = new Map();
+        this.$store.getters.getCart
+          .filter(({type}) => {return type == 'modifier'})
+          .forEach(item => {
+            modifier.set(item.id, {
+              id: item.id,
+              name: item.name,
+              amount: item.count,
+              groupId: item.groupId,
+              groupName: 'Групповой модификатор'
+            });
+        });
+        const candidateCart = this.nomenclature.products.filter(item => {
+          return item.type == 'dish' && item.groupModifiers[0]
+        });
+        candidateCart
+          .filter((item) => {
+            item.groupModifiers[0].childModifiers.forEach((mod) => {
+              if(modifier.get(mod.modifierId)){
+                item.modifiers.push(modifier.get(mod.modifierId))
+              }
+            })
+            return item
+          })
+          .filter(({modifiers}) => {return modifiers.length != 0})
+          .forEach(item => cart.push({...item, count: 1}));
+        console.log(cart)
+        return cart
+      };
+
       const order = {
         name: this.user.name,
-        cart: this.$store.getters.getCart,
+        cart: transformCart(),
         city: this.adress.city,
         home: this.adress.home,
         email: this.user.email,
@@ -191,12 +236,39 @@ export default {
         payment: this.paymentType,
         apartment: this.adress.apartment,
         orderPrice: this.totalSumCart,
-        selfService: this.selected,
+        selfService: this.selected == 'delivery' ? false : true,
         deliveryPrice: this.delivery,
         organizationID: process.env.ORGANIZATION_ID,
+      };
+
+      console.log(order)
+
+      if(this.paymentType == "CARD"){
+        // this.loading = false
+        // try {
+        //   const res = await this.$http.$post('https://api.rijet.ru/api/v1/order', order)
+        //   console.log(res)
+        // } catch (error) {
+        //   console.log(error)
+        // }
+        // return;
       }
-      //console.log(order)
-      console.log(this.$v.adress.home.$error)
+
+      // try {
+      //   const res = await this.$http.$post('https://api.rijet.ru/api/v1/order', order)
+      //   console.log(res)
+      // } catch (error) {
+      //   console.log(error)
+      // } finally {
+      //   this.loading = false;
+      // }
+
+      // this.$store.commit('clearCart')
+    },
+    async dataApi(){
+      this.$http.setHeader('Organization', process.env.ORGANIZATION_ID)
+      const nomenclature = await this.$http.$get('https://api.rijet.ru/api/v1/nomenclature')
+      this.nomenclature = nomenclature;
     }
   }
 }

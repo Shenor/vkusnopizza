@@ -1,6 +1,6 @@
 <template>
   <div class="item mb-2" v-if="visible">
-    <b-img class="item-img mr-3" src="/pizza.png" fluid></b-img>
+    <b-img class="item-img mr-3" :src="imageUrl(item)" fluid></b-img>
     <div class="item-body">
       <div class="item-body__title d-flex align-items-center mb-2">{{item.name}}</div>
       <div class="item-body__content">
@@ -39,6 +39,9 @@ export default {
     },
     deleteProduct(){
       this.$store.commit('deleteFromCart', {id: this.item.id})
+    },
+    imageUrl(item){
+      return item.images[item.images.length - 1] ? item.images[item.images.length - 1].imageUrl : '/default.png'
     }
   }
 }
@@ -53,7 +56,7 @@ export default {
 
     &-img{
       max-width: 25%;
-      max-height: 80px;
+      max-height: 60px;
     }
 
     &-body{
