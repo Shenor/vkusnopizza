@@ -1,0 +1,532 @@
+{
+  "newsItems": [
+    {
+      "description": "",
+      "id": "3eb3fbc5-94b3-47fd-9555-ede56d113991",
+      "name": "Гавайская",
+      "groupModifiers": [{
+        "maxAmount": 99,
+        "minAmount": 1,
+        "modifierId": "770c84f3-1c35-483d-8f8c-c3a99d96a785",
+        "required": true,
+        "childModifiers": [{
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "fd683f39-a4be-47f3-8d09-425c680eac5e",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          },
+          {
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "32be818f-cf24-4c46-a0b3-1beda258e088",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          },
+          {
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "f6320805-9dda-46f9-a9e4-f9c126dc2462",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          }
+        ],
+        "childModifiersHaveMinMaxRestrictions": false
+      }],
+      "price": 0,
+      "productCategoryId": "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a",
+      "type": "dish",
+      "images": [{
+        "imageId": "d7489a1c-a8a2-426f-bfad-939d5817bff5",
+        "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/c0185bb5-1769-48a8-a268-8f05d66abc9f.png",
+        "uploadDate": "2020-09-25 12:13:07"
+      }]
+    },
+    {
+      "description": "",
+      "id": "29dab025-a9e4-4d00-85ab-53289d37e728",
+      "name": "Ципленок с томатами",
+      "groupModifiers": [{
+        "maxAmount": 99,
+        "minAmount": 1,
+        "modifierId": "e672b926-6b1a-4c57-8e33-e7843eca0f12",
+        "required": true,
+        "childModifiers": [{
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "fc267d88-602f-4707-978e-aa432ec89a3a",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          },
+          {
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "3fa9403a-0cdb-4c6d-8b20-4ddb3e0a5bb2",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          },
+          {
+            "maxAmount": 0,
+            "minAmount": 0,
+            "modifierId": "600e1c94-7dd1-4919-9c60-d49400ac5d96",
+            "required": false,
+            "defaultAmount": 0,
+            "hideIfDefaultAmount": false
+          }
+        ],
+        "childModifiersHaveMinMaxRestrictions": false
+      }],
+      "price": 0,
+      "productCategoryId": "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a",
+      "type": "dish",
+      "images": [{
+        "imageId": "7b924bb1-23f8-46c8-9d5b-bc84efa88570",
+        "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/ed2fa2a0-bab0-4e77-8383-51b758788a0a.jpg",
+        "uploadDate": "2020-09-25 12:13:07"
+      }]
+    }
+  ],
+  "nomenclature": {
+    "products": [
+      {
+        "description": "Вкуснейшная пицца!!! состав: имбирь, сок апельсиновый, капуста, картошка, лук, лимон",
+        "id": "410d9ccb-e307-45fe-9f9b-7e9fda378151",
+        "name": "Ассорти",
+        "groupModifiers": [{
+          "maxAmount": 99,
+          "minAmount": 1,
+          "modifierId": "d86d89ed-d8fc-400e-b21d-9a3a6027ee8c",
+          "required": true,
+          "childModifiers": [{
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "0d6e5e90-ea1c-47b4-9373-28e02d6077e4",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "382796b3-ed64-4bad-a68f-752ad77b0ad0",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "96c33aac-e3f2-41a8-a44a-66d868bb6b8e",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            }
+          ],
+          "childModifiersHaveMinMaxRestrictions": false
+        }],
+        "price": 0,
+        "productCategoryId": "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a",
+        "type": "dish",
+        "images": [{
+            "imageId": "aced2155-423b-4f37-ab49-ed8cffc98794",
+            "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/25caad36-bd36-4548-948a-dc09cedb24a0.jpg",
+            "uploadDate": "2020-09-25 12:13:05"
+          },
+          {
+            "imageId": "073af6d0-fe33-4403-a35b-46b507c8b9ff",
+            "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/82643944-76fc-43fa-8cdb-2597535b6caf.jpg",
+            "uploadDate": "2020-09-25 13:40:42"
+          }
+        ]
+      },
+      {
+        "description": "",
+        "id": "3eb3fbc5-94b3-47fd-9555-ede56d113991",
+        "name": "Гавайская",
+        "groupModifiers": [{
+          "maxAmount": 99,
+          "minAmount": 1,
+          "modifierId": "770c84f3-1c35-483d-8f8c-c3a99d96a785",
+          "required": true,
+          "childModifiers": [{
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "fd683f39-a4be-47f3-8d09-425c680eac5e",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "32be818f-cf24-4c46-a0b3-1beda258e088",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "f6320805-9dda-46f9-a9e4-f9c126dc2462",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            }
+          ],
+          "childModifiersHaveMinMaxRestrictions": false
+        }],
+        "price": 0,
+        "productCategoryId": "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a",
+        "type": "dish",
+        "images": [{
+          "imageId": "d7489a1c-a8a2-426f-bfad-939d5817bff5",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/c0185bb5-1769-48a8-a268-8f05d66abc9f.png",
+          "uploadDate": "2020-09-25 12:13:07"
+        }]
+      },
+      {
+        "description": "",
+        "id": "29dab025-a9e4-4d00-85ab-53289d37e728",
+        "name": "Ципленок с томатами",
+        "groupModifiers": [{
+          "maxAmount": 99,
+          "minAmount": 1,
+          "modifierId": "e672b926-6b1a-4c57-8e33-e7843eca0f12",
+          "required": true,
+          "childModifiers": [{
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "fc267d88-602f-4707-978e-aa432ec89a3a",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "3fa9403a-0cdb-4c6d-8b20-4ddb3e0a5bb2",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "600e1c94-7dd1-4919-9c60-d49400ac5d96",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            }
+          ],
+          "childModifiersHaveMinMaxRestrictions": false
+        }],
+        "price": 0,
+        "productCategoryId": "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a",
+        "type": "dish",
+        "images": [{
+          "imageId": "7b924bb1-23f8-46c8-9d5b-bc84efa88570",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/ed2fa2a0-bab0-4e77-8383-51b758788a0a.jpg",
+          "uploadDate": "2020-09-25 12:13:07"
+        }]
+      },
+      {
+        "description": "",
+        "id": "dbd8bada-4a7e-4bf1-8a44-7ae165767b93",
+        "name": "Cola 0.33 л.",
+        "groupModifiers": [],
+        "price": 70,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "44d02cc8-8c67-4e6b-ab0b-7158212438f6",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/5871867e-6c9b-4fa6-acbb-48c9e2e2c4e7.jpg",
+          "uploadDate": "2020-09-25 12:13:08"
+        }]
+      },
+      {
+        "description": "",
+        "id": "e626dba4-fa83-4e77-a1da-f2ecec92b8ee",
+        "name": "Cola 0.5 л.",
+        "groupModifiers": [],
+        "price": 80,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "ecf1f11a-e615-4d98-ac21-7e23dcef9011",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/60ab1d6f-402e-438b-bb10-910e0e732077.jpg",
+          "uploadDate": "2020-09-25 12:13:08"
+        }]
+      },
+      {
+        "description": "",
+        "id": "5e33747b-3027-4584-afdd-9690c77d2ebf",
+        "name": "Cola 0.9 л.",
+        "groupModifiers": [],
+        "price": 100,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "0f1abbc6-4719-4be2-941e-edf8c4484c5f",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/41d38edd-800c-40cf-b711-5b1fe2bfb25a.jpg",
+          "uploadDate": "2020-09-25 12:13:08"
+        }]
+      },
+      {
+        "description": "",
+        "id": "8447799b-360d-46fa-8ec6-9f7a74669bb5",
+        "name": "БонАква 0,5 л.",
+        "groupModifiers": [],
+        "price": 70,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "5f849a30-8f9f-4a1e-a822-dcbb7bef1a39",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/52c183c4-0d89-4fae-89fa-b9fca083e53b.jpg",
+          "uploadDate": "2020-09-25 12:13:09"
+        }]
+      },
+      {
+        "description": "",
+        "id": "9ccc99c1-0e44-4073-945d-afef893db3bf",
+        "name": "Сок Rich 1л.",
+        "groupModifiers": [],
+        "price": 160,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "ad0f8261-a5fe-4154-a9a4-b9b1bf6eeee9",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/378e8e30-3f20-4499-911f-a1fe119332f9.jpg",
+          "uploadDate": "2020-09-25 12:13:09"
+        }]
+      },
+      {
+        "description": "",
+        "id": "24deea53-e618-4c36-b340-95237ed376be",
+        "name": "Сок Добрый 0,2",
+        "groupModifiers": [],
+        "price": 40,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "c432663c-bc25-4260-beaf-914b3c5ea3cb",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/ef5a4791-4c31-4818-a42f-2d153736f40a.jpg",
+          "uploadDate": "2020-09-25 12:13:09"
+        }]
+      },
+      {
+        "description": "",
+        "id": "c222a66b-bea0-4511-94e2-3263eac2a562",
+        "name": "Сок Добрый 1 л.",
+        "groupModifiers": [],
+        "price": 110,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "good",
+        "images": [{
+          "imageId": "aa3736e4-7535-4f14-942b-8c8c94c5412e",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/b8e01735-f6b5-44c4-8df4-50c897dad4a0.jpg",
+          "uploadDate": "2020-09-25 12:13:10"
+        }]
+      },
+      {
+        "description": "",
+        "id": "f67a15f9-bddf-4348-b64b-be13f7368bdd",
+        "name": "Американо 0,3",
+        "groupModifiers": [],
+        "price": 90,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "dish",
+        "images": []
+      },
+      {
+        "description": "",
+        "id": "a675a1b9-a6e1-4f51-a47a-bae136bb6c8a",
+        "name": "Капучино 0,3",
+        "groupModifiers": [],
+        "price": 110,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "dish",
+        "images": []
+      },
+      {
+        "description": "",
+        "id": "3e04e807-90dd-4de6-af48-02ea72fa7765",
+        "name": "Эспрессо",
+        "groupModifiers": [],
+        "price": 80,
+        "productCategoryId": "f07bedd4-fbfa-4203-0174-be6eb197baf5",
+        "type": "dish",
+        "images": []
+      },
+      {
+        "description": "",
+        "id": "dc259a3d-feb1-4da6-9deb-33ac4b6baca9",
+        "name": "Чесночный цыпленок",
+        "groupModifiers": [{
+          "maxAmount": 1,
+          "minAmount": 1,
+          "modifierId": "ba30abf3-5fa3-4b54-b451-164288674f0d",
+          "required": true,
+          "childModifiers": [{
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "550ceee5-f069-4ee6-ae09-4fc0f9b02f0d",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "5e66ac93-4783-46c6-8036-b94b646d9897",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            },
+            {
+              "maxAmount": 0,
+              "minAmount": 0,
+              "modifierId": "12fc8368-0670-4adb-8ce7-4a46a21632c1",
+              "required": false,
+              "defaultAmount": 0,
+              "hideIfDefaultAmount": false
+            }
+          ],
+          "childModifiersHaveMinMaxRestrictions": false
+        }],
+        "price": 0,
+        "productCategoryId": null,
+        "type": "dish",
+        "images": [{
+          "imageId": "6c22ce56-0d5a-4b78-8bd4-2c66f814c4be",
+          "imageUrl": "https://102922.selcdn.ru/nomenclature_images/fe470000-906b-0025-bf94-08d85ef15bee/6a06cb8d-814b-4f97-9589-87353d430be7.jpg",
+          "uploadDate": "2020-09-25 12:13:10"
+        }]
+      },
+      {
+        "description": "",
+        "id": "0d6e5e90-ea1c-47b4-9373-28e02d6077e4",
+        "name": "Ассорти 25 см",
+        "groupModifiers": [],
+        "price": 299,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da4a",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "382796b3-ed64-4bad-a68f-752ad77b0ad0",
+        "name": "Ассорти 30см",
+        "groupModifiers": [],
+        "price": 419,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da25",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "96c33aac-e3f2-41a8-a44a-66d868bb6b8e",
+        "name": "Ассорти 35 см",
+        "groupModifiers": [],
+        "price": 519,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495d637",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "fd683f39-a4be-47f3-8d09-425c680eac5e",
+        "name": "Гавайская 25 см",
+        "groupModifiers": [],
+        "price": 299,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da4a",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "32be818f-cf24-4c46-a0b3-1beda258e088",
+        "name": "Гавайская 30 см",
+        "groupModifiers": [],
+        "price": 419,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da25",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "f6320805-9dda-46f9-a9e4-f9c126dc2462",
+        "name": "Гавайская 35 см",
+        "groupModifiers": [],
+        "price": 519,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495d637",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "fc267d88-602f-4707-978e-aa432ec89a3a",
+        "name": "Ципленок с томатами 30 см.",
+        "groupModifiers": [],
+        "price": 419,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da25",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "3fa9403a-0cdb-4c6d-8b20-4ddb3e0a5bb2",
+        "name": "Ципленок с томатами 35 см.",
+        "groupModifiers": [],
+        "price": 519,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495d637",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "600e1c94-7dd1-4919-9c60-d49400ac5d96",
+        "name": "Ципленок с томатами 25 см.",
+        "groupModifiers": [],
+        "price": 299,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da4a",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "550ceee5-f069-4ee6-ae09-4fc0f9b02f0d",
+        "name": "Чесночный цыпленок 25 см.",
+        "groupModifiers": [],
+        "price": 299,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da4a",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "5e66ac93-4783-46c6-8036-b94b646d9897",
+        "name": "Чесночный цыпленок 30 см.",
+        "groupModifiers": [],
+        "price": 419,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495da25",
+        "type": "modifier",
+        "images": null
+      },
+      {
+        "description": "",
+        "id": "12fc8368-0670-4adb-8ce7-4a46a21632c1",
+        "name": "Чесночный цыпленок 35 см.",
+        "groupModifiers": [],
+        "price": 519,
+        "productCategoryId": "5227397c-488b-80bb-0173-e84e5495d637",
+        "type": "modifier",
+        "images": null
+      }
+    ]
+  }
+}

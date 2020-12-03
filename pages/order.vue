@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col col-12">
         <h2 class="order__title text-left">Оформление заказа</h2>
-        <div class="row order__content-wrapper col col-12">
+        <div class="row order__content-wrapper col col-12" v-if="!succesPaymnet">
           <div class="order__body-wrapper d-flex flex-column text-left col col-lg-8 col-md-7 col-sm-12">
             <div class="order__body">
               <b-form-group>
@@ -88,6 +88,27 @@
             </div>
           </div>
         </div>
+        <div class="row order__content-wrapper col col-12 d-block" v-if="succesPaymnet">
+          <h3 class="restore-order__form-success-title"> Спасибо за заказ </h3>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox = "0 0 80 80" class="pt-5 pb-5" style="max-width: 150px;">
+              <path fill="#bae0bd" d="M40,77.5C19.3,77.5,2.5,60.7,2.5,40S19.3,2.5,40,2.5S77.5,19.3,77.5,40S60.7,77.5,40,77.5z" />
+              <path fill="#5e9c76"
+                  d="M40,3c20.4,0,37,16.6,37,37S60.4,77,40,77S3,60.4,3,40S19.6,3,40,3 M40,2C19,2,2,19,2,40s17,38,38,38 s38-17,38-38S61,2,40,2L40,2z" />
+              <path fill="#fff" d="M34 56L20.2 42.2 24.5 38 34 47.6 58.2 23.4 62.5 27.6z" />
+          </svg>
+          <div class="" style="max-width: 70%; margin: 0 auto;">
+            <div>Ваш заказ принят в обработку</div>
+            <div class="mt-3 mb-3">
+                Номер заказа: {{succesPaymnet.number}} <br>
+                Время заказа: {{succesPaymnet.createdTime}}
+            </div>
+            <div>В ближайшее время с вами свяжутся для уточнения деталей и подтвержения заказа</div>
+            <div>
+                Если после оплаты заказа у Вас вознили технические проблемы или Вы обнаружили ошибку (ФИО/адрес/номер и д.р),
+                обратитесь по номеру + 7 (918) 627-55-37
+            </div>
+        </div>
+        </div>
       </div>
     </div>
   </div>
@@ -101,6 +122,7 @@ export default {
     return {
       user: null,
       error: null,
+      succesPaymnet: false,
       loading: false,
       listAdress: [
         {street: 'Краснодар, Восточно-Кругликовская', home: '53', apartments: '1'},
@@ -122,7 +144,7 @@ export default {
       options: [
           { text: 'Доставка', value: 'delivery' },
           { text: 'Самовывоз', value: 'selfService' }
-        ]
+      ]
     }
   },
   validations: {
@@ -139,17 +161,18 @@ export default {
     ItemCartSidebar
   },
   async mounted(){
+
     if(this.$store.getters.isAuthorization){
       this.$http.setToken(this.$store.getters.getToken)
       const {user} = await this.$http.$get(`users`)
       this.user = user;
     }
     this.$nextTick(function () {
-      this.dataApi();
+      //this.dataApi();
       $('#street').fias({
         type: $.fias.type.street,
         parentType: $.fias.type.city,
-        parentId: 2300000200000,
+        parentId: 2300000100000,
         spinner: false,
         verify: true,
         select: function () {
@@ -166,12 +189,6 @@ export default {
       })
     });
   },
-  // async asyncData({$http}){
-  //   $http.setHeader('Organization', process.env.ORGANIZATION_ID)
-  //   $http.setHeader('Origin', 'http://localhost:3000')
-  //   const res = await $http.$get('https://api.rijet.ru/api/v1/nomenclature')
-  //   console.log(res)
-  // },
   computed: {
     totalSumCartWithDelivery(){
       return this.$store.getters.getTotalSumCart + this.delivery
@@ -189,85 +206,55 @@ export default {
       return `${adress.street}, д. ${adress.home}, кв. ${adress.apartments}`
     },
     async createOrder({env}){
-      if(!this.$store.getters.isAuthorization) return this.$bvModal.show('modal-enter')
+      // if(!this.$store.getters.isAuthorization) return this.$bvModal.show('modal-enter')
       // if(!this.isValidForm()) return this.error = 'Некорректно заполнена форма'
       // this.error = null
       this.loading = true;
-      const transformCart = () => {
-        let cart = this.$store.getters.getCart.filter(({type}) => {return type != 'modifier'})
-        const modifier = new Map();
-        this.$store.getters.getCart
-          .filter(({type}) => {return type == 'modifier'})
-          .forEach(item => {
-            modifier.set(item.id, {
-              id: item.id,
-              name: item.name,
-              amount: item.count,
-              groupId: item.groupId,
-              groupName: 'Групповой модификатор'
-            });
-        });
-        const candidateCart = this.nomenclature.products.filter(item => {
-          return item.type == 'dish' && item.groupModifiers[0]
-        });
-        candidateCart
-          .filter((item) => {
-            item.groupModifiers[0].childModifiers.forEach((mod) => {
-              if(modifier.get(mod.modifierId)){
-                item.modifiers.push(modifier.get(mod.modifierId))
-              }
-            })
-            return item
-          })
-          .filter(({modifiers}) => {return modifiers.length != 0})
-          .forEach(item => cart.push({...item, count: 1}));
-        console.log(cart)
-        return cart
-      };
 
-      const order = {
-        name: this.user.name,
-        cart: transformCart(),
-        city: this.adress.city,
-        home: this.adress.home,
-        email: this.user.email,
-        phone: this.user.phone.replace(/[-()]/g, ''),
-        street: this.adress.street,
-        payment: this.paymentType,
-        apartment: this.adress.apartment,
-        orderPrice: this.totalSumCart,
-        selfService: this.selected == 'delivery' ? false : true,
-        deliveryPrice: this.delivery,
-        organizationID: process.env.ORGANIZATION_ID,
-      };
+      // const transformCart = () => {
+      //   let cart = this.$store.getters.getCart.filter(({type}) => {return type != 'modifier'})
+      //   const modifier = new Map();
+      //   this.$store.getters.getCart
+      //     .filter(({type}) => {return type == 'modifier'})
+      //     .forEach(item => {
+      //       modifier.set(item.id, {
+      //         id: item.id,
+      //         name: item.name,
+      //         amount: item.count,
+      //         groupId: item.groupId,
+      //         groupName: 'Групповой модификатор'
+      //       });
+      //   });
+      //   const candidateCart = this.nomenclature.products.filter(item => {
+      //     return item.type == 'dish' && item.groupModifiers[0]
+      //   });
+      //   candidateCart
+      //     .filter((item) => {
+      //       item.groupModifiers[0].childModifiers.forEach((mod) => {
+      //         if(modifier.get(mod.modifierId)){
+      //           item.modifiers.push(modifier.get(mod.modifierId))
+      //         }
+      //       })
+      //       return item
+      //     })
+      //     .filter(({modifiers}) => {return modifiers.length != 0})
+      //     .forEach(item => cart.push({...item, count: 1}));
+      //   console.log(cart)
+      //   return cart
+      // };
 
-      console.log(order)
+      if(this.paymentType == "CARD"){}
 
-      if(this.paymentType == "CARD"){
-        // this.loading = false
-        // try {
-        //   const res = await this.$http.$post('https://api.rijet.ru/api/v1/order', order)
-        //   console.log(res)
-        // } catch (error) {
-        //   console.log(error)
-        // }
-        // return;
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      this.succesPaymnet = {
+        number: Math.floor(Math.random() * Math.floor(5000)),
+        createdTime: new Date().toLocaleString()
       }
-
-      // try {
-      //   const res = await this.$http.$post('https://api.rijet.ru/api/v1/order', order)
-      //   console.log(res)
-      // } catch (error) {
-      //   console.log(error)
-      // } finally {
-      //   this.loading = false;
-      // }
-
-      // this.$store.commit('clearCart')
+      this.loading = false;
     },
     async dataApi(){
-      this.$http.setHeader('Organization', process.env.ORGANIZATION_ID)
-      const nomenclature = await this.$http.$get('https://api.rijet.ru/api/v1/nomenclature')
+      this.$http.setHeader('Organization')
+      const nomenclature = await this.$http.$get()
       this.nomenclature = nomenclature;
     }
   }

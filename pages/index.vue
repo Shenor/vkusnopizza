@@ -214,6 +214,7 @@
   </div>
 </template>
 <script>
+import data from '@/store/data.json';
 export default {
   data() {
     return {
@@ -225,14 +226,14 @@ export default {
       },
       loadCategoryID: {
         newsCategoryID: '7ba3f2a8-fa96-c6ad-0174-b5ba1356019a',
-        comboCategoryID: '5227397c-488b-80bb-0173-e84e5495da4a',
+        comboCategoryID: '',
         drinksCategoryID: 'f07bedd4-fbfa-4203-0174-be6eb197baf5'
       },
       uploadData: {
-        nomenclature: null,
-        newsItems: null,
+        nomenclature: data.nomenclature,
         comboItems: null,
-        drinksItems: null
+        drinksItems: data.nomenclature.products.filter(i => i.productCategoryId == 'f07bedd4-fbfa-4203-0174-be6eb197baf5'),
+        newsItems: data.nomenclature.products.filter(i => i.productCategoryId == '7ba3f2a8-fa96-c6ad-0174-b5ba1356019a' && i.type == "dish")
       },
       height: 380,
       sliders: {
@@ -285,7 +286,7 @@ export default {
     this.visibleSliders = true
     this.$nextTick(function () {
       this.onResize();
-      this.dataApi();
+      // this.dataApi();
     })
     this.windowWidth = document.documentElement.clientWidth;
     window.addEventListener('resize', this.onResize)
@@ -366,9 +367,9 @@ export default {
       console.log('object')
     },
     async dataApi(){
-      this.$http.setHeader('Organization', process.env.ORGANIZATION_ID)
-      const nomenclature = await this.$http.$get('https://api.rijet.ru/api/v1/nomenclature')
-      // console.log(nomenclature)
+      this.$http.setHeader('Organization')
+      const nomenclature = await this.$http.$get()
+      console.log(nomenclature)
       this.uploadData.nomenclature = nomenclature;
       this.uploadData.newsItems = nomenclature.products.filter(element => {
         return element.productCategoryId == this.loadCategoryID.newsCategoryID

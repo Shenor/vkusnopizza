@@ -9,7 +9,7 @@ export default {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -25,13 +25,13 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     script: [
-      {src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js'},
+      {src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'},
       {src: 'https://cdn.jsdelivr.net/gh/Shenor/cartography_api@master/jquery.fias.min.js'}
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/Shenor/cartography_api@master/jquery.fias.min.css'},
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700;900&display=swap'}
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700;900&display=swap'},
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/Shenor/cartography_api@master/jquery.fias.min.css'}
     ]
   },
   /*
@@ -49,9 +49,7 @@ export default {
   /*
   ** Environment Nuxt
   */
-  env: {
-    ORGANIZATION_ID: 'fe470000-906b-0025-bf94-08d85ef15bee'
-  },
+  env: {},
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
@@ -116,7 +114,7 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   server: {
-    port: 3000, // default: 3000
+    port: 3033, // default: 3000
     host: '0.0.0.0' // default: localhost
   }
 }

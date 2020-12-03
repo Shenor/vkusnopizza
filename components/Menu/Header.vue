@@ -9,7 +9,7 @@
         </div>
        <div class="info d-none d-md-block d-xl-block">
          <div class="">Доставка пиццы</div>
-         <div class="city">Армавир</div>
+         <div class="city">Краснодар</div>
        </div>
 
       <!-- Mobile menu -->
@@ -29,7 +29,7 @@
             </b-container>
              <b-container class=" justify-content-between">
                <div class="d-flex justify-content-center align-items-center"><b-img left src="/Ellipse.png" alt="Ellipse"></b-img> <span>Войти</span></div>
-               <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Армавир</span></div>
+               <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Краснодар</span></div>
              </b-container>
              <div class="internal-menu__content pt-5 pb-5">
                <b-container class=" internal-menu__navigation">
