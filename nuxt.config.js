@@ -92,6 +92,12 @@ export default {
     port: 3010
   },
   /*
+  ** PWA options
+  */
+  pwa: {
+    workbox: false
+  },
+  /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
@@ -114,7 +120,7 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   server: {
-    port: 3033, // default: 3000
+    port: 3001, // default: 3000
     host: '0.0.0.0' // default: localhost
   }
 }

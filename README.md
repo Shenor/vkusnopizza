@@ -1,5 +1,7 @@
 # vkusnopizza
 
+[DEMO](https://demo.rijet.ru/)
+
 ## Build Setup
 
 ```bash
