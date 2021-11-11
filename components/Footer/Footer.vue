@@ -15,10 +15,10 @@
           Основные ссылки
         </div>
         <ul class="footer__column__list">
-          <li><nuxt-link to='/about'>О компании</nuxt-link></li>
-          <li><nuxt-link to='/'>Каталог</nuxt-link></li>
-          <li><nuxt-link to='#'>Доставка</nuxt-link></li>
-          <li><nuxt-link to='#'>Оплата</nuxt-link></li>
+          <li><NuxtLink to='/about'>О компании</NuxtLink></li>
+          <li><NuxtLink to='/'>Каталог</NuxtLink></li>
+          <li><NuxtLink to='#'>Доставка</NuxtLink></li>
+          <li><NuxtLink to='#'>Оплата</NuxtLink></li>
         </ul>
       </div>
       <div class="footer__column">
@@ -26,10 +26,10 @@
           Категории
         </div>
         <ul class="footer__column__list">
-          <li><nuxt-link to='/#pizza'>Пицца</nuxt-link></li>
-          <li><nuxt-link to='/#combo'>Комбо</nuxt-link></li>
-          <li><nuxt-link to='/#drinks'>Напитки</nuxt-link></li>
-          <li><nuxt-link to='/stocks'>Акции</nuxt-link></li>
+          <li><NuxtLink to='/#pizza'>Пицца</NuxtLink></li>
+          <li><NuxtLink to='/#combo'>Комбо</NuxtLink></li>
+          <li><NuxtLink to='/#drinks'>Напитки</NuxtLink></li>
+          <li><NuxtLink to='/stocks'>Акции</NuxtLink></li>
         </ul>
       </div>
       <div class="footer__column">
@@ -37,9 +37,9 @@
           Полезные ссылки
         </div>
         <ul class="footer__column__list">
-          <li><nuxt-link to='/about'>О нас</nuxt-link></li>
-          <li><nuxt-link to='#'>Условия доставки</nuxt-link></li>
-          <li><nuxt-link to='#'>Договор оферты</nuxt-link></li>
+          <li><NuxtLink to='/about'>О нас</NuxtLink></li>
+          <li><NuxtLink to='#'>Условия доставки</NuxtLink></li>
+          <li><NuxtLink to='#'>Договор оферты</NuxtLink></li>
         </ul>
       </div>
       <div class="footer__column">
@@ -47,9 +47,9 @@
           Соц сети
         </div>
         <ul class="footer__column__list">
-          <li><nuxt-link to='#'><b-img src="/social-icon/vk.svg" fluid alt="Fluid image"></b-img> VK.com</nuxt-link></li>
-          <li><nuxt-link to='#'><b-img src="/social-icon/fb.svg" fluid alt="Fluid image"></b-img> Facebook</nuxt-link></li>
-          <li><nuxt-link to='#'><b-img src="/social-icon/inst.svg" fluid alt="Fluid image"></b-img> Instagram</nuxt-link></li>
+          <li><NuxtLink to='#'><b-img src="/social-icon/vk.svg" fluid alt="Fluid image"></b-img> VK.com</NuxtLink></li>
+          <li><NuxtLink to='#'><b-img src="/social-icon/fb.svg" fluid alt="Fluid image"></b-img> Facebook</NuxtLink></li>
+          <li><NuxtLink to='#'><b-img src="/social-icon/inst.svg" fluid alt="Fluid image"></b-img> Instagram</NuxtLink></li>
         </ul>
       </div>
     </b-container>

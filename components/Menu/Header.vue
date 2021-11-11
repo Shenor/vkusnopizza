@@ -1,11 +1,11 @@
 <template>
     <b-container class="header justify-content-start menu">
-      <nuxt-link class="navbar-brand" to="/">
+      <NuxtLink class="navbar-brand" to="/">
         <b-img src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
-      </nuxt-link>
+      </NuxtLink>
         <div class="logo-text text-left">
-          <div class="title"><nuxt-link to="/">VKUSNOPIZZA</nuxt-link></div>
-          <div class="sub-title"><nuxt-link to="/">лучшая пицца - по лучшей цене</nuxt-link></div>
+          <div class="title"><NuxtLink to="/">VKUSNOPIZZA</NuxtLink></div>
+          <div class="sub-title"><NuxtLink to="/">лучшая пицца - по лучшей цене</NuxtLink></div>
         </div>
        <div class="info d-none d-md-block d-xl-block">
          <div class="">Доставка пиццы</div>
@@ -33,10 +33,10 @@
              </b-container>
              <div class="internal-menu__content pt-5 pb-5">
                <b-container class=" internal-menu__navigation">
-                 <li class="internal-menu__navigation__item"><nuxt-link class="text-white" to='/stocks'>Акции</nuxt-link></li>
-                 <li class="internal-menu__navigation__item"><nuxt-link class="text-white" to='/contacts'>Контакты</nuxt-link></li>
-                 <li class="internal-menu__navigation__item"><nuxt-link class="text-white" to='/about'>О нас</nuxt-link></li>
-                 <li class="internal-menu__navigation__item"><nuxt-link class="text-white" to='#'>Личный кабинет</nuxt-link></li>
+                 <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/stocks'>Акции</NuxtLink></li>
+                 <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/contacts'>Контакты</NuxtLink></li>
+                 <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/about'>О нас</NuxtLink></li>
+                 <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='#'>Личный кабинет</NuxtLink></li>
                </b-container>
              </div>
              <b-container class="internal-menu__phone justify-content-start">

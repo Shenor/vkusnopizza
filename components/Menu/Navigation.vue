@@ -4,10 +4,11 @@
 
         <!-- Menu navigation stickly -->
         <div class="menu-stickly__wrapper-logo">
-          <nuxt-link to="/">
+          <NuxtLink to="/">
             <b-img class="menu-stickly__logo" src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
-          </nuxt-link>
+          </NuxtLink>
         </div>
+          <!-- This reason warning vue router -->
          <b-nav>
           <b-nav-item to="/#pizza">Пицца</b-nav-item>
           <b-nav-item to="/#combo">Комбо</b-nav-item>

@@ -3,10 +3,10 @@
     <template v-slot:footer="{}">
 
       <div class="text-light px-3 py-2">
-        <nuxt-link to="order" class="btn-order-wrapper d-flex justify-content-between px-3 py-2">
+        <NuxtLink to="order" class="btn-order-wrapper d-flex justify-content-between px-3 py-2">
           <span>Заказать</span>
           <span>{{totalSumCart}} ₽</span>
-        </nuxt-link>
+        </NuxtLink>
       </div>
       </template>
     <div class="px-3 py-4">
