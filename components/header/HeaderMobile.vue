@@ -1,0 +1,103 @@
+<template>
+  <div>
+    <menu-burger :isInternalMenu="false"></menu-burger>
+    <b-sidebar id="sidebar-right" class="internal-menu d-block d-sm-block d-md-none ml-auto" title="Sidebar" width="100%"  bg-variant="dark-custom" no-header right shadow>
+      <div class="text-white">
+        <b-container class="header justify-content-start menu mb-4">
+          <a class="navbar-brand" href="/">
+            <b-img src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
+          </a>
+          <div class="logo-text text-left">
+            <div class="title">VKUSNOPIZZA</div>
+            <div class="sub-title">лучшая пицца - по лучшей цене</div>
+          </div>
+
+          <menu-burger :isInternalMenu="true"></menu-burger>
+        </b-container>
+        <b-container class=" justify-content-between">
+          <div class="d-flex justify-content-center align-items-center"><b-img left src="/Ellipse.png" alt="Ellipse"></b-img> <span>Войти</span></div>
+          <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Краснодар</span></div>
+        </b-container>
+        <div class="internal-menu__content pt-5 pb-5">
+          <b-container class=" internal-menu__navigation">
+            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/stocks'>Акции</NuxtLink></li>
+            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/contacts'>Контакты</NuxtLink></li>
+            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/about'>О нас</NuxtLink></li>
+            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='#'>Личный кабинет</NuxtLink></li>
+          </b-container>
+        </div>
+        <b-container class="internal-menu__phone-wrapper justify-content-start">
+          <b-img src="/phone.svg" fluid alt="Fluid image" class="mr-2"></b-img>
+          <b-link href="tel:123" class="internal-menu__phone">8 (800)-000-00-00</b-link>
+        </b-container>
+      </div>
+    </b-sidebar>
+  </div>
+</template>
+
+<script>
+import MenuBurger from '@/components/elements/burger-menu/index'
+
+export default {
+  name: "HeaderMobile",
+  components: { MenuBurger }
+}
+</script>
+
+<style lang="scss" scoped>
+#sidebar-right{
+  background-color: $bg-color !important;
+}
+.toggle-menu,
+.hamburger{
+  outline: none;
+}
+.menu{
+  padding: 10px 15px;
+}
+.internal-menu{
+  &__phone-wrapper{
+    padding: 30px 15px;
+  }
+  &__phone{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 15px;
+    text-decoration: none;
+    color: white;
+  }
+
+  &__map{
+    span{
+      font-weight: 600;
+      margin: 0 5px;
+      font-size: 16px;
+      color: $primary-color;
+      text-transform: uppercase;
+    }
+  }
+
+  &__content{
+    border-top: 0.5px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+  }
+  &__navigation{
+    padding: 0;
+    padding-left: 80px;
+    list-style: none;
+    text-align: left;
+    align-items: flex-start;
+    flex-direction: column;
+
+    &__item{
+      margin: 10px 0;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+</style>

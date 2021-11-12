@@ -38,7 +38,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '@assets/scss/global.scss',
+    '@/assets/styles/global.scss',
   ],
   /*
    ** Router Nuxt
@@ -84,7 +84,7 @@ export default {
   ],
   styleResources: {
     scss: [
-      '@assets/scss/colors.scss'
+      '@/assets/styles/index.scss'
     ]
   },
   http: {

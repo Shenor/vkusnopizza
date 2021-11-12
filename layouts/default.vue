@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import Header from '@/components/Menu/Header'
+import Header from '@/components/header/index'
 import Footer from '@/components/Footer/Footer'
 import Navigation from '@/components/Menu/Navigation'
+
 export default {
   data() {
     return{}
