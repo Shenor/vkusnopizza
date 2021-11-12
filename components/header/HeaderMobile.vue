@@ -16,9 +16,19 @@
         </b-container>
         <b-container class=" justify-content-between">
           <div class="d-flex justify-content-center align-items-center"><b-img left src="/Ellipse.png" alt="Ellipse"></b-img> <span>Войти</span></div>
-          <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Краснодар</span></div>
+          <div id="tooltip-target-2">
+            <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Краснодар</span></div>
+            <small>доставим за 25 минут!</small>
+          </div>
+          <b-tooltip
+            custom-class="tooltip"
+            target="tooltip-target-2"
+            triggers="hover">
+              Если не успеем доставить ваш заказ за 25 минут, <br>
+              <b>вы получите сертификат на любую пиццу из меню в подарок!</b>
+          </b-tooltip>
         </b-container>
-        <div class="internal-menu__content pt-5 pb-5">
+        <div class="internal-menu__content pt-4 pb-4">
           <b-container class=" internal-menu__navigation">
             <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/stocks'>Акции</NuxtLink></li>
             <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/contacts'>Контакты</NuxtLink></li>
@@ -27,8 +37,13 @@
           </b-container>
         </div>
         <b-container class="internal-menu__phone-wrapper justify-content-start">
-          <b-img src="/phone.svg" fluid alt="Fluid image" class="mr-2"></b-img>
-          <b-link href="tel:123" class="internal-menu__phone">8 (800)-000-00-00</b-link>
+          <div class="text-left">
+            <div class="d-flex align-items-center position-relative">
+              <b-img src="/phone.svg" fluid alt="Fluid image" class="position-absolute"></b-img>
+              <b-link href="tel:123" class="internal-menu__phone pl-4">8 (800)-000-00-00</b-link>
+            </div>
+            <small class="pl-4">звонок бесплатный!</small>
+          </div>
         </b-container>
       </div>
     </b-sidebar>
@@ -40,7 +55,12 @@ import MenuBurger from '@/components/elements/burger-menu/index'
 
 export default {
   name: "HeaderMobile",
-  components: { MenuBurger }
+  components: { MenuBurger },
+  methods: {
+    q() {
+      console.log('asdasd')
+    }
+  }
 }
 </script>
 
@@ -64,7 +84,6 @@ export default {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-left: 15px;
     text-decoration: none;
     color: white;
   }

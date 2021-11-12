@@ -8,7 +8,8 @@
         <div class="sub-title"><NuxtLink to="/">лучшая пицца - по лучшей цене</NuxtLink></div>
       </div>
       <div class="delivery d-none d-md-block d-xl-block">
-        <div>Доставка пиццы
+        <div class="text-left">
+          Доставка пиццы
           <span class="delivery__city">Краснодар</span>
         </div>
         <div id="tooltip-target-1" class="delivery__info text-left ">всего за 25 минут!</div>
@@ -16,7 +17,7 @@
           :delay="300"
           custom-class="delivery__tooltip"
           target="tooltip-target-1"
-          triggers="hover">
+          triggers="hover click">
           Если не успеем доставить ваш заказ за 25 минут, <br>
           <b>вы получите сертификат на любую пиццу из меню в подарок!</b>
         </b-tooltip>
