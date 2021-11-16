@@ -7,7 +7,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "dev:host": "nuxt --hostname 0.0.0.0 --port 80"
+    "dev:host": "nuxt --hostname 192.168.0.67 --port 3000"
   },
   "dependencies": {
     "@egjs/vue-flicking": "^3.3.0",

@@ -1,28 +1,9 @@
 <template>
   <div>
-    <div class="slider-wrapper mb-1">
-      <i class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"></i>
-      <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>
-      <client-only>
-        <flicking
-          ref="mainSlider"
-          :style="heightMainSlider"
-          class="main-slider grabbing"
-          :options="sliders.optionsMainBanner"
-          :tag="'div'"
-          :viewportTag="'div'">
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-        </flicking>
+    <MainBanner />
 
-        <div class="text-center" slot="placeholder">
-          <b-spinner class="spinner" variant="success" label="Spinning"></b-spinner>
-        </div>
-      </client-only>
-    </div>
     <div class="news d-flex flex-column">
-      <div class="container main-title mb-3 pl-4 justify-content-start">Новинки</div>
+      <div class="container main-title mb-3 pl-4 justify-content-start">Хиты продаж</div>
         <div class="slider-wrapper mb-1 pt-2 pb-2" v-if="uploadData.newsItems">
           <i class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"></i>
           <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>
@@ -214,6 +195,7 @@
   </div>
 </template>
 <script>
+import MainBanner from "../components/banner/MainBanner_clone";
 import data from '@/store/data.json';
 export default {
   data() {
@@ -237,18 +219,18 @@ export default {
       },
       height: 380,
       sliders: {
-        optionsMainBanner: {
-          position: 330,
-          gap: 30,
-          zIndex: 1,
-          defaultIndex: 0,
-          hanger:"50%",
-          moveType: 'snap',
-          useOffset: true,
-          autoResize: true,
-          adaptive: true,
-          circular: true
-        },
+        // optionsMainBanner: {
+        //   position: 330,
+        //   gap: 30,
+        //   zIndex: 1,
+        //   defaultIndex: 0,
+        //   hanger:"50%",
+        //   moveType: 'snap',
+        //   useOffset: true,
+        //   autoResize: true,
+        //   adaptive: true,
+        //   circular: true
+        // },
         optionsNewsBanner: {
           gap: 20,
           zIndex: 1,
@@ -281,6 +263,9 @@ export default {
         {id: 14, title: 'Комбо экспресс', price: '599'}
       ]
     }
+  },
+  components: {
+    MainBanner
   },
   mounted: function () {
     this.visibleSliders = true
@@ -323,7 +308,7 @@ export default {
       if(document.documentElement.clientWidth > 768){
         this.height = document.documentElement.clientWidth * 0.22;
       } else if (document.documentElement.clientWidth < 768 && document.documentElement.clientWidth > 576){
-        this.sliders.optionsMainBanner.anchor = '300px'
+        // this.sliders.optionsMainBanner.anchor = '300px'
         this.height = document.documentElement.clientWidth * 0.28;
         this.sliders.optionsNewsBanner.circular = true
         this.sliders.optionsNewsBanner.hanger = "8%"
