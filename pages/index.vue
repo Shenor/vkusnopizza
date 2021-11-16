@@ -3,7 +3,7 @@
     <MainBanner />
 
     <div class="news d-flex flex-column">
-      <div class="container main-title mb-3 pl-4 justify-content-start">Хиты продаж</div>
+      <div class="container main-title mb-4 mt-4 pl-4 justify-content-start">Хиты продаж</div>
         <div class="slider-wrapper mb-1 pt-2 pb-2" v-if="uploadData.newsItems">
           <i class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"></i>
           <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>
@@ -219,29 +219,8 @@ export default {
       },
       height: 380,
       sliders: {
-        // optionsMainBanner: {
-        //   position: 330,
-        //   gap: 30,
-        //   zIndex: 1,
-        //   defaultIndex: 0,
-        //   hanger:"50%",
-        //   moveType: 'snap',
-        //   useOffset: true,
-        //   autoResize: true,
-        //   adaptive: true,
-        //   circular: true
-        // },
         optionsNewsBanner: {
-          gap: 20,
-          zIndex: 1,
-          hanger:"0",
-          anchor: "0",
-          moveType: 'snap',
-          autoResize: true,
-          adaptive: true,
-          circular: false,
-          overflow: true,
-          isConstantSize: true
+          align: "prev",
         }
       },
       items: [
@@ -491,35 +470,11 @@ export default {
   }
 }
 
-.main-slider{
-  position: relative;
-  outline: none;
-
-  .panel{
-    width: 60%;
-
-    @media (max-width: 576px) {
-      width: 95%;
-    }
-
-    @media (min-width: 576px) and (max-width: 767.98px) {
-      width: 80%;
-    }
-
-    &-img{
-      border-radius: 20px;
-
-      @media (max-width: 576px) {
-        border-radius: 10px;
-      }
-    }
-  }
-}
-
 .slider-news{
   position: relative;
   outline: none;
   width: 100%;
+  overflow: visible;
 
   &__card{
     img{
@@ -529,6 +484,10 @@ export default {
 
   .panel{
     width: 330px;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
 
     @media (max-width: 768px) {
       width: 320px;

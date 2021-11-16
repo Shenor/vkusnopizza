@@ -5,11 +5,11 @@
 <!--      <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>-->
       <client-only>
         <div class="container">
-        <flicking class="main-slider" :options="options">
+        <Flicking  class="main-slider" :options="options">
           <div class="panel"><b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
           <div class="panel"><b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
           <div class="panel"><b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-        </flicking>
+        </Flicking >
         </div>
 
         <div class="text-center" slot="placeholder">
@@ -27,19 +27,9 @@ export default {
     return {
       height: 380,
       options: {
-        // align: "prev",
+        align: "prev",
+        bound: true,
         horizontal: true,
-        // position: 330,
-        gap: 30,
-        zIndex: 1,
-        // defaultIndex: 0,
-        hanger:"0",
-        anchor:"0",
-        moveType: 'snap',
-        // useOffset: true,
-        autoResize: true,
-        // adaptive: true,
-        // circular: true,
       }
     }
   },
@@ -117,7 +107,10 @@ export default {
   .panel{
     width: 200px;
     height: 250px;
-    //width: 20%;
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
 
     //@media (max-width: 576px) {
     //  width: 95%;
