@@ -1,39 +1,7 @@
 <template>
   <div>
     <MainBanner />
-
-    <div class="news d-flex flex-column">
-      <div class="container main-title mb-4 mt-4 pl-4 justify-content-start">Хиты продаж</div>
-        <div class="slider-wrapper mb-1 pt-2 pb-2" v-if="uploadData.newsItems">
-          <i class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"></i>
-          <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>
-          <div class="container">
-            <client-only>
-              <flicking
-                class="slider-news grabbing"
-                :options="sliders.optionsNewsBanner"
-                :tag="'div'"
-                :viewportTag="'div'">
-                <div class="panel" v-for="item in uploadData.newsItems" :key="item.key">
-                  <b-card :img-src="imageUrl(item)" img-alt="Card image" img-left fluid class="slider-news__card mb-3 p-2">
-                    <b-card-text class="d-flex flex-column">
-                      <div style="min-height: 45px;">
-                        {{item.name}}
-                      </div>
-                      <b-button class="mt-2" variant="outline-primary" @click="showProductCard(item)">Выбрать</b-button>
-                    </b-card-text>
-                  </b-card>
-                </div>
-              </flicking>
-
-              <div class="text-center" slot="placeholder">
-                <b-spinner class="spinner" variant="success" label="Spinning"></b-spinner>
-              </div>
-            </client-only>
-          </div>
-        </div>
-
-    </div>
+    <Bestsellers />
 
     <div class="banner d-none d-md-flex d-xl-flex mb-5">
       <b-container class="flex-column text-white align-items-center">
@@ -162,40 +130,11 @@
       <p>Суши – не просто традиционный представитель японской кухни. Именно в этом блюде воплотилась одна из важнейших японских ценностей:
       красота в простоте. Изумительные суши всегда станут гармоничным дополнением к здоровой и вкусной пище.</p>
     </b-container>
-
-    <b-modal id="modal-product" centered size="lg">
-       <b-container class='wrapper-modal' v-if="modalInfo.selectedItem">
-        <b-col lg="6" md="10">
-          <b-img :src="imageUrl(modalInfo.selectedItem)" fluid alt="Responsive image"></b-img>
-        </b-col>
-        <b-col lg="6" md="10" class="text-left">
-          <p class="title font-weight-semibold">{{modalInfo.selectedItem.name}}</p>
-          <b-form-group>
-            <b-form-radio-group
-              class="text-center"
-              v-model="modalInfo.selectedModifiers"
-              text-field="name"
-              value-field="id"
-              :options="modifiers"
-              buttons
-              @change="changeModifiers"
-              button-variant="outline-primary"
-              name="radio-btn-outline"
-            ></b-form-radio-group>
-          </b-form-group>
-          <p>{{modalInfo.selectedItem.description}}</p>
-        </b-col>
-       </b-container>
-      <template v-slot:modal-footer="">
-        <b-button size="md" variant="outline-primary" @click="add(null)">
-          Добавить в корзину - <b>{{priceSelectedModifiers}} ₽</b>
-        </b-button>
-      </template>
-    </b-modal>
   </div>
 </template>
 <script>
-import MainBanner from "../components/banner/MainBanner_clone";
+import MainBanner from "@/components/banner/MainBanner";
+import Bestsellers from "@/components/bestsellers/index";
 import data from '@/store/data.json';
 export default {
   data() {
@@ -216,12 +155,6 @@ export default {
         comboItems: null,
         drinksItems: data.nomenclature.products.filter(i => i.productCategoryId == 'f07bedd4-fbfa-4203-0174-be6eb197baf5'),
         newsItems: data.nomenclature.products.filter(i => i.productCategoryId == '7ba3f2a8-fa96-c6ad-0174-b5ba1356019a' && i.type == "dish")
-      },
-      height: 380,
-      sliders: {
-        optionsNewsBanner: {
-          align: "prev",
-        }
       },
       items: [
         {id: 1, title: 'Пицца 4 сезона', price: '350'},
@@ -244,26 +177,17 @@ export default {
     }
   },
   components: {
-    MainBanner
+    MainBanner,
+    Bestsellers
   },
   mounted: function () {
     this.visibleSliders = true
-    this.$nextTick(function () {
-      this.onResize();
-      // this.dataApi();
-    })
-    this.windowWidth = document.documentElement.clientWidth;
-    window.addEventListener('resize', this.onResize)
     document.querySelector('.delivery').addEventListener('click', this.onCollapseDelivery)
   },
   destroyed(){
-    window.removeEventListener("resize", this.onResize);
     document.querySelector('.delivery').addEventListener('click', this.onCollapseDelivery)
   },
   computed:{
-    heightMainSlider(){
-      return `height: ${this.height}px`;
-    },
     modifiers(){
       const modifiers = this.modalInfo.selectedItem.groupModifiers[0].childModifiers.map(item => {
         return this.uploadData.nomenclature.products.find(product => {
@@ -283,18 +207,6 @@ export default {
     }
   },
   methods: {
-    onResize() {
-      if(document.documentElement.clientWidth > 768){
-        this.height = document.documentElement.clientWidth * 0.22;
-      } else if (document.documentElement.clientWidth < 768 && document.documentElement.clientWidth > 576){
-        // this.sliders.optionsMainBanner.anchor = '300px'
-        this.height = document.documentElement.clientWidth * 0.28;
-        this.sliders.optionsNewsBanner.circular = true
-        this.sliders.optionsNewsBanner.hanger = "8%"
-      } else if(document.documentElement.clientWidth < 576){
-        this.height = document.documentElement.clientWidth * 0.34;
-      }
-    },
     onCollapseDelivery(){
       document.querySelector('.delivery').classList.add('delivery--isActive')
     },
@@ -442,84 +354,6 @@ export default {
   margin: 0 auto;
 }
 
-.slider-wrapper{
-  position: relative;
-  overflow: hidden;
-
-  .slider-shadow{
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    width: 20%;
-    z-index: 2;
-    padding: 9px 53.3333px 20px;
-    pointer-events: none;
-  }
-
-  .slider-shadow-right{
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
-    right: 0;
-  }
-
-  .slider-shadow-left{
-    background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
-    left: 0;
-  }
-}
-
-.slider-news{
-  position: relative;
-  outline: none;
-  width: 100%;
-  overflow: visible;
-
-  &__card{
-    img{
-      max-width: 40%
-    }
-  }
-
-  .panel{
-    width: 330px;
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
-
-    @media (max-width: 768px) {
-      width: 320px;
-    }
-  }
-
-  &__card {
-    align-items: center;
-    min-width: 265px;
-    border: none;
-    box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.2);
-    transition: box-shadow .3s;
-
-    &:hover{
-      box-shadow: 0px 4px 6px -2px rgba(6, 5, 50, 0.15);
-    }
-
-    .card-body{
-      div {
-        @media (max-width: 1400px) {
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-
-.main-title{
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
 .delivery{
   font-size: .75rem;
   font-weight: 300;
@@ -543,24 +377,6 @@ export default {
     width: 100%;
     height: 100px;
     background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, #fff 100%);
-  }
-}
-
-#modal-product{
-  .wrapper-modal{
-    @media (max-width: 991px) {
-      align-items: center;
-      flex-direction: column;
-      padding: 0;
-    }
-  }
-
-  .modal-body{
-    padding: 0;
-  }
-
-  .title{
-    font-size: 1.2rem;
   }
 }
 </style>
