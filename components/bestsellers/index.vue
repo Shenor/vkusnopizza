@@ -12,7 +12,7 @@
             :tag="'div'"
             :viewportTag="'div'">
             <div class="panel" v-for="item in getNewsItem" :key="item.key">
-              <b-card @click="showProductCard(item)" :img-src="imageUrl(item)" img-alt="Card image" img-left fluid class="slider-news__card mb-3 p-2">
+              <b-card @click="showProductCard(item)" :img-src="getImageUrl(item)" img-alt="Card image" img-left fluid class="slider-news__card mb-3 p-2">
                 <b-card-text class="d-flex flex-column">
                   <div style="min-height: 45px;">
                     {{item.name}}
@@ -36,6 +36,7 @@
 
 <script>
 import data from '@/store/data.json';
+import { images } from '@/mixins';
 import BestsellerModal from '@/components/modals/bestsellerModal';
 
 export default {
@@ -44,26 +45,16 @@ export default {
   data() {
     return {
       activeItem: null,
-      // modalInfo:{
-      //   selectedItem: null,
-      //   groupModifiers: null,
-      //   selectedModifiers: '',
-      //   price: 0
-      // },
       options: {
         align: "prev",
       }
     }
   },
+  mixins: [images],
   methods: {
     showProductCard(payload){
       this.activeItem = payload
       this.$bvModal.show('modal-product')
-    },
-    imageUrl(item){
-      return item.images[item.images.length - 1]
-        ? item.images[item.images.length - 1].imageUrl
-        : '/default.png'
     },
   },
   computed: {
@@ -71,17 +62,6 @@ export default {
      return data.nomenclature.products.filter(
        i => i.productCategoryId == '7ba3f2a8-fa96-c6ad-0174-b5ba1356019a' && i.type == "dish"
      )
-    },
-    modifiers(){
-      const modifiers = this.modalInfo.selectedItem.groupModifiers[0].childModifiers.map(item => {
-        return data.nomenclature.products.find(product => {
-          return product.id == item.modifierId
-        })
-      });
-      this.modalInfo.selectedModifiers = modifiers[0].id
-      this.modalInfo.groupModifiers = modifiers
-      console.log(modifiers)
-      return modifiers
     },
   }
 }

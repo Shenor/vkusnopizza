@@ -13,10 +13,10 @@
             <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-            <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            <b-img class="panel-img" src="/banner_4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-            <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            <b-img class="panel-img" src="/banner_4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
         </Flicking >
         </div>

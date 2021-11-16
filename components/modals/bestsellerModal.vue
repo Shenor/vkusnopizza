@@ -2,7 +2,7 @@
   <b-modal id="modal-product" centered size="lg">
     <b-container class='wrapper-modal' v-if="item">
       <b-col lg="6" md="10">
-        <b-img :src="imageUrl(item)" fluid alt="Responsive image"></b-img>
+        <b-img :src="getImageUrl(item)" fluid alt="Responsive image"></b-img>
       </b-col>
       <b-col lg="6" md="10" class="text-left align-self-start">
         <p class="title font-weight-semibold">{{item.name}}</p>
@@ -30,9 +30,12 @@
 </template>
 
 <script>
+import data from '@/store/data.json';
+import { images } from '@/mixins';
 export default {
   name: "bestsellerModal",
   props: ['item'],
+  mixins: [images],
   data(){
     return {
       groupModifiers: null,
@@ -40,12 +43,24 @@ export default {
       price: 0
     }
   },
-  methods: {
-    imageUrl(item){
-      return item.images[item.images.length - 1]
-        ? item.images[item.images.length - 1].imageUrl
-        : '/default.png'
+  computed: {
+    modifiers(){
+      const modifiers = this.item.groupModifiers[0].childModifiers.map(item => {
+        return data.nomenclature.products.find(product => {
+          return product.id == item.modifierId
+        })
+      });
+      this.selectedModifiers = modifiers[0].id
+      this.groupModifiers = modifiers
+      console.log(modifiers)
+      return modifiers
     },
+    priceSelectedModifiers(){
+      const {price} = this.groupModifiers.find(item => {
+        return item.id == this.selectedModifiers
+      })
+      return price
+    }
   }
 }
 </script>
