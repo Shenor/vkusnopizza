@@ -1,30 +1,11 @@
-
+//TODO: Разделить стейт на отдельные файлы
 export const state = () => ({
-  cart: [],
-  modParentCart: [],
   user: '',
   authorization: false,
   token: ''
 })
 
 export const mutations = {
-  addToCart(state, payload){
-    const candidate = state.cart.find(item => {return item.id == payload.id});
-    candidate ? candidate.count++ : state.cart.push(payload);
-  },
-  deleteFromCart(state, payload) {
-    const candidate = state.cart.find(item => {return item.id == payload.id});
-    candidate.count <= 1
-    ? state.cart = state.cart.filter(item => {return item.id != payload.id})
-    : candidate.count--
-  },
-  updateCartItem(state, payload) {
-    const candidate = state.cart.find(item => {return item.id == payload.id});
-    candidate.count = +payload.count
-  },
-  clearCart(state){
-    state.cart = []
-  },
   setToken(state, payload){
     state.token = payload
   },
@@ -44,19 +25,6 @@ export const mutations = {
 }
 
 export const getters = {
-  getCart(state){
-    return state.cart
-  },
-  getTotalSumCart(state){
-    return state.cart.reduce((sum, item) => {
-      return sum + item.count * item.price;
-    }, 0);
-  },
-  getItemCountAllCart(state) {
-    return state.cart.reduce((sum, item) => {
-      return sum + item.count;
-    }, 0);
-  },
   getToken(state){
     return state.token
   },

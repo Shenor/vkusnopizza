@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     getItemCountAllCart(){
-     return this.$store.getters.getItemCountAllCart;
+     return this.$store.getters["cart/allItemsCart"];
     }
   },
   components: {
