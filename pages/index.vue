@@ -24,6 +24,9 @@ export default {
     Bestsellers,
     DeliveryBanner
   },
+  mounted() {
+    console.log(this.$store.getters["cart/cart"])
+  },
   methods: {
     add(payload){
       if(payload){
@@ -44,7 +47,7 @@ export default {
         this.$eventHub.$emit('viewBuyMsg')
         this.$store.commit('addToCart', {...candidate, count: 1})
         this.$bvModal.hide('modal-product')
-        console.log(this.$store.getters.getCart)
+        console.log(this.$store.getters["cart/cart"])
       }
     },
     async dataApi(){

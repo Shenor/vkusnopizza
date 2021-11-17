@@ -191,10 +191,10 @@ export default {
   },
   computed: {
     totalSumCartWithDelivery(){
-      return this.$store.getters.getTotalSumCart + this.delivery
+      return this.$store.getters["cart/totalSumCart"] + this.delivery
     },
     totalSumCart(){
-      return this.$store.getters.getTotalSumCart
+      return this.$store.getters["cart/totalSumCart"]
     }
   },
   methods: {

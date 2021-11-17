@@ -11,7 +11,7 @@
       </template>
     <div class="px-3 py-4">
       <item-cart-sidebar
-       v-for="item in this.$store.state.cart"
+       v-for="item in this.$store.getters['cart/cart']"
        :key="item.key"
        :item="item">
       </item-cart-sidebar>
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     totalSumCart(){
-      return this.$store.getters.getTotalSumCart;
+      return this.$store.getters["cart/totalSumCart"];
     }
   },
   methods: {}

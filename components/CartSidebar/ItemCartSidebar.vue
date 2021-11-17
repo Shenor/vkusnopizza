@@ -41,6 +41,7 @@ export default {
       this.$store.commit('deleteFromCart', {id: this.item.id})
     },
     imageUrl(item){
+      return '/default.png'
       return item.images[item.images.length - 1] ? item.images[item.images.length - 1].imageUrl : '/default.png'
     }
   }
