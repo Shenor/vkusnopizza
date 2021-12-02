@@ -48,6 +48,7 @@ export default {
   position: relative;
   outline: none;
   width: 100%;
+  overflow: hidden;
 
   .panel{
     width: 200px;
