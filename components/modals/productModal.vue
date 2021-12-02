@@ -1,5 +1,10 @@
 <template>
   <b-modal id="modal-product" centered size="lg">
+    <template #modal-header="{ close }">
+      <div class="w-100 d-flex justify-content-end">
+        <b-icon variant="white" class="modal-close" icon="x" role="button" @click="close()"></b-icon>
+      </div>
+    </template>
     <b-container class='wrapper-modal' v-if="item">
       <div>
         <b-img :src="getImageUrl(item)" fluid alt="Responsive image"></b-img>
@@ -7,7 +12,7 @@
       <div class="text-left align-self-start">
         <p class="title font-weight-semibold d-flex justify-content-between align-items-center">
           {{item.name}}
-          <b-icon id="tooltip-product" icon="exclamation-circle"></b-icon></p>
+          <b-icon id="tooltip-product" icon="exclamation-circle" role="button"></b-icon></p>
         <p>{{item.description}}</p>
       </div>
       <b-tooltip
@@ -15,7 +20,19 @@
         placement="bottom"
         target="tooltip-product"
         triggers="click">
-        I am tooltip <b>component</b> content!
+          <p class="small">Пищевая ценности на 100 г</p>
+          <div class="small d-flex justify-content-between">
+            <span>Эрнерг. ценность</span> <span>0</span>
+          </div>
+          <div class="small d-flex justify-content-between">
+            <span>Белки</span> <span>0</span>
+          </div>
+          <div class="small d-flex justify-content-between">
+            <span>Жиры</span> <span>0</span>
+          </div>
+          <div class="small d-flex justify-content-between">
+            <span>Углеводы</span> <span>0</span>
+          </div>
       </b-tooltip>
     </b-container>
     <template v-slot:modal-footer="">
@@ -47,18 +64,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep{
-  #modal-product{
-    .modal-content{
+::v-deep {
+  #modal-product {
+    .modal-header{
+      .modal-close{
+        position: absolute;
+        top: -5px;
+        right: -55px;
+        width: 50px;
+        height: 50px;
+
+        @include  for-mobile{
+          position: unset;
+          width: 25px;
+          height: 25px;
+          color: #212121 !important;
+        }
+      }
+    }
+
+    .modal-content {
       border-radius: 20px;
     }
 
-    .wrapper-modal{
+    .wrapper-modal {
       display: grid;
       grid-template-columns: 1fr 1fr;
+
+      @include  for-mobile{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        row-gap: 36px;
+      }
     }
 
-    .title{
+    .title {
       font-size: $font-size + .4;
     }
   }

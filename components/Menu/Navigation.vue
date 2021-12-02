@@ -19,11 +19,13 @@
         </b-nav>
 
         <div class="cart-wrapper ml-auto mr-3 d-none d-md-flex d-xl-flex"  v-b-toggle.cart-sidebar>
-          <b-button class="btn cart-btn rounded-pill d-flex" size="md" variant="secondary" @click="enter">
-            Корзина
-            <div class="cart-btn__separate" v-if="allItemsCart"></div>
-            <div v-if="allItemsCart">{{allItemsCart}}</div>
-          </b-button>
+          <client-only>
+            <b-button class="btn cart-btn rounded-pill d-flex" size="md" variant="secondary" @click="enter">
+              Корзина
+              <div class="cart-btn__separate" v-if="allItemsCart"></div>
+              <div v-if="allItemsCart">{{allItemsCart}}</div>
+            </b-button>
+          </client-only>
         </div>
         <b-alert
           class="info-buy"
@@ -297,9 +299,6 @@ export default {
     ...mapGetters({
       allItemsCart: 'cart/allItemsCart'
     }),
-    getItemCountAllCart(){
-     return this.$store.getters["cart/allItemsCart"];
-    }
   },
   methods: {
     isValidRegistrForm(){
