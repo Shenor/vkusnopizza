@@ -19,7 +19,7 @@
       </b-tooltip>
     </b-container>
     <template v-slot:modal-footer="">
-      <b-button size="md" variant="outline-primary">
+      <b-button size="md" variant="outline-primary" @click="adding">
         Добавить в корзину - <b> {{ item.price }} ₽</b>
       </b-button>
     </template>
@@ -27,11 +27,22 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { images } from '@/mixins';
 export default {
   name: "productModal",
   mixins: [images],
-  props: ['item']
+  props: ['item'],
+  methods: {
+    ...mapMutations({
+      add: 'cart/add'
+    }),
+    adding(){
+      this.add(this.item)
+      this.$bvModal.hide('modal-product')
+      this.$eventHub.$emit('buyEvent');
+    }
+  }
 }
 </script>
 

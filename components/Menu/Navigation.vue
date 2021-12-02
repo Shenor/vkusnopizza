@@ -21,8 +21,8 @@
         <div class="cart-wrapper ml-auto mr-3 d-none d-md-flex d-xl-flex"  v-b-toggle.cart-sidebar>
           <b-button class="btn cart-btn rounded-pill d-flex" size="md" variant="secondary" @click="enter">
             Корзина
-            <div class="cart-btn__separate" v-if="getItemCountAllCart"></div>
-            <div v-if="getItemCountAllCart">{{getItemCountAllCart}}</div>
+            <div class="cart-btn__separate" v-if="allItemsCart"></div>
+            <div v-if="allItemsCart">{{allItemsCart}}</div>
           </b-button>
         </div>
         <b-alert
@@ -220,6 +220,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Cart from '@/components/Cart'
 import Sidebar from '@/components/CartSidebar/Sidebar'
 import MobileCart from '@/components/CartSidebar/MobileCart'
@@ -286,13 +287,16 @@ export default {
     });
   },
   created(){
-    this.$eventHub.$on('viewBuyMsg', this.countDownChanged)
+    this.$eventHub.$on('buyEvent', this.countDownChanged)
   },
   destroyed(){
     document.removeEventListener('scroll', this.onScrolling)
-    this.$eventHub.$off('viewBuyMsg')
+    this.$eventHub.$off('buyEvent')
   },
   computed:{
+    ...mapGetters({
+      allItemsCart: 'cart/allItemsCart'
+    }),
     getItemCountAllCart(){
      return this.$store.getters["cart/allItemsCart"];
     }

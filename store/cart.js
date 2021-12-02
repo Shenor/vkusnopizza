@@ -17,21 +17,21 @@ export const getters = {
 }
 
 export const mutations = {
-  addToCart: ({cart}, payload) => {
+  add: ({cart}, payload) => {
     const candidate = cart.find(item => item.id === payload.id);
-    candidate ? candidate.count++ : cart.push(payload);
+    candidate ? candidate.count++ : cart.push({...payload, count: 1});
   },
-  deleteFromCart({cart}, payload) {
+  delete({cart}, payload) {
     const candidate = cart.find(item => item.id === payload.id);
     candidate.count <= 1
       ? cart = cart.filter(item => item.id !== payload.id)
       : candidate.count--
   },
-  updateCartItem: ({cart}, payload) => {
+  updatItem: ({cart}, payload) => {
     const candidate = cart.find(item => item.id === payload.id);
     candidate.count = +payload.count
   },
-  clearCart: ({cart}) => cart = [],
+  clear: ({cart}) => cart = [],
 }
 
 export const actions = {

@@ -22,7 +22,7 @@
       </b-col>
     </b-container>
     <template v-slot:modal-footer="">
-      <b-button size="md" variant="outline-primary" @click="add(null)">
+      <b-button size="md" variant="outline-primary" @click="add(item)">
         Добавить в корзину - <b>{{priceSelectedModifiers}} ₽</b>
       </b-button>
     </template>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import data from '@/store/data.json';
 import { images } from '@/mixins';
 export default {
@@ -42,6 +43,11 @@ export default {
       selectedModifiers: '',
       price: 0
     }
+  },
+  methods: {
+    ...mapMutations({
+      add: 'cart/add'
+    }),
   },
   computed: {
     modifiers(){
