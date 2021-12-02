@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-btn-cart d-flex d-sm-flex d-md-none">
+  <div class="mobile-btn-cart d-flex d-sm-flex d-md-none" role="button" v-b-toggle.cart-sidebar>
     <cart :fill="'fff'"></cart>
     <span class="mobile-btn-cart__counter">{{getItemCountAllCart}}</span>
   </div>
