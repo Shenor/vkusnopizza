@@ -13,7 +13,7 @@
         <p class="title font-weight-semibold d-flex justify-content-between align-items-center">
           {{item.name}}
           <b-icon id="tooltip-product" icon="exclamation-circle" role="button"></b-icon></p>
-        <p>{{item.description}}</p>
+        <p>{{item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}</p>
       </div>
       <b-tooltip
         offset="-70"
@@ -22,16 +22,16 @@
         triggers="click">
           <p class="small">Пищевая ценности на 100 г</p>
           <div class="small d-flex justify-content-between">
-            <span>Эрнерг. ценность</span> <span>0</span>
+            <span>Эрнерг. ценность</span> <span>{{item.energyAmount || 0}}</span>
           </div>
           <div class="small d-flex justify-content-between">
-            <span>Белки</span> <span>0</span>
+            <span>Белки</span> <span>{{item.fiberAmount|| 0}}</span>
           </div>
           <div class="small d-flex justify-content-between">
-            <span>Жиры</span> <span>0</span>
+            <span>Жиры</span> <span>{{item.fatAmount || 0}}</span>
           </div>
           <div class="small d-flex justify-content-between">
-            <span>Углеводы</span> <span>0</span>
+            <span>Углеводы</span> <span>{{item.carbohydrateAmount || 0}}</span>
           </div>
       </b-tooltip>
     </b-container>

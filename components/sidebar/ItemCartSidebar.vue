@@ -1,27 +1,30 @@
 <template>
-  <div class="item mb-2" v-if="visible">
-    <b-img class="item-img mr-3" :src="imageUrl(item)" fluid></b-img>
-    <div class="item-body">
-      <div class="item-body__title d-flex align-items-center mb-2">{{item.name}}</div>
-      <div class="item-body__content">
-        <div class="counter text-center">
-          <span class="counter-minus" @click="deleteProduct">-</span>
-          <input type="number" class="counter-quantity" contenteditable="true" :value="item.count" @blur="onBlur">
-          <span class="counter-plus" @click="addProduct">+</span>
+    <div class="item mb-2" v-if="visible">
+      <b-img class="item-img mr-3" :src="getImageUrl(item)" fluid></b-img>
+      <div class="item-body">
+        <div class="item-body__title d-flex align-items-center mb-2">{{item.name}}</div>
+        <div class="item-body__content">
+          <div class="counter text-center">
+            <span class="counter-minus" @click="del({id: item.id})">-</span>
+            <div class="counter-quantity">{{item.count}}</div>
+            <span class="counter-plus" @click="add({id: item.id})">+</span>
+          </div>
+          <span>{{totalSum}} ₽</span>
         </div>
-        <span>{{totalSum}} ₽</span>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
+import { images } from '@/mixins'
+import { mapMutations } from 'vuex'
 export default {
   data(){
     return{
       visible: true
     }
   },
+  mixins: [images],
   props: ['item'],
   computed:{
     totalSum(){
@@ -29,21 +32,17 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      add: 'cart/add',
+      del: 'cart/del',
+      clear: 'cart/clear',
+      update: 'cart/updateItem',
+    }),
     onBlur(e){
       e.target.value > 0 && e.target.value <= 99
       ? this.$store.commit('updateCartItem', {id: this.item.id, count: e.target.value})
       : e.target.value = this.item.count
     },
-    addProduct(){
-      this.$store.commit('addToCart', {id: this.item.id})
-    },
-    deleteProduct(){
-      this.$store.commit('deleteFromCart', {id: this.item.id})
-    },
-    imageUrl(item){
-      return '/default.png'
-      return item.images[item.images.length - 1] ? item.images[item.images.length - 1].imageUrl : '/default.png'
-    }
   }
 }
 </script>

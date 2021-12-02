@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import ItemCartSidebar from '@/components/CartSidebar/ItemCartSidebar'
+import ItemCartSidebar from '@/components/sidebar/ItemCartSidebar'
 import { required } from 'vuelidate/lib/validators'
 export default {
   data() {

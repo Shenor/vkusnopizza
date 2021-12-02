@@ -49,8 +49,8 @@ import { mapGetters } from 'vuex';
 import Menu from '@/components/menu/Menu'
 import CodeForm from '@/components/forms/Code'
 import AlertAddItem from '@/components/elements/alerts'
-import Sidebar from '@/components/CartSidebar/Sidebar'
-import MobileCart from '@/components/CartSidebar/MobileCart'
+import Sidebar from '@/components/sidebar/Sidebar'
+import MobileCart from '@/components/sidebar/MobileCart'
 
 export default {
   data() {
