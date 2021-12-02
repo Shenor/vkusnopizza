@@ -19,7 +19,7 @@ export default {
     return {
       activeProduct: null,
       combo: [
-        {id: 7, name: 'Комбо 3 в 1', price: '599', images: [{imageUrl: "/combo.png"}]},
+        {id: 7, name: 'Комбо 3 в 1', price: '599', images: [{imageUrl: "/combo.png",}]},
         {id: 8, name: 'Комбо на двоих', price: '599', images: [{imageUrl: "/combo.png"}]},
         {id: 9, name: 'Комбо на компанию', price: '599', images: [{imageUrl: "/combo.png"}]},
         {id: 10, name: 'Комбо максимум', price: '599', images: [{imageUrl: "/combo.png"}]},

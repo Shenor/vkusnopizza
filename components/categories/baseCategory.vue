@@ -13,10 +13,10 @@
         img-top
       >
         <b-card-text>
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+          {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
         </b-card-text>
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mt-auto">
           <div class="card__price">{{ item.price }} ₽</div>
           <b-button href="#" variant="outline-primary" class="ml-auto">Выбрать</b-button>
         </div>
@@ -56,6 +56,12 @@ export default {
   .card{
     border: none;
     cursor: pointer;
+
+    &-body{
+      display: flex;
+      flex-direction: column;
+      min-height: 230px;
+    }
 
     @media (max-width: 767.98px) {
       //margin-right: 0;
