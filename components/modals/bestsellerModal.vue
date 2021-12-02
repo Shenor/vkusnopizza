@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="modal-product" centered size="lg">
+  <b-modal id="modal-bestseller" centered size="lg">
     <b-container class='wrapper-modal' v-if="item">
       <b-col lg="6" md="10">
         <b-img :src="getImageUrl(item)" fluid alt="Responsive image"></b-img>
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#modal-product{
+#modal-bestseller{
   .wrapper-modal{
     @media (max-width: 991px) {
       align-items: center;

@@ -54,7 +54,7 @@ export default {
   methods: {
     showProductCard(payload){
       this.activeItem = payload
-      this.$bvModal.show('modal-product')
+      this.$bvModal.show('modal-bestseller')
     },
   },
   computed: {

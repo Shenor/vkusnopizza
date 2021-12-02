@@ -82,6 +82,9 @@ export default {
     '@nuxtjs/proxy',
     '@nuxt/http'
   ],
+  bootstrapVue: {
+    icons: true
+  },
   styleResources: {
     scss: [
       '@/assets/styles/index.scss'

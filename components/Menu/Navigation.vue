@@ -18,9 +18,12 @@
           <b-nav-item to="/about" class="d-none d-md-flex d-xl-flex">О нас</b-nav-item>
         </b-nav>
 
-        <div class="cart-wrapper ml-auto mr-3 d-none d-md-flex d-xl-flex">
-          <cart></cart>
-          <span class="cart__counter">{{getItemCountAllCart}}</span>
+        <div class="cart-wrapper ml-auto mr-3 d-none d-md-flex d-xl-flex"  v-b-toggle.cart-sidebar>
+          <b-button class="btn cart-btn rounded-pill d-flex" size="md" variant="secondary" @click="enter">
+            Корзина
+            <div class="cart-btn__separate" v-if="getItemCountAllCart"></div>
+            <div v-if="getItemCountAllCart">{{getItemCountAllCart}}</div>
+          </b-button>
         </div>
         <b-alert
           class="info-buy"
@@ -476,5 +479,25 @@ export default {
       right: 50%;
       transform: translate(50%, 0)
      }
+  }
+
+  .cart-btn{
+    background: $primary-color;
+    border-color: $primary-color;
+    font-size: $font-size;
+    transition: all .3s;
+    padding: 6px 18px;
+
+    &:hover{
+      background: darken($primary-color, 5);
+    }
+
+    &__separate{
+      height: 22px;
+      width: 1px;
+      margin: 0px 12px;
+      background: rgb(255, 255, 255);
+      opacity: 0.4;
+    }
   }
 </style>
