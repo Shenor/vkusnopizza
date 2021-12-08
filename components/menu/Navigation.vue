@@ -103,6 +103,7 @@ export default {
     top: 0;
     background: white;
     z-index: 3;
+    overflow: hidden;
 
     &__wrapper-logo{
       display: flex;
@@ -112,6 +113,7 @@ export default {
       line-height: 0;
       position: relative;
       width: 50px;
+      min-width: 50px;
       padding-right: 10px;
       height: 36px;
     }

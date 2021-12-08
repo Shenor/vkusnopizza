@@ -3,7 +3,7 @@
     <b-container class="footer__wrapper justify-content-between align-items-baseline pt-4 text-white">
       <div class="footer__column">
         <div class="footer__column__title">
-          VKUSNOPIZZA
+          PIZZBURG
         </div>
         <p class="footer__column__text">
           Вкуснейшная пицца в городе армавир,

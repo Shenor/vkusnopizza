@@ -1,25 +1,31 @@
 <template>
   <b-nav>
-    <b-nav-item to="/#pizza">Пицца</b-nav-item>
-    <b-nav-item to="/#combo">Комбо</b-nav-item>
-<!--    <b-nav-item to="/#combo">Ролы</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Закуски</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Салаты</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Бургеры</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Горячее</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Паста</b-nav-item>-->
-    <!--    <b-nav-item to="/#combo">Десерты</b-nav-item>-->
-    <b-nav-item to="/#drinks">Напитки</b-nav-item>
-    <b-nav-item to="/stocks" class="d-none d-md-flex d-xl-flex">Акции</b-nav-item>
-    <b-nav-item to="/contacts" class="d-none d-md-flex d-xl-flex">Контакты</b-nav-item>
-    <b-nav-item to="/about" class="d-none d-md-flex d-xl-flex">О нас</b-nav-item>
-<!--    <flicking-->
-<!--      class="slider-news grabbing d-md-none d-xl-none"-->
-<!--      :options="options"-->
-<!--      :tag="'div'"-->
-<!--      :viewportTag="'div'">-->
-<!--        -->
-<!--    </flicking>-->
+    <template v-if="window.width > 768">
+      <b-nav-item
+        v-for="item in menu"
+        :key="item.key"
+        :to="item.link"
+        :class="item.class">
+          {{ item.title }}
+      </b-nav-item>
+    </template>
+    <client-only v-else>
+      <flicking
+        class="slider-nav grabbing"
+        :options="options"
+        :tag="'div'"
+        :viewportTag="'div'">
+          <div v-for="item in mobileMenu" :key="item.key">
+            <div class="panel" v-if="!item.class">
+              <b-nav-item
+                :to="item.link"
+                :class="item.class">
+                {{ item.title }}
+              </b-nav-item>
+            </div>
+          </div>
+      </flicking>
+    </client-only>
   </b-nav>
 </template>
 
@@ -28,16 +34,59 @@ export default {
   name: "Menu",
   data(){
     return {
+      menu: [
+        {link: '/#pizza', title: "Пицца"},
+        {link: '/#combo', title: "Комбо"},
+        {link: '/#drinks', title: "Напитки"},
+        {link: '/#1', title: "Закуски"},
+        {link: '/#2', title: "Салаты"},
+        {link: '/#3', title: "Бургеры"},
+        {link: '/#4', title: "Горячее"},
+        {link: '/#5', title: "Паста"},
+        {link: '/#6', title: "Десерты"},
+        {link: '/stocks', title: "Акции", class: 'd-none d-md-flex d-xl-flex'},
+        {link: '/contacts', title: "Контакты", class: 'd-none d-md-flex d-xl-flex'},
+        {link: '/about', title: "О нас", class: 'd-none d-md-flex d-xl-flex'},
+      ],
       options: {
         align: "prev",
+        horizontal: true,
+      },
+      window: {
+        width: 0
       }
+    }
+  },
+  mounted(){
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+      this.onResize()
+    });
+  },
+  destroyed(){
+    window.removeEventListener('resize', this.onResize)
+  },
+  methods: {
+    onResize(){
+      this.window.width = window.innerWidth
+    }
+  },
+  computed: {
+    mobileMenu() {
+      return this.menu.filter(item => !item.class)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.slider-nav{
+  position: relative;
+  outline: none;
+  width: 100%;
+}
 .nav-link{
+  font-size: $font-size - .05;
   line-height: 17px;
   color: #212121;
 
