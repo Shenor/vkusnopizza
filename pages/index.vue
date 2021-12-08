@@ -2,7 +2,7 @@
   <div>
     <MainBanner />
     <Bestsellers />
-    <DeliveryBanner />
+<!--    <DeliveryBanner />-->
     <Categories />
     <Info />
   </div>
@@ -24,8 +24,18 @@ export default {
     Bestsellers,
     DeliveryBanner
   },
-  mounted() {
-    console.log(this.$store.getters["cart/cart"])
+  async mounted() {
+    // this.$eventHub.$emit('error')
+    // console.log(await this.$strapi.$clients.find({fields: 'name'}))
+    // const res = await this.$strapi.find('clients', {name: 'Павел'})
+    // console.log(res)
+    // const userId = this.$strapi.$cookies.get('strapi_user')
+    // if(!userId) return
+    // this.$strapi.user = await this.$strapi.find('clients', {id: userId})
+    // if (!res.length) return
+    // this.$strapi.$cookies.set('strapi_user', res[0].id, {
+    //   maxAge: 60 * 60 * 24
+    // })
   },
   methods: {
     add(payload){

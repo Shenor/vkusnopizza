@@ -1,10 +1,10 @@
 <template>
   <b-container class="header justify-content-start menu">
       <NuxtLink class="navbar-brand" to="/">
-        <b-img src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
+        <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
       </NuxtLink>
       <div class="logo-text text-left">
-        <div class="title"><NuxtLink to="/">PIZZABURG</NuxtLink></div>
+        <div class="title"><NuxtLink to="/">PIZZBURG</NuxtLink></div>
         <div class="sub-title"><NuxtLink to="/">лучшая пицца - по лучшей цене</NuxtLink></div>
       </div>
       <div class="delivery d-none d-md-block d-xl-block">
@@ -40,6 +40,13 @@ a{
   color: inherit;
   text-decoration: none;
 }
+
+.navbar-brand{
+  img{
+    max-width: 150px;
+  }
+}
+
 .menu {
   padding: 10px 15px;
 

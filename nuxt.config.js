@@ -1,4 +1,3 @@
-
 export default {
   /*
   ** Nuxt rendering mode
@@ -70,6 +69,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -80,8 +80,13 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
+    '@nuxtjs/axios',
+    '@nuxtjs/strapi',
     '@nuxt/http'
   ],
+  strapi: {
+    entities: ['clients']
+  },
   bootstrapVue: {
     icons: true
   },

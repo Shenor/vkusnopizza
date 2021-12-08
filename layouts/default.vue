@@ -10,6 +10,9 @@
      <!-- Content Site -->
           <Nuxt />
 
+      <!-- Alerts -->
+      <ErrorAlert />
+
       <!-- Footer Site -->
     <Footer></Footer>
   </div>
@@ -19,6 +22,7 @@
 import Header from '@/components/header/index'
 import Footer from '@/components/Footer/Footer'
 import Navigation from '@/components/Menu/Navigation'
+import ErrorAlert from "@/components/elements/alerts/ErrorAlert";
 
 export default {
   data() {
@@ -27,7 +31,8 @@ export default {
   components: {
     Header,
     Footer,
-    Navigation
+    Navigation,
+    ErrorAlert
   }
 }
 </script>

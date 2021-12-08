@@ -11,7 +11,7 @@
   >
     <client-only>
       <div class="px-3 py-4">
-        <h5>{{allItem}} {{allItem >=5 ? 'товаров ': 'товара'}} на {{totalSum}} ₽</h5>
+        <h5>{{allItem}} {{formatCount}} на {{totalSum}} ₽</h5>
         <item-cart-sidebar
           v-for="item in this.$store.getters['cart/cart']"
           :key="item.id"
@@ -43,6 +43,11 @@ export default {
       totalSum: 'cart/totalSumCart',
       allItem: 'cart/allItemsCart',
     }),
+    formatCount(){
+      return this.allItem === 1 ? 'товар'
+        : this.allItem >= 5
+          ? 'товаров' : 'товара'
+    }
   },
 }
 </script>

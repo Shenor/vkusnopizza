@@ -98,14 +98,15 @@ export default {
   },
   middleware: 'auth',
   methods: {},
-  async mounted({redirect}){
-    try {
-      this.$http.setToken(this.$store.getters.getToken)
-      const {user} = await this.$http.$get(`users`)
-      this.user = user;
-    } catch (error) {
-      this.$router.push('/')
-    }
+  async mounted(){
+    this.$strapi.find('clients', {name: 'Павел', fields: 'name'})
+    // try {
+    //   this.$http.setToken(this.$store.getters.getToken)
+    //   const {user} = await this.$http.$get(`users`)
+    //   this.user = user;
+    // } catch (error) {
+    //   this.$router.push('/')
+    // }
   }
 }
 </script>

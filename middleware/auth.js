@@ -1,5 +1,5 @@
-export default function ({store, redirect}) {
-  if (!store.getters.isisAuthorization) {
+export default function ({store, redirect }) {
+  if (!store.state.user.user) {
     return redirect('/')
   }
 }

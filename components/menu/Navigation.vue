@@ -4,7 +4,7 @@
         <!-- Menu navigation stickly -->
         <div class="menu-stickly__wrapper-logo">
           <NuxtLink to="/">
-            <b-img class="menu-stickly__logo" src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
+            <b-img class="menu-stickly__logo" src="/pizzburg_short-logo.png" fluid alt="Fluid image"></b-img>
           </NuxtLink>
         </div>
 
@@ -22,9 +22,9 @@
         </div>
 
         <client-only>
-          <div v-if="$store.getters.isAuthorization">
-            <b-dropdown :text="$store.getters.getUser" variant="outline-primary" toggle-class="rounded-pill">
-              <b-dropdown-item to="lk" exact active-class="dropdown-active">Профиль</b-dropdown-item>
+          <div v-if="user">
+            <b-dropdown :text="user.name" variant="outline-primary" toggle-class="rounded-pill">
+              <b-dropdown-item to="profile" exact active-class="dropdown-active">Профиль</b-dropdown-item>
               <b-dropdown-item to="/" exact active-class="dropdown-active" @click="exit">Выйти</b-dropdown-item>
             </b-dropdown>
           </div>
@@ -77,6 +77,7 @@ export default {
   },
   computed:{
     ...mapGetters({
+      user: 'user/user',
       allItemsCart: 'cart/allItemsCart'
     }),
   },
@@ -104,14 +105,14 @@ export default {
     z-index: 3;
 
     &__wrapper-logo{
-      display: inline-block;
-      vertical-align: middle;
+      display: flex;
+      align-items: center;
       overflow: hidden;
       font-size: 0px;
       line-height: 0;
       position: relative;
-      width: 52px;
-      padding-right: 16px;
+      width: 50px;
+      padding-right: 10px;
       height: 36px;
     }
 

@@ -3,14 +3,14 @@
     <template v-slot:default>
       <div class="d-flex container mb-4">
         <a href="/" class="mr-2">
-          <b-img src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
+          <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
         </a>
-        <div class="logo-text text-left">
-          <div class="title">PIZZABURG</div>
-          <div class="sub-title">лучшая пицца - по лучшей цене</div>
-        </div>
+<!--        <div class="logo-text text-left">-->
+<!--          <div class="title">PIZZABURG</div>-->
+<!--          <div class="sub-title">лучшая пицца - по лучшей цене</div>-->
+<!--        </div>-->
       </div>
-      <b-container class="text-left">
+      <b-container class="text-center" v-if="!isSendCode">
         <form ref="form" @submit.stop.prevent="">
           <b-form-group
             label="Номер телефона"
@@ -26,28 +26,63 @@
           </b-form-group>
         </form>
       </b-container>
+      <b-container class="text-center" v-else>
+        <form ref="form" @submit.stop.prevent="">
+          <b-form-group
+            label="Проверочный код"
+            label-for="phone-input">
+
+            <the-mask
+              @input="inputCode"
+              class="form-control text-center"
+              id="code-input"
+              :class="{'is-invalid': error}"
+              placeholder="_ _ _ _"
+              :mask="['####']"
+              :masked="true"
+              v-model.trim="$v.code.$model"
+              required />
+          </b-form-group>
+        </form>
+      </b-container>
+      <b-container>
+        <b-alert
+          show
+          class="w-100"
+          v-if="error"
+          variant="danger">
+          <small>
+            {{error}}
+          </small>
+        </b-alert>
+      </b-container>
     </template>
     <template v-slot:modal-footer>
       <b-button
+        @click="sendCode"
         class="actionBtn rounded-pill pl-3 pr-3"
         :disabled="$v.phone.$invalid"
         :class="{'actionBtn--disable': $v.phone.$invalid}"
         size="md">
-        Выслать код
+        {{isSendCode ? 'Получить новый код' : 'Выслать код'}}
       </b-button>
     </template>
   </b-modal>
 </template>
 
 <script>
-import {minLength, required} from "vuelidate/lib/validators";
+import { mapActions } from "vuex";
+import {minLength, maxLength, required} from "vuelidate/lib/validators";
 
 export default {
   name: "Code",
   data() {
     return {
+      code: '',
       phone: '+7 ',
       error: '',
+      isSendCode: false,
+      dismissCountDown: 4
     }
   },
   validations: {
@@ -55,7 +90,50 @@ export default {
       required,
       minLength: minLength(18)
     },
+    code: {
+      required,
+      minLength: minLength(7),
+      maxLength: maxLength(7),
+    },
   },
+  methods: {
+    ...mapActions({
+      sendSMS: 'user/sendSMS'
+    }),
+    inputCode(){
+      if(this.$v.code.$invalid) return
+      const code = this.code.replace(/ /g, '');
+      if(sessionStorage.getItem('verification_code') === code){
+
+      } else {
+        this.error = 'Неверный проверочный код'
+      }
+    },
+    async sendCode(){
+      const phone = this.clearePhone;
+      try {
+        await this.sendSMS(phone)
+      } catch (e) {
+        this.$eventHub.$emit('error')
+        this.error = 'Что-то пошло не так. Обратитесь по номеру'
+      }
+    },
+    async login() {
+      const phone = this.clearePhone;
+
+      const res = await this.$strapi.find('clients', {phone})
+      if(!res.length) return
+      this.$store.commit('user/SET_USER', res[0])
+      this.$strapi.$cookies.set('strapi_user', res[0].id, {
+        maxAge: 60 //* 60 * 24
+      })
+    }
+  },
+  computed: {
+    clearePhone(){
+      return this.phone.replace(/-|\(|\)|\+| /g, '');
+    }
+  }
 }
 </script>
 
