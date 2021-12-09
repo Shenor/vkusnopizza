@@ -15,39 +15,41 @@
         :options="options"
         :tag="'div'"
         :viewportTag="'div'">
-          <div v-for="item in mobileMenu" :key="item.key">
-            <div class="panel" v-if="!item.class">
+          <template v-for="item in mobileMenu">
+            <div class="panel" v-if="!item.class" :key="item.key">
               <b-nav-item
                 :to="item.link"
                 :class="item.class">
                 {{ item.title }}
               </b-nav-item>
             </div>
-          </div>
+          </template>
       </flicking>
     </client-only>
   </b-nav>
 </template>
 
 <script>
+import data from '@/store/menu.json';
 export default {
   name: "Menu",
   data(){
     return {
-      menu: [
-        {link: '/#pizza', title: "Пицца"},
-        {link: '/#combo', title: "Комбо"},
-        {link: '/#drinks', title: "Напитки"},
-        {link: '/#1', title: "Закуски"},
-        {link: '/#2', title: "Салаты"},
-        {link: '/#3', title: "Бургеры"},
-        {link: '/#4', title: "Горячее"},
-        {link: '/#5', title: "Паста"},
-        {link: '/#6', title: "Десерты"},
-        {link: '/stocks', title: "Акции", class: 'd-none d-md-flex d-xl-flex'},
-        {link: '/contacts', title: "Контакты", class: 'd-none d-md-flex d-xl-flex'},
-        {link: '/about', title: "О нас", class: 'd-none d-md-flex d-xl-flex'},
-      ],
+      menu: data,
+      // menu: [
+      //   {link: '/#pizza', title: "Пицца"},
+      //   {link: '/#combo', title: "Комбо"},
+      //   {link: '/#drinks', title: "Напитки"},
+      //   {link: '/#1', title: "Закуски"},
+      //   {link: '/#2', title: "Салаты"},
+      //   {link: '/#3', title: "Бургеры"},
+      //   {link: '/#4', title: "Горячее"},
+      //   {link: '/#5', title: "Паста"},
+      //   {link: '/#6', title: "Десерты"},
+      //   {link: '/stocks', title: "Акции", class: 'd-none d-md-flex d-xl-flex'},
+      //   {link: '/contacts', title: "Контакты", class: 'd-none d-md-flex d-xl-flex'},
+      //   {link: '/about', title: "О нас", class: 'd-none d-md-flex d-xl-flex'},
+      // ],
       options: {
         align: "prev",
         horizontal: true,
@@ -84,6 +86,7 @@ export default {
   position: relative;
   outline: none;
   width: 100%;
+  overflow: hidden;
 }
 .nav-link{
   font-size: $font-size - .05;

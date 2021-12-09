@@ -25,6 +25,7 @@ export default {
     DeliveryBanner
   },
   async mounted() {
+    // console.log(await this.$axios('/api'))
     // this.$eventHub.$emit('error')
     // console.log(await this.$strapi.$clients.find({fields: 'name'}))
     // const res = await this.$strapi.find('clients', {name: 'Павел'})

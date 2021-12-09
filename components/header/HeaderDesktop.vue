@@ -1,12 +1,8 @@
 <template>
   <b-container class="header justify-content-start menu">
-      <NuxtLink class="navbar-brand" to="/">
+      <NuxtLink class="navbar-brand mr-4" to="/">
         <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
       </NuxtLink>
-      <div class="logo-text text-left">
-        <div class="title"><NuxtLink to="/">PIZZBURG</NuxtLink></div>
-        <div class="sub-title"><NuxtLink to="/">лучшая пицца - по лучшей цене</NuxtLink></div>
-      </div>
       <div class="delivery d-none d-md-block d-xl-block">
         <div class="text-left">
           Доставка пиццы
@@ -42,24 +38,20 @@ a{
 }
 
 .navbar-brand{
+  @include for-mobile{
+    margin: 0 !important;
+  }
+
   img{
-    max-width: 150px;
+    max-width: 220px;
   }
 }
 
 .menu {
   padding: 10px 15px;
 
-  .logo-text {
-    margin-right: 45px;
-
-    @include for-tablet-down {
-      margin-right: 0;
-    }
-
-    @include for-desktop-down {
-      margin-right: 20px;
-    }
+  @include for-mobile{
+    padding: 5px 0px;
   }
 
   .title {

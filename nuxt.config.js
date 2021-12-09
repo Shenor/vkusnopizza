@@ -56,6 +56,7 @@ export default {
   plugins: [
     { src: '@/plugins/vue-event-hub'},
     { src: '@/plugins/vue-masked-input'},
+    { src: '@/plugins/vue-draggable'},
     { src: '@/plugins/vue-vuelidate', ssr: true },
     { src: '@/plugins/localStoreage', ssr: false},
     { src: '@/plugins/vue-flicking', mode: 'client', ssr: true }
@@ -127,5 +128,7 @@ export default {
   ** Server configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  server: {}
+  serverMiddleware: [
+    { path: "/api", handler: "~/server/index.js" },
+  ],
 }

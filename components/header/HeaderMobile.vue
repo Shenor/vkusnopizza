@@ -5,10 +5,10 @@
       <div class="text-white">
         <b-container class="header justify-content-start menu mb-4">
           <a class="navbar-brand" href="/">
-            <b-img src="/dark-logo-vkusnopizza.svg" fluid alt="Fluid image"></b-img>
+            <b-img class="internal-menu__logo" src="/pizzburg_short-logo.png" fluid alt="Fluid image"></b-img>
           </a>
           <div class="logo-text text-left">
-            <div class="title">VKUSNOPIZZA</div>
+            <div class="title">PIZZBURG</div>
             <div class="sub-title">лучшая пицца - по лучшей цене</div>
           </div>
 
@@ -86,6 +86,10 @@ export default {
     letter-spacing: 0.05em;
     text-decoration: none;
     color: white;
+  }
+
+  &__logo{
+    max-width: 50px;
   }
 
   &__map{

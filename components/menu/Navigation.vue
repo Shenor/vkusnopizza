@@ -23,9 +23,9 @@
 
         <client-only>
           <div v-if="user">
-            <b-dropdown :text="user.name" variant="outline-primary" toggle-class="rounded-pill">
+            <b-dropdown class="d-none d-md-flex d-xl-flex" :text="user.name" variant="outline-primary" toggle-class="rounded-pill">
               <b-dropdown-item to="profile" exact active-class="dropdown-active">Профиль</b-dropdown-item>
-              <b-dropdown-item to="/" exact active-class="dropdown-active" @click="exit">Выйти</b-dropdown-item>
+              <b-dropdown-item to="/" exact active-class="dropdown-active" @click="logout">Выйти</b-dropdown-item>
             </b-dropdown>
           </div>
           <b-button v-else class="btn-enter rounded-pill d-none d-md-flex d-xl-flex" variant="outline-primary" v-b-modal.modal-code>Войти</b-button>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Menu from '@/components/menu/Menu'
 import CodeForm from '@/components/forms/Code'
 import AlertAddItem from '@/components/elements/alerts'
@@ -77,11 +77,14 @@ export default {
   },
   computed:{
     ...mapGetters({
-      user: 'user/user',
+      user: 'account/user',
       allItemsCart: 'cart/allItemsCart'
     }),
   },
   methods: {
+    ...mapActions({
+      logout: 'account/logout'
+    }),
     onScrolling(){
       if(document.documentElement.scrollTop > 20){
         document.querySelector('.menu-stickly').classList.add('menu-stickly--isActive');
@@ -103,7 +106,9 @@ export default {
     top: 0;
     background: white;
     z-index: 3;
-    overflow: hidden;
+    @include for-mobile{
+      overflow: hidden;
+    }
 
     &__wrapper-logo{
       display: flex;
@@ -116,6 +121,7 @@ export default {
       min-width: 50px;
       padding-right: 10px;
       height: 36px;
+      z-index: 1;
     }
 
     &__logo{

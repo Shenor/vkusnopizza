@@ -21,13 +21,17 @@ export const mutations = {
     const candidate = cart.find(item => item.id === payload.id);
     candidate ? candidate.count++ : cart.push({...payload, count: 1});
   },
-  del({cart}, payload) {
+  sub({cart}, payload) {
     const candidate = cart.find(item => item.id === payload.id);
-    const index = cart.findIndex(item => item.id === payload.id)
+    const index = cart.findIndex(item => item.id === payload.id);
 
     candidate.count <= 1
       ? cart.splice(index, 1)
       : candidate.count--
+  },
+  del({cart}, payload){
+    const index = cart.findIndex(item => item.id === payload.id)
+    cart.splice(index, 1)
   },
   updateItem: ({cart}, payload) => {
     const candidate = cart.find(item => item.id === payload.id);

@@ -1,5 +1,5 @@
 <template>
-  <div class="toggle-menu d-block d-sm-block d-md-none ml-auto" v-b-toggle.sidebar-right.sidebar-no-header>
+  <div class="toggle-menu d-block d-sm-block d-md-none ml-auto p-1" v-b-toggle.sidebar-right.sidebar-no-header>
     <div class="hamburger">
       <span class="hamburger-slice top" :class="isOpen ? 'top-anim bg-light' : 'top-anim-r'"></span>
       <span class="hamburger-slice mid" :class="isOpen ? 'mid-anim bg-light' : 'mid-anim-r'"></span>

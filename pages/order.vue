@@ -50,7 +50,7 @@
                 </div>
               </div>
 
-              <div class="font-weight-semibold mb-2">Способ оплаты</div>
+            <div class="font-weight-semibold mb-2">Способ оплаты</div>
               <b-form-group>
                 <b-form-radio v-model="paymentType" name="payment-radios" value="CASH">Наличными</b-form-radio>
                 <b-form-radio v-model="paymentType" name="payment-radios" value="CARD">Картой онлайн</b-form-radio>
@@ -81,7 +81,7 @@
             <div class="order__cart-list">
               <item-cart-sidebar
                 class="order__cart-list__item"
-                v-for="item in this.$store.state.cart"
+                v-for="item in cart"
                 :key="item.key"
                 :item="item">
               </item-cart-sidebar>
@@ -117,6 +117,7 @@
 <script>
 import ItemCartSidebar from '@/components/sidebar/ItemCartSidebar'
 import { required } from 'vuelidate/lib/validators'
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -162,11 +163,12 @@ export default {
   },
   async mounted(){
 
-    if(this.$store.getters.isAuthorization){
-      this.$http.setToken(this.$store.getters.getToken)
-      const {user} = await this.$http.$get(`users`)
-      this.user = user;
-    }
+    // if(this.$store.getters.isAuthorization){
+    //   this.$http.setToken(this.$store.getters.getToken)
+    //   const {user} = await this.$http.$get(`users`)
+    //   this.user = user;
+    // }
+
     this.$nextTick(function () {
       //this.dataApi();
       $('#street').fias({
@@ -190,12 +192,13 @@ export default {
     });
   },
   computed: {
+    ...mapGetters({
+      cart: 'cart/cart',
+      totalSumCart: 'cart/totalSumCart'
+    }),
     totalSumCartWithDelivery(){
-      return this.$store.getters["cart/totalSumCart"] + this.delivery
+      return this.totalSumCart + this.delivery
     },
-    totalSumCart(){
-      return this.$store.getters["cart/totalSumCart"]
-    }
   },
   methods: {
     isValidForm(){

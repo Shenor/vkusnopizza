@@ -6,7 +6,7 @@
           <!-- Личные данные (1 раздел) -->
           <b-tab title="Личные данные"><b-card-text>
             <h3 class="mb-3">Личный кабинет</h3>
-            <div class="privat-data">
+            <div class="privat-data" v-if="user">
               <client-only>
                 <div class="font-weight-semibold">Имя: </div>
                 <div>{{user.name}}</div>
@@ -82,10 +82,10 @@
 </template>
 
 <script>
+import { mapGetters} from "vuex";
 export default {
   data(){
     return{
-      user: {},
       items: [
         {id: 1, title: 'Пицца 4 сезона', price: '350'},
         {id: 2, title: 'Пицца 4 сыра', price: '250'},
@@ -98,8 +98,13 @@ export default {
   },
   middleware: 'auth',
   methods: {},
+  computed: {
+    ...mapGetters({
+      user: 'account/user'
+    })
+  },
   async mounted(){
-    this.$strapi.find('clients', {name: 'Павел', fields: 'name'})
+    // this.$strapi.find('clients', {name: 'Павел', fields: 'name'})
     // try {
     //   this.$http.setToken(this.$store.getters.getToken)
     //   const {user} = await this.$http.$get(`users`)

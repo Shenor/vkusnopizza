@@ -33,6 +33,19 @@ export default {
     Footer,
     Navigation,
     ErrorAlert
+  },
+  async mounted() {
+    if (this.$strapi.$cookies.get('strapi_user')) {
+      const id = this.$strapi.$cookies.get('strapi_user');
+      try {
+        const res = await this.$strapi.find('clients', {id: id})
+        if (!res.length) return
+        return  this.$store.commit('account/SET_USER', res[0])
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    this.$store.commit('account/SET_USER', null)
   }
 }
 </script>

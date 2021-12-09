@@ -57,6 +57,30 @@ a{
   }
 }
 
+.btn-primary{
+  outline: none;
+  color: #fff;
+  background-color: $primary-color;
+  border-color: $primary-color;
+
+  &.focus,
+  &:focus,
+  &:not(:disabled):not(.disabled):active:focus {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active:active {
+    outline: none;
+    color: white;
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+}
+
 .btn-secondary{
   outline: none;
   color: #fff;

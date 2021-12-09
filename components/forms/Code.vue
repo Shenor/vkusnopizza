@@ -1,10 +1,7 @@
 <template>
   <b-modal id="modal-code" title="Вход на сайт" centered>
     <template v-slot:default>
-      <div class="d-flex container mb-4">
-        <a href="/" class="mr-2">
-          <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
-        </a>
+      <div class="d-flex container mb-4"><b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
 <!--        <div class="logo-text text-left">-->
 <!--          <div class="title">PIZZABURG</div>-->
 <!--          <div class="sub-title">лучшая пицца - по лучшей цене</div>-->
@@ -92,19 +89,26 @@ export default {
     },
     code: {
       required,
-      minLength: minLength(7),
-      maxLength: maxLength(7),
+      minLength: minLength(4),
+      maxLength: maxLength(4),
     },
   },
+  async mounted() {},
   methods: {
     ...mapActions({
-      sendSMS: 'user/sendSMS'
+      login: 'account/login',
+      sendSMS: 'account/sendSMS'
     }),
-    inputCode(){
+    async inputCode(){
       if(this.$v.code.$invalid) return
+      const phone = this.clearePhone;
       const code = this.code.replace(/ /g, '');
       if(sessionStorage.getItem('verification_code') === code){
-
+        const res = await this.login(phone)
+        this.$strapi.$cookies.set('strapi_user', res.id, {
+          maxAge: 60 //* 60 * 24
+        })
+        this.$bvModal.hide('modal-code')
       } else {
         this.error = 'Неверный проверочный код'
       }
@@ -112,22 +116,14 @@ export default {
     async sendCode(){
       const phone = this.clearePhone;
       try {
-        await this.sendSMS(phone)
+       const res =  await this.sendSMS(phone)
+        console.log(res)
       } catch (e) {
         this.$eventHub.$emit('error')
         this.error = 'Что-то пошло не так. Обратитесь по номеру'
       }
+      this.isSendCode = true
     },
-    async login() {
-      const phone = this.clearePhone;
-
-      const res = await this.$strapi.find('clients', {phone})
-      if(!res.length) return
-      this.$store.commit('user/SET_USER', res[0])
-      this.$strapi.$cookies.set('strapi_user', res[0].id, {
-        maxAge: 60 //* 60 * 24
-      })
-    }
   },
   computed: {
     clearePhone(){
