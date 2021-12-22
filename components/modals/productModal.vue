@@ -7,7 +7,7 @@
     </template>
     <b-container class='wrapper-modal' v-if="item">
       <div>
-        <b-img :src="getImageUrl(item)" fluid alt="Responsive image"></b-img>
+        <b-img class="product-img" :src="getImageUrl(item)" fluid alt="Responsive image"></b-img>
       </div>
       <div class="text-left align-self-start">
         <p class="title font-weight-semibold d-flex justify-content-between align-items-center">
@@ -100,6 +100,11 @@ export default {
 
     .title {
       font-size: $font-size + .4;
+    }
+
+    .product-img{
+      max-width: 90%;
+      border-radius: 10px;
     }
   }
 }

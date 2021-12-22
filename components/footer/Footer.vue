@@ -6,7 +6,7 @@
           PIZZBURG
         </div>
         <p class="footer__column__text">
-          Вкуснейшная пицца в городе армавир,
+          Готовим вкусное настроение,
           мы всегда удивим вас качеством и ценами
         </p>
       </div>
@@ -54,18 +54,23 @@
       </div>
     </b-container>
     <b-container class="footer__additional-info d-block d-sm-block d-md-none text-white text-left pt-4 pb-4">
-      <div class="mb-1">Армавир, ул. Саловая 112</div>
-      <div class="mb-1">8 (918) 627-55-37</div>
-      <div class="mb-1">с 8:00 для 24:00</div>
-      <p class="mt-4 ">Вкуснейшная пицца в городе армавир, мы всегда удивим вас качеством и ценами</p>
+      <div class="footer__additional-info__text mb-1">Краснодар, ул. Красная, 29</div>
+      <div class="footer__additional-info__text mb-1">Краснодар, ул. Восточно-Кругликовская, 18</div>
+      <client-only>
+        <div class="footer__additional-info__text mb-1">{{ $config.CALL_CENTER }}</div>
+      </client-only>
+      <div class="footer__additional-info__text mb-1">с 10:00 до 24:00</div>
+      <p class="mt-4 ">Готовим вкусное настроение, мы всегда удивим вас качеством и ценами</p>
     </b-container>
-    <div class="d-flex justify-content-center align-items-center footer__green-line">Copyright © 2020. Все права защищены. by <a class="text-white mr-1 ml-1" target="_blank" href="https://rijet.ru">Rijet</a> P.M.</div>
+<!--    <div class="d-flex justify-content-center align-items-center footer__green-line">Copyright © 2020. Все права защищены. by <a class="text-white mr-1 ml-1" target="_blank" href="https://rijet.ru">Rijet</a> P.M.</div>-->
   </div>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {}
+  }
 }
 </script>
 
@@ -147,6 +152,9 @@ export default {
     }
 
     &__additional-info{
+      &__text{
+        font-size: $font-size - .09;
+      }
       p{
         font-weight: 300;
       }

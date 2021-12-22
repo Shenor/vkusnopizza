@@ -1,7 +1,8 @@
 <template>
   <b-container class="header justify-content-start menu">
       <NuxtLink class="navbar-brand mr-4" to="/">
-        <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
+        <b-img class="mb-2" src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
+        <div class="sub-title text-right">Готовим вкусное настроение</div>
       </NuxtLink>
       <div class="delivery d-none d-md-block d-xl-block">
         <div class="text-left">
@@ -19,7 +20,7 @@
         </b-tooltip>
       </div>
       <div class="d-none d-md-block d-xl-block">
-        <div class="font-weight-bold">8 (800)-000-00-00</div>
+        <div class="font-weight-bold">{{ $config.CALL_CENTER }}</div>
         <small>звонок бесплатный</small>
       </div>
   </b-container>
@@ -27,7 +28,10 @@
 
 <script>
 export default {
-  name: "HeaderDesktop"
+  name: "HeaderDesktop",
+  data() {
+    return {}
+  }
 }
 </script>
 
@@ -42,8 +46,13 @@ a{
     margin: 0 !important;
   }
 
+  .sub-title {
+    font-size: 9px;
+    text-transform: uppercase;
+  }
+
   img{
-    max-width: 220px;
+    max-width: 240px;
   }
 }
 
@@ -58,11 +67,6 @@ a{
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.07em;
-  }
-
-  .sub-title {
-    font-size: 9px;
-    text-transform: uppercase;
   }
 }
 

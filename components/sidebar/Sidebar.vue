@@ -5,12 +5,13 @@
       backdrop-variant="dark"
       :bg-variant="'white'"
       title="Корзина"
+      ref="sidebar"
       backdrop
       right
       shadow
   >
     <client-only>
-      <div class="px-3 py-4">
+      <div class="px-3 py-4" v-if="allItem">
         <h5>{{allItem}} {{formatCount}} на {{totalSum}} ₽</h5>
         <item-cart-sidebar
           v-for="item in this.$store.getters['cart/cart']"
@@ -18,10 +19,17 @@
           :item="item">
         </item-cart-sidebar>
       </div>
+      <div
+        class="cart-empty d-flex flex-column h-100 justify-content-center align-items-center px-3 py-4"
+        v-else>
+          <div class="cart-empty__title">Ой, пусто</div>
+          <div class="text-center">Ваша корзина пуста, откройте «Меню» <br> и выберите понравившийся товар.</div>
+          <button class="btn btn-secondary rounded-pill mt-3 px-3 py-2" @click="$refs.sidebar.hide()">Вернуться в меню</button>
+      </div>
     </client-only>
 
     <template v-slot:footer="{}">
-      <div class="text-light px-3 py-2">
+      <div v-if="allItem" class="text-light px-3 py-2">
         <NuxtLink to="order" class="btn-order-wrapper d-flex justify-content-between px-3 py-2">
           <span>Заказать</span>
           <span>{{totalSum}} ₽</span>
@@ -84,4 +92,10 @@ export default {
   }
 }
 
+.cart-empty{
+  &__title{
+    font-size: $font-size + .4;
+    margin-bottom: 10px;
+  }
+}
 </style>

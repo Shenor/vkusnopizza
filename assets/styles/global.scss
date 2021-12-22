@@ -210,3 +210,15 @@ a{
   flex-direction: row;
   -ms-flex-direction: row;
 }
+
+.hide-on-mobile{
+  @include for-mobile{
+    display: none !important;
+  }
+}
+.show-on-mobile{
+  display: none;
+  @include for-mobile {
+    display: block
+  }
+}

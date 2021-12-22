@@ -36,11 +36,13 @@
 
       <AlertAddItem />
 
-      <!-- Sidebar Cart -->
-      <Sidebar></Sidebar>
+      <client-only>
+        <!-- Sidebar Cart -->
+        <Sidebar></Sidebar>
 
-      <!-- Mobile Cart -->
-      <MobileCart></MobileCart>
+        <!-- Mobile Cart -->
+        <MobileCart></MobileCart>
+      </client-only>
     </div>
 </template>
 

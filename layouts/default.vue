@@ -20,8 +20,8 @@
 
 <script>
 import Header from '@/components/header/index'
-import Footer from '@/components/Footer/Footer'
-import Navigation from '@/components/Menu/Navigation'
+import Footer from '@/components/footer/Footer'
+import Navigation from '@/components/menu/Navigation'
 import ErrorAlert from "@/components/elements/alerts/ErrorAlert";
 
 export default {

@@ -1,27 +1,30 @@
 <template>
   <div>
     <b-container class="main-title mb-4 justify-content-start">{{ title }}</b-container>
-    <b-container class="main-content flex-wrap mb-4">
-      <b-card
-        v-for="item in products"
-        :key="item.key"
-        :title="item.name"
-        :img-src="getImageUrl(item)"
-        @click="$emit('select-item', item)"
-        class="mb-5"
-        align="left"
-        img-top
-      >
-        <b-card-text>
-          {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
-        </b-card-text>
+<!--    <client-only>-->
+      <b-container class="main-content flex-wrap mb-4">
+        <b-card
+          v-for="item in products"
+          :key="item.key"
+          :title="item.name"
+          :img-src="getImageUrl(item)"
+          @click="$emit('select-item', item)"
+          align="left"
+          img-top
+        >
+          <b-card-text>
+            {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
+          </b-card-text>
 
-        <div class="d-flex justify-content-between align-items-center mt-auto">
-          <div class="card__price">{{ item.price }} ₽</div>
-          <b-button href="#" variant="outline-primary" class="ml-auto">Выбрать</b-button>
-        </div>
-      </b-card>
-    </b-container>
+          <div class="card__footer d-flex justify-content-between align-items-center mt-auto">
+              <div class="card__price hide-on-mobile">{{ item.price }} ₽</div>
+              <b-button href="#" variant="outline-primary" class="ml-auto hide-on-mobile">Выбрать</b-button>
+              <b-button href="#" variant="outline-primary" class="show-on-mobile">{{ item.price }} ₽</b-button>
+          </div>
+        </b-card>
+      </b-container>
+<!--     s-->
+<!--    </client-only>-->
   </div>
 </template>
 
@@ -51,16 +54,32 @@ export default {
 .main-content{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  row-gap: 50px;
+  column-gap: 15px;
+
+  @include for-mobile {
+    row-gap: 30px;
+  }
 
   .card{
     border: none;
     cursor: pointer;
+    height: 100%;
+
+    @include for-mobile {
+      flex-direction: unset;
+    }
 
     &-body{
       display: flex;
       flex-direction: column;
       min-height: 230px;
+
+      @include for-mobile {
+        padding: 0;
+        padding-left: 20px;
+        min-height: unset;
+      }
     }
 
     @media (max-width: 767.98px) {
@@ -79,7 +98,8 @@ export default {
     }
 
     &-img-top{
-      max-width: 200px;
+      max-width: 270px;
+      max-height: 240px;
       margin: auto;
       transition: all .3s;
       cursor: pointer;
@@ -87,18 +107,37 @@ export default {
       &:hover{
         transform: translate(0, 5px);
       }
+
+      @include for-mobile {
+        max-width: 150px;
+        max-height: 150px;
+      }
     }
 
     &-title{
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: $font-size + 0.2;
+
+      @include for-mobile {
+        font-size: $font-size + 0.1;
+      }
     }
 
     &-text{
-      font-size: .9rem;
+      font-size: $font-size;
       font-weight: 300;
       min-height: 65px;
-      overflow: hidden
+      overflow: hidden;
+
+      @include for-mobile {
+        font-size: $font-size - 0.15;
+      }
+    }
+
+    &__footer{
+      @include for-mobile{
+        margin: 0 !important;
+      }
     }
 
     &__price{

@@ -36,20 +36,6 @@ export default {
   data(){
     return {
       menu: data,
-      // menu: [
-      //   {link: '/#pizza', title: "Пицца"},
-      //   {link: '/#combo', title: "Комбо"},
-      //   {link: '/#drinks', title: "Напитки"},
-      //   {link: '/#1', title: "Закуски"},
-      //   {link: '/#2', title: "Салаты"},
-      //   {link: '/#3', title: "Бургеры"},
-      //   {link: '/#4', title: "Горячее"},
-      //   {link: '/#5', title: "Паста"},
-      //   {link: '/#6', title: "Десерты"},
-      //   {link: '/stocks', title: "Акции", class: 'd-none d-md-flex d-xl-flex'},
-      //   {link: '/contacts', title: "Контакты", class: 'd-none d-md-flex d-xl-flex'},
-      //   {link: '/about', title: "О нас", class: 'd-none d-md-flex d-xl-flex'},
-      // ],
       options: {
         align: "prev",
         horizontal: true,

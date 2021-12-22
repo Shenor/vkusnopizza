@@ -1,11 +1,8 @@
 <template>
   <b-modal id="modal-code" title="Вход на сайт" centered>
     <template v-slot:default>
-      <div class="d-flex container mb-4"><b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
-<!--        <div class="logo-text text-left">-->
-<!--          <div class="title">PIZZABURG</div>-->
-<!--          <div class="sub-title">лучшая пицца - по лучшей цене</div>-->
-<!--        </div>-->
+      <div class="d-flex container mb-4">
+        <b-img src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
       </div>
       <b-container class="text-center" v-if="!isSendCode">
         <form ref="form" @submit.stop.prevent="">
@@ -24,23 +21,23 @@
         </form>
       </b-container>
       <b-container class="text-center" v-else>
-        <form ref="form" @submit.stop.prevent="">
-          <b-form-group
-            label="Проверочный код"
-            label-for="phone-input">
+          <form ref="form" @submit.stop.prevent="">
+            <b-form-group
+              label="Проверочный код"
+              label-for="phone-input">
 
-            <the-mask
-              @input="inputCode"
-              class="form-control text-center"
-              id="code-input"
-              :class="{'is-invalid': error}"
-              placeholder="_ _ _ _"
-              :mask="['####']"
-              :masked="true"
-              v-model.trim="$v.code.$model"
-              required />
-          </b-form-group>
-        </form>
+              <the-mask
+                @input="inputCode"
+                class="form-control text-center"
+                id="code-input"
+                :class="{'is-invalid': error}"
+                placeholder="_ _ _ _"
+                :mask="['####']"
+                :masked="true"
+                v-model.trim="$v.code.$model"
+                required />
+            </b-form-group>
+          </form>
       </b-container>
       <b-container>
         <b-alert
@@ -79,7 +76,6 @@ export default {
       phone: '+7 ',
       error: '',
       isSendCode: false,
-      dismissCountDown: 4
     }
   },
   validations: {
@@ -106,7 +102,7 @@ export default {
       if(sessionStorage.getItem('verification_code') === code){
         const res = await this.login(phone)
         this.$strapi.$cookies.set('strapi_user', res.id, {
-          maxAge: 60 //* 60 * 24
+          maxAge: 60 * 60 * 24
         })
         this.$bvModal.hide('modal-code')
       } else {

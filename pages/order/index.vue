@@ -5,6 +5,7 @@
         <h2 class="order__title text-left">Оформление заказа</h2>
         <div class="row order__content-wrapper col col-12" v-if="!succesPaymnet">
           <div class="order__body-wrapper d-flex flex-column text-left col col-lg-8 col-md-7 col-sm-12">
+
             <div class="order__body">
               <b-form-group>
                 <b-form-radio-group
@@ -17,45 +18,52 @@
                 ></b-form-radio-group>
               </b-form-group>
 
-              <div class="order__body__list-adress" v-show="selected == 'delivery'">
+              <div class="order__body__list-address" v-show="selected == 'delivery'">
                 <div class="font-weight-semibold mb-2">Адреса доставки</div>
                 <b-form-group>
                   <client-only>
                     <div v-if="$store.getters.isAuthorization">
                       <b-form-radio
-                        v-model="activeAdress"
+                        v-model="activeaddress"
                         name="some-radios"
                         value="A"
-                        v-for="item in listAdress"
-                        :key="item.message">{{fullAdress(item)}}</b-form-radio>
+                        v-for="item in listaddress"
+                        :key="item.message">{{fulladdress(item)}}</b-form-radio>
                     </div>
                   </client-only>
-                  <b-form-radio class="pt-2" v-model="activeAdress" name="some-radios" value="С">Новый адрес</b-form-radio>
+                  <b-form-radio class="pt-2" v-model="activeaddress" name="some-radios" value="С">Новый адрес</b-form-radio>
                 </b-form-group>
               </div>
 
               <div v-show="selected == 'delivery'">
-                <div class="order__body__adress mb-4" v-show="activeAdress == 'С'">
+                <div class="order__body__address mb-4" v-show="activeaddress == 'С'">
                   <b-form-group
                     :state='streetState'
                     label-for="street"
                     invalid-feedback="Данная улица не найдена">
-                    <b-form-input class="pt-3 pb-3 mb-2" id="street" :class="{'is-invalid': $v.adress.street.$error }" v-model.trim="$v.adress.street.$model" placeholder="Введите улицу" autocomplete="off"></b-form-input>
+                    <b-form-input class="pt-3 pb-3 mb-2" id="street" :class="{'is-invalid': $v.address.street.$error }" v-model.trim="$v.address.street.$model" placeholder="Введите улицу" autocomplete="off"></b-form-input>
                   </b-form-group>
                   <div class="d-flex">
-                    <b-form-input class="pt-3 pb-3 mr-2" :class="{'is-invalid': $v.adress.home.$error }" v-model.trim="$v.adress.home.$model" placeholder="Дом"></b-form-input>
+                    <b-form-input class="pt-3 pb-3 mr-2" :class="{'is-invalid': $v.address.home.$error }" v-model.trim="$v.address.home.$model" placeholder="Дом"></b-form-input>
                     <b-form-input class="pt-3 pb-3 mr-2" placeholder="Подъезд"></b-form-input>
-                    <b-form-input class="pt-3 pb-3"  placeholder="Квартира"  v-model.trim="adress.apartment"></b-form-input>
+                    <b-form-input class="pt-3 pb-3"  placeholder="Квартира"  v-model.trim="address.apartment"></b-form-input>
                   </div>
                 </div>
               </div>
 
-            <div class="font-weight-semibold mb-2">Способ оплаты</div>
+              <div class="font-weight-semibold mb-2">Способ оплаты</div>
               <b-form-group>
                 <b-form-radio v-model="paymentType" name="payment-radios" value="CASH">Наличными</b-form-radio>
                 <b-form-radio v-model="paymentType" name="payment-radios" value="CARD">Картой онлайн</b-form-radio>
                 <b-form-radio v-model="paymentType" name="payment-radios" value="CARD1">Картой при получении</b-form-radio>
               </b-form-group>
+
+              <div class="font-weight-semibold mb-2">Зоны доставки</div>
+              <div class='ymaps__wrapper' style="position:relative;overflow:hidden;">
+                <a href="https://yandex.ru/maps/35/krasnodar/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Краснодар</a><a href="https://yandex.ru/maps/35/krasnodar/?ll=39.031616%2C45.050482&mode=usermaps&source=constructorLink&um=constructor%3A90352660613978a51d72198028a7e513f012cbd87c62f2438a9682010d04db5a&utm_medium=mapframe&utm_source=maps&z=15" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс.Карты — транспорт, навигация, поиск мест</a>
+                <iframe class="ymaps__map" src="https://yandex.ru/map-widget/v1/-/CCUyQFTvlC" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+              </div>
+
             </div>
 
             <div class="order__footer">
@@ -66,7 +74,7 @@
                 class="error-alert"
                 v-if="error"
                 variant="danger"><small>{{error}}</small></b-alert>
-              <div class="order__footer__btn-action d-flex px-3 py-2 mb-2" :class="[loading ? 'justify-content-center':'justify-content-between']" @click="createOrder">
+              <div class="order__footer__btn-action d-flex px-3 py-2 mb-2" :class="[loading ? 'justify-content-center':'justify-content-between']" @click="create">
                 <b-spinner v-if="loading" style="width: 1.3rem; height: 1.3rem;" variant="light" label="Spinning"></b-spinner>
                 <span v-if="!loading">Заказать</span>
                 <span v-if="!loading">{{totalSumCart}} ₽</span>
@@ -79,12 +87,14 @@
           <div class="order__cart d-none d-md-block d-xl-block text-left col col-lg-4  col-md-5">
             <div class="order__cart-title text-right mb-3">Корзина</div>
             <div class="order__cart-list">
-              <item-cart-sidebar
-                class="order__cart-list__item"
-                v-for="item in cart"
-                :key="item.key"
-                :item="item">
-              </item-cart-sidebar>
+              <client-only>
+                <item-cart-sidebar
+                  class="order__cart-list__item"
+                  v-for="item in cart"
+                  :key="item.key"
+                  :item="item">
+                </item-cart-sidebar>
+              </client-only>
             </div>
           </div>
         </div>
@@ -105,9 +115,9 @@
             <div>В ближайшее время с вами свяжутся для уточнения деталей и подтвержения заказа</div>
             <div>
                 Если после оплаты заказа у Вас вознили технические проблемы или Вы обнаружили ошибку (ФИО/адрес/номер и д.р),
-                обратитесь по номеру + 7 (918) 627-55-37
+                обратитесь по номеру {{ $config.CALL_CENTER }}
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -117,26 +127,28 @@
 <script>
 import ItemCartSidebar from '@/components/sidebar/ItemCartSidebar'
 import { required } from 'vuelidate/lib/validators'
-import { mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   data() {
     return {
+      showMap: false,
       user: null,
       error: null,
       succesPaymnet: false,
       loading: false,
-      listAdress: [
+      listaddress: [
         {street: 'Краснодар, Восточно-Кругликовская', home: '53', apartments: '1'},
         {street: 'Краснодар, Caдовая', home: '112', apartments: '23'},
       ],
-      adress: {
-        city: 'Армавир',
+      address: {
+        city: 'Краснодар',
         street:'',
         home: '',
         entrance: '',
         apartment: ''
       },
-      activeAdress: 'С',
+      activeaddress: 'С',
       delivery: 0,
       nomenclature: null,
       streetState: true,
@@ -149,7 +161,7 @@ export default {
     }
   },
   validations: {
-    adress: {
+    address: {
       home: {
         required
       },
@@ -162,7 +174,12 @@ export default {
     ItemCartSidebar
   },
   async mounted(){
-
+    this.showMap = true
+    console.log(await this.$strapi.login({ identifier: 'test@test.ru', password: '1q2w3e4R' }))
+    // await this.$strapi.$clients.update('61b1cfa211b523000e0a99b0', { orders: [{
+    //   id: 2,
+    //   order: 3
+    //   }]})
     // if(this.$store.getters.isAuthorization){
     //   this.$http.setToken(this.$store.getters.getToken)
     //   const {user} = await this.$http.$get(`users`)
@@ -182,11 +199,11 @@ export default {
         },
         check: (city) => {
           if(!city) return this.streetState = false
-          this.adress.street = city.name
+          this.address.street = city.name
           this.streetState = true
         },
         change: (city) => {
-          this.adress.street = city.name
+          this.address.street = city.name
         }
       })
     });
@@ -201,14 +218,34 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      createOrder: 'iiko/createOrder',
+      createPayment: 'payment/createPayment'
+    }),
+    onClick(e) {
+      this.coords = e.get('coords');
+    },
     isValidForm(){
-      return (!this.$v.adress.home.$error && this.$v.adress.home.$model != '')
-      && (!this.$v.adress.street.$error && this.$v.adress.street.$model != '')
+      return (!this.$v.address.home.$error && this.$v.address.home.$model != '')
+      && (!this.$v.address.street.$error && this.$v.address.street.$model != '')
     },
-    fullAdress(adress){
-      return `${adress.street}, д. ${adress.home}, кв. ${adress.apartments}`
+    fulladdress(address){
+      return `${address.street}, д. ${address.home}, кв. ${address.apartments}`
     },
-    async createOrder({env}){
+    async create(){
+      if (this.paymentType === 'CARD') {
+        const { data } = await this.createPayment({
+          sum: this.totalSumCart,
+          metadata: { lol: 'you' }
+        })
+        console.log(data)
+        sessionStorage.setItem('payment-id', data.id);
+        // window.location.href = data.confirmation.confirmation_url
+      }
+
+      // await this.createOrder({ address: this.address });
+
+
       // if(!this.$store.getters.isAuthorization) return this.$bvModal.show('modal-enter')
       // if(!this.isValidForm()) return this.error = 'Некорректно заполнена форма'
       // this.error = null
@@ -246,13 +283,11 @@ export default {
       //   return cart
       // };
 
-      if(this.paymentType == "CARD"){}
-
       await new Promise(resolve => setTimeout(resolve, 3000))
-      this.succesPaymnet = {
-        number: Math.floor(Math.random() * Math.floor(5000)),
-        createdTime: new Date().toLocaleString()
-      }
+      // this.succesPaymnet = {
+      //   number: Math.floor(Math.random() * Math.floor(5000)),
+      //   createdTime: new Date().toLocaleString()
+      // }
       this.loading = false;
     },
     async dataApi(){
@@ -265,6 +300,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+  .ymaps{
+    &__wrapper{
+      position:relative;
+      overflow:hidden;
+    }
+    &__map{
+      width: 100%;
+      height: 400px;
+    }
+  }
   .order{
     display: block;
     padding: 25px;
@@ -292,7 +337,7 @@ export default {
     &__body{
       flex-grow: 1;
 
-      &__adress{
+      &__address{
         max-width: 350px;
         min-width: 200px;
 

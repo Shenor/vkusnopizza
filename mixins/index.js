@@ -4,7 +4,7 @@ export const images = {
       if (!item.images) return '/default.png'
       return item.images[item.images.length - 1]
         ? item.images[item.images.length - 1].imageUrl
-        : '/default.png'
+        : 'default_200x133.png'
     },
   }
 }

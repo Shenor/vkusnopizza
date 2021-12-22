@@ -2,9 +2,41 @@ const fs = require('fs')
 const app = require('express')()
 const axios = require('axios')
 const URL = require('url').URL
+const { v4: uuidv4 } = require('uuid');
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+
+app.post('/payment', async (req, res) => {
+  // const { sum, metadata } = req.body;
+  try {
+    const response = await axios.post('https://api.yookassa.ru/v3/payments', {
+      amount: {
+        value: '100.00',
+        currency: 'RUB'
+      },
+      capture: true,
+      confirmation: {
+        type: 'redirect',
+        return_url: 'https://pizzburgkrd.ru/order/1234'
+      },
+      description: "Заказ №1",
+      metadata: { lol: 'you'}
+    }, {
+      headers: {
+        'Idempotence-Key': uuidv4()
+      },
+      auth: {
+        username: process.env.SHOP_ID,
+        password: process.env.PAYMENT_API_KEY
+      }
+    })
+    console.log(response.data)
+    res.json({...response.data})
+  } catch (e) {
+    res.status(400).json(e)
+  }
+})
 
 app.get('/sms', async (req, res) => {
   const { phone, code } = req.query;
@@ -15,7 +47,7 @@ app.get('/sms', async (req, res) => {
     res.json({...response.data})
   } catch (e) {
     console.log(e)
-    res.json({...e})
+    res.json(e)
   }
 });
 

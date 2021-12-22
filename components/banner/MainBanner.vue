@@ -4,19 +4,19 @@
         <div class="container">
         <Flicking  class="main-slider" :options="options">
           <div class="panel">
-              <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+              <b-img class="panel-img" src="/1.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-              <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+              <b-img class="panel-img" src="/2.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-            <b-img class="panel-img" src="/banner_3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            <b-img class="panel-img" src="/3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-            <b-img class="panel-img" src="/banner_4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            <b-img class="panel-img" src="/4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
           <div class="panel">
-            <b-img class="panel-img" src="/banner_4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            <b-img class="panel-img" src="/5.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
           </div>
         </Flicking >
         </div>
