@@ -24,8 +24,8 @@
             custom-class="tooltip"
             target="tooltip-target-2"
             triggers="hover">
-              Если не успеем доставить ваш заказ за 25 минут, <br>
-              <b>вы получите сертификат на любую пиццу из меню в подарок!</b>
+              Мы доставляем бесплатно по мкр. «Панорама». Доставку в остальные районы
+              вы можете заказать через Яндекс.Еда, Delivery, Broniboy, Антей Сервис
           </b-tooltip>
         </b-container>
         <div class="internal-menu__content pt-4 pb-4">
@@ -40,7 +40,7 @@
           <div class="text-left">
             <div class="d-flex align-items-center position-relative">
               <b-img src="/phone.svg" fluid alt="Fluid image" class="position-absolute"></b-img>
-              <b-link href="tel:123" class="internal-menu__phone pl-4">8 (800)-000-00-00</b-link>
+              <b-link href="tel:123" class="internal-menu__phone pl-4">{{ $config.CALL_CENTER }}</b-link>
             </div>
             <small class="pl-4">звонок бесплатный!</small>
           </div>

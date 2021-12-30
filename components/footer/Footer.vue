@@ -18,7 +18,7 @@
           <li><NuxtLink to='/about'>О компании</NuxtLink></li>
           <li><NuxtLink to='/'>Каталог</NuxtLink></li>
           <li><NuxtLink to='#'>Доставка</NuxtLink></li>
-          <li><NuxtLink to='#'>Оплата</NuxtLink></li>
+<!--          <li><NuxtLink to='#'>Оплата</NuxtLink></li>-->
         </ul>
       </div>
       <div class="footer__column">
@@ -27,9 +27,9 @@
         </div>
         <ul class="footer__column__list">
           <li><NuxtLink to='/#pizza'>Пицца</NuxtLink></li>
-          <li><NuxtLink to='/#combo'>Комбо</NuxtLink></li>
-          <li><NuxtLink to='/#drinks'>Напитки</NuxtLink></li>
-          <li><NuxtLink to='/stocks'>Акции</NuxtLink></li>
+          <li><NuxtLink to='/#rolls'>Роллы</NuxtLink></li>
+          <li><NuxtLink to='/#burgers'>Бургеры</NuxtLink></li>
+          <li><NuxtLink to='/#mussels'>Мидии</NuxtLink></li>
         </ul>
       </div>
       <div class="footer__column">
@@ -38,18 +38,16 @@
         </div>
         <ul class="footer__column__list">
           <li><NuxtLink to='/about'>О нас</NuxtLink></li>
-          <li><NuxtLink to='#'>Условия доставки</NuxtLink></li>
-          <li><NuxtLink to='#'>Договор оферты</NuxtLink></li>
         </ul>
       </div>
       <div class="footer__column">
         <div class="footer__column__title">
-          Соц сети
+          <a href='http://instagram.com/pizzburgkrd'><b-img src="/social-icon/inst.svg" fluid alt="Fluid image"></b-img> Instagram</a>
         </div>
         <ul class="footer__column__list">
-          <li><NuxtLink to='#'><b-img src="/social-icon/vk.svg" fluid alt="Fluid image"></b-img> VK.com</NuxtLink></li>
-          <li><NuxtLink to='#'><b-img src="/social-icon/fb.svg" fluid alt="Fluid image"></b-img> Facebook</NuxtLink></li>
-          <li><NuxtLink to='#'><b-img src="/social-icon/inst.svg" fluid alt="Fluid image"></b-img> Instagram</NuxtLink></li>
+          <li></li>
+          <li></li>
+          <li></li>
         </ul>
       </div>
     </b-container>

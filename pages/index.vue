@@ -1,7 +1,7 @@
 <template>
   <div>
     <MainBanner />
-    <Bestsellers />
+<!--    <Bestsellers />-->
     <Categories />
     <Info />
   </div>

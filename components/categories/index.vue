@@ -8,7 +8,13 @@
       <BaseCategory id="burgers" title="Бургеры" :products="burgers" @select-item="showModal"/>
       <BaseCategory id="hotter" title="Горячее" :products="hotter" @select-item="showModal"/>
       <BaseCategory id="pasta" title="Паста" :products="pasta" @select-item="showModal"/>
+      <BaseCategory id="soups" title="Супы" :products="soups" @select-item="showModal"/>
+      <BaseCategory id="mussels" title="Мидии" :products="mussels" @select-item="showModal"/>
       <BaseCategory id="desserts" title="Десерты" :products="desserts" @select-item="showModal"/>
+      <BaseCategory id="sets" title="Сеты" :products="sets" @select-item="showModal"/>
+      <BaseCategory id="rolls" title="Роллы" :products="rolls" @select-item="showModal"/>
+      <BaseCategory id="children" title="Детское" :products="children" @select-item="showModal"/>
+      <BaseCategory id="drinks" title="Напитки" :products="drinks" @select-item="showModal"/>
       <ProductModal :item="activeProduct" />
   </div>
 </template>
@@ -41,7 +47,7 @@ export default {
     }),
     showModal(payload){
       this.activeProduct = payload
-      this.$bvModal.show('modal-product')
+      // this.$bvModal.show('modal-product')
     }
   },
   computed: {
@@ -69,6 +75,14 @@ export default {
       if (!Object.keys(this.nomenclature).length) return [];
       return this.nomenclature.products.filter(item => item.parentGroup === 'de5a534d-8689-4a9f-b135-f440db7cda18')
     },
+    soups(){
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === '6d7ba109-b0c5-4079-8809-50e081d8edf0')
+    },
+    mussels(){
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === '3a16a7df-7a75-4211-9112-da4aeebbe8e7')
+    },
     burgers(){
       if (!Object.keys(this.nomenclature).length) return [];
       return this.nomenclature.products.filter(item => item.parentGroup === 'b8bd47cf-acad-4a68-9d08-22c1c01658be')
@@ -80,6 +94,22 @@ export default {
     desserts(){
       if (!Object.keys(this.nomenclature).length) return [];
       return this.nomenclature.products.filter(item => item.parentGroup === '2c967b0b-80a7-4d0c-bc08-ee374f6f19bc')
+    },
+    sets(){
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === '4bbe40c5-5171-4681-a56e-c1cf66cb332b')
+    },
+    rolls(){
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === 'ee7bb50d-a0e3-4eb2-a411-81665702c1af')
+    },
+    drinks() {
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === '3987319a-bc83-4f07-8764-af55990c656d')
+    },
+    children(){
+      if (!Object.keys(this.nomenclature).length) return [];
+      return this.nomenclature.products.filter(item => item.parentGroup === 'b9737194-2a9a-472a-b7a3-82372ef86a37')
     }
   }
 }

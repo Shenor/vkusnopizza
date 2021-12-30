@@ -38,6 +38,7 @@ export default {
     if (this.$strapi.$cookies.get('strapi_user')) {
       const id = this.$strapi.$cookies.get('strapi_user');
       try {
+        await this.$strapi.login({ identifier: 'test@test.ru', password: '1q2w3e4R' })
         const res = await this.$strapi.find('clients', {id: id})
         if (!res.length) return
         return  this.$store.commit('account/SET_USER', res[0])

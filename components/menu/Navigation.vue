@@ -1,6 +1,6 @@
 <template>
     <div class="menu-stickly">
-      <div class="container menu-nav justify-content-start pt-3 pb-3">
+      <div class="container menu-nav justify-content-start pt-3 pb-3 overflow-mobile">
         <!-- Menu navigation stickly -->
         <div class="menu-stickly__wrapper-logo">
           <NuxtLink to="/">
@@ -102,15 +102,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .overflow-mobile{
+    @include for-mobile {
+      overflow: hidden;
+    }
+  }
+
   .menu-stickly{
     width: 100%;
     position: sticky;
     top: 0;
     background: white;
     z-index: 3;
-    @include for-mobile{
-      overflow: hidden;
-    }
+
+    //@include for-mobile{
+    //  overflow: hidden;
+    //}
 
     &__wrapper-logo{
       display: flex;

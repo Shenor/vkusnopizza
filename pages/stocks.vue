@@ -2,14 +2,28 @@
   <div class="container d-block main">
     <h2 class="stocks__title text-left pl-3">Акции</h2>
     <div class="stocks__content-wrapper">
-      <div class="stocks__item"><b-img class="stocks__item-img" src="banner.jpg" fluid></b-img></div>
-      <div class="stocks__item"><b-img class="stocks__item-img" src="banner-2.jpg" fluid></b-img></div>
+      <div v-for="item in banners" class="stocks__item">
+        <b-img class="stocks__item-img" :src="getImage(item)" fluid></b-img>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      banners: []
+    }
+  },
+  async fetch() {
+    this.banners = await this.$strapi.$stocks.find()
+  },
+  methods: {
+    getImage(item) {
+      return `${process.env.STRAPI_URL}${item.image.url}`
+    }
+  }
 }
 </script>
 

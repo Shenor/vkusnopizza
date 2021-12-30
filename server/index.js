@@ -1,27 +1,87 @@
 const fs = require('fs')
 const app = require('express')()
+const cors = require('cors')
 const axios = require('axios')
 const URL = require('url').URL
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require("nodemailer");
 const bodyParser = require('body-parser')
 
+let transporter = nodemailer.createTransport({
+  service: 'Yandex',
+  auth: {
+    user: process.env.MAILER_LOGIN,
+    pass: process.env.MAILER_PASS
+  },
+});
+
+app.use(cors())
 app.use(bodyParser.json())
 
+app.post('/mail', (req, res) => {
+  const { data } = req.body;
+  console.log(data)
+  const renderOrderList = items => {
+    let order = ''
+    items.forEach(({name, amount, sum}) => {
+      order += `<div>${name} – кол-во: ${amount} – ${sum}₽</div>`
+    })
+    return order;
+  }
+  transporter.sendMail({
+    from: "pizzburg-info@yandex.ru",
+    to: process.env.NODE_ENV === 'production' ? 'pizzburgkrd.online@gmail.com' : 'dreik757@mail.ru',
+    subject: `Поступил новый заказ ${new Date().toLocaleString()}`,
+    html: `
+      <div>Дата и время: ${new Date().toLocaleString()}</div>
+      <div>Номер заказа: ${data.number}</div>
+      <div>Имя: ${data.customer.name}</div>
+      <div>Телефон: ${data.customer.phone}</div>
+      <div>Итого к оплате: ${data.totalSum}₽</div>
+      <br>
+      <div>Город: ${data.order.address.city}</div>
+      <div>Улица: ${data.order.address.street}</div>
+      <div>Дом: ${data.order.address.home}</div>
+      <div>Подъезд: ${data.order.address.entrance}</div>
+      <div>Квартира: ${data.order.address.apartment}</div>
+      <br>
+      <div>Состав заказа:</div>
+      ${renderOrderList(data.order.items)}
+    `
+  })
+  res.send('ok');
+})
+
+app.get('/payment/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.get(`https://api.yookassa.ru/v3/payments/${id}`, {
+      auth: {
+        username: process.env.SHOP_ID,
+        password: process.env.PAYMENT_API_KEY
+      }
+    })
+    res.json({...response.data});
+  } catch (e) {
+    res.status(400).json(e)
+  }
+})
+
 app.post('/payment', async (req, res) => {
-  // const { sum, metadata } = req.body;
+  const { sum, metadata } = req.body;
   try {
     const response = await axios.post('https://api.yookassa.ru/v3/payments', {
       amount: {
-        value: '100.00',
+        value: `${sum}`,
         currency: 'RUB'
       },
       capture: true,
       confirmation: {
         type: 'redirect',
-        return_url: 'https://pizzburgkrd.ru/order/1234'
+        return_url: metadata.return_url
       },
       description: "Заказ №1",
-      metadata: { lol: 'you'}
+      metadata: {...metadata }
     }, {
       headers: {
         'Idempotence-Key': uuidv4()
@@ -60,5 +120,6 @@ app.post('/json', async (req, res) => {
 })
 
 app.get('/', (req, res) => res.send('OK'));
+app.get('/test', (req, res) => res.send(process.env.NODE_ENV));
 
 module.exports = app

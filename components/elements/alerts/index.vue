@@ -44,7 +44,7 @@ export default {
   box-shadow: 0 4px 7px 1px rgba(0, 0, 0, 0.2);
 
   @include for-mobile {
-    width: 240px;
+    width: 250px;
     right: 50%;
     transform: translate(50%, 0)
   }

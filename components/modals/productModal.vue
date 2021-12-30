@@ -12,7 +12,9 @@
       <div class="text-left align-self-start">
         <p class="title font-weight-semibold d-flex justify-content-between align-items-center">
           {{item.name}}
-          <b-icon id="tooltip-product" icon="exclamation-circle" role="button"></b-icon></p>
+          <b-icon id="tooltip-product" icon="exclamation-circle" role="button"></b-icon>
+        </p>
+        <h4 class="mb-2">Вес: {{item.weight * 1000}} г</h4>
         <p>{{item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}</p>
       </div>
       <b-tooltip

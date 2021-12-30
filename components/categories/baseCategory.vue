@@ -8,18 +8,18 @@
           :key="item.key"
           :title="item.name"
           :img-src="getImageUrl(item)"
-          @click="$emit('select-item', item)"
           align="left"
           img-top
         >
+<!--          @click="$emit('select-item', item)"-->
           <b-card-text>
             {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
           </b-card-text>
 
           <div class="card__footer d-flex justify-content-between align-items-center mt-auto">
               <div class="card__price hide-on-mobile">{{ item.price }} ₽</div>
-              <b-button href="#" variant="outline-primary" class="ml-auto hide-on-mobile">Выбрать</b-button>
-              <b-button href="#" variant="outline-primary" class="show-on-mobile">{{ item.price }} ₽</b-button>
+              <b-button href="#" variant="outline-primary" class="ml-auto hide-on-mobile" @click="addind(item)">Выбрать</b-button>
+              <b-button href="#" variant="outline-primary" class="show-on-mobile" @click="addind(item)">{{ item.price }} ₽</b-button>
           </div>
         </b-card>
       </b-container>
@@ -30,6 +30,7 @@
 
 <script>
 import { images } from '@/mixins';
+import {mapMutations} from "vuex";
 
 export default {
   name: "baseCategory",
@@ -47,6 +48,15 @@ export default {
       default: []
     }
   },
+  methods: {
+    ...mapMutations({
+      add: 'cart/add'
+    }),
+    addind(item){
+      this.add(item)
+      this.$eventHub.$emit('buyEvent');
+    }
+  }
 }
 </script>
 
@@ -82,24 +92,9 @@ export default {
       }
     }
 
-    @media (max-width: 767.98px) {
-      //margin-right: 0;
-      //width: 24rem;
-      //height: auto;
-    }
-    @media (min-width: 768px) and (max-width: 1199.98px) {
-      //margin-right: 5.5%;
-    }
-
-    @media (min-width: 1199.98px) {
-      //&:not(:nth-child(3n)){
-      //  margin-right: 10.5%;
-      //}
-    }
-
     &-img-top{
       max-width: 270px;
-      max-height: 240px;
+      max-height: 250px;
       margin: auto;
       transition: all .3s;
       cursor: pointer;

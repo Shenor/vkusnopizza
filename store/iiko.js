@@ -1,12 +1,82 @@
+import { DateTime } from "luxon";
 const base_api = 'https://iiko.biz:9900/api/0';
 
-export const state = () => ({})
+export const state = () => ({
+  orderNumber: null,
+  paymentType: 'CASH',
+  isSelfService: false,
+  delivery: 0,
+  address: {
+    city: 'Краснодар',
+    street:'',
+    home: '',
+    entrance: '',
+    apartment: ''
+  },
+})
 
-export const getters = {};
+export const getters = {
+  address: ({ address }) => address,
+  city: ({ address }) => address.city,
+  street: ({ address }) => address.street,
+  home: ({ address }) => address.home,
+  entrance: ({ address }) => address.entrance,
+  delivery: ({ delivery }) => delivery,
+  apartment: ({ address }) => address.apartment,
+  orderNumber: ({ orderNumber }) => orderNumber,
+  paymentType: ({ paymentType }) => paymentType,
+  isSelfService: ({ isSelfService }) => isSelfService
+};
 
-export const mutations = {};
+export const mutations = {
+  SET_ADDRESS(state, payload) {
+    state.address = payload
+  },
+  SET_HOME(state, payload) {
+    state.address.home = payload
+  },
+  SET_STREET(state, payload) {
+    state.address.street = payload
+  },
+  SET_ENTRANCE(state, payload) {
+    state.address.entrance = payload
+  },
+  SET_APARTMENT(state, payload) {
+    state.address.apartment = payload
+  },
+  SET_PAYMENT_TYPE(state, payload) {
+    state.paymentType = payload
+  },
+  SET_ORDER_NUMBER(state, payload) {
+    state.orderNumber = payload
+  },
+  SET_IS_SELF_SERVICE(state, payload) {
+    state.isSelfService = payload
+  }
+};
 
 export const actions = {
+  SET_HOME({ commit }, payload) {
+    commit('SET_HOME', payload)
+  },
+  SET_STREET({ commit }, payload) {
+    commit('SET_STREET', payload)
+  },
+  SET_ENTRANCE({ commit }, payload) {
+    commit('SET_ENTRANCE', payload)
+  },
+  SET_APARTMENT({ commit }, payload) {
+    commit('SET_APARTMENT', payload)
+  },
+  SET_PAYMENT_TYPE({ commit }, payload) {
+    commit('SET_PAYMENT_TYPE', payload)
+  },
+  SET_ORDER_NUMBER({ commit }, payload) {
+    commit('SET_ORDER_NUMBER', payload)
+  },
+  SET_IS_SELF_SERVICE({ commit }, payload) {
+    commit('SET_IS_SELF_SERVICE', payload)
+  },
   async getToken() {
     try {
       const { data } = await this.$axios.get(
@@ -28,11 +98,13 @@ export const actions = {
     }
   },
 
-  async createOrder({ rootState, dispatch }, payload){
+  async createOrder({ state, rootState, dispatch, commit }){
+    const number = Math.floor(Math.random() * Math.floor(9999));
     const cart = rootState.cart.cart.map(item => {
       return {
         id: item.id,
         name: item.name,
+        images: item.images,
         amount: item.count,
         code: item.code,
         sum: item.price
@@ -41,18 +113,23 @@ export const actions = {
     const order = {
       organization: process.env.ORHANIZATION_ID,
       customer: {
-        name: "Петя",
-        phone: "+79998887766"
+        name: rootState.account.user.name,
+        phone: '+' + rootState.account.user.phone
       },
       order: {
-        id: "d8195714-b901-5fb2-ed89-e94233ba5497",
-        date: "2019-05-16 13:49:00",
-        phone: "+79998887766",
-        isSelfService: "false",
+        date: DateTime.now().toFormat('yyyy-LL-dd HH:mm:ss'),
+        phone: '+' + rootState.account.user.phone,
+        isSelfService: state.isSelfService,
         items: cart,
-        address: payload.address,
+        address: state.isSelfService ? null : ({
+          ...state.address,
+        }),
       }
     }
+
+    dispatch('SET_ORDER_NUMBER', number);
+    await dispatch('sendMail', order);
+    await dispatch('addToHistory', order);
 
     try {
       const token = await dispatch('getToken');
@@ -60,8 +137,34 @@ export const actions = {
       console.log(data)
       return data
     } catch (e) {
-      console.error(e.message)
+      console.error(e)
     }
+  },
+
+  sendMail({ state, rootGetters }, payload){
+    try {
+      return this.$axios.post('/api/mail', {
+        data: {
+          number: state.orderNumber,
+          totalSum: rootGetters["cart/totalSumCart"],
+          ...payload
+        }
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  },
+
+  async addToHistory({ state, rootGetters }, payload){
+    await this.$strapi.$orders.create({
+      number: state.orderNumber,
+      clients: rootGetters["account/user"].id,
+      phone: rootGetters["account/user"].phone,
+      name: payload.customer.name,
+      date: payload.order.date,
+      cart: payload.order.items,
+      address: payload.order.address
+    })
   }
 };
 

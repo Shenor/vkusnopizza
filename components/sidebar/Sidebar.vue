@@ -12,7 +12,7 @@
   >
     <client-only>
       <div class="px-3 py-4" v-if="allItem">
-        <h5>{{allItem}} {{formatCount}} на {{totalSum}} ₽</h5>
+        <h3>{{allItem}} {{formatCount}} на {{totalSum}} ₽</h3>
         <item-cart-sidebar
           v-for="item in this.$store.getters['cart/cart']"
           :key="item.id"

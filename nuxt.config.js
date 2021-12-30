@@ -59,7 +59,8 @@ export default {
     { src: '@/plugins/vue-masked-input'},
     { src: '@/plugins/vue-draggable'},
     { src: '@/plugins/vue-vuelidate', ssr: true },
-    { src: '@/plugins/localStoreage', ssr: false},
+    { src: '@/plugins/vue-click-outside', ssr: true },
+    { src: '@/plugins/vue-persistance', ssr: false},
     { src: '@/plugins/vue-flicking', mode: 'client', ssr: true },
   ],
   /*
@@ -79,6 +80,7 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
+    '@nuxtjs/markdownit',
     '@nuxtjs/style-resources',
     '@nuxtjs/proxy',
     '@nuxtjs/axios',
@@ -86,10 +88,13 @@ export default {
     '@nuxt/http'
   ],
   strapi: {
-    entities: ['clients']
+    entities: ['clients', 'banners', 'orders', 'stocks']
   },
   bootstrapVue: {
     icons: true
+  },
+  markdownit: {
+    runtime: true // Support `$md()`
   },
   styleResources: {
     scss: [

@@ -8,21 +8,40 @@
             <h3 class="mb-3">Личный кабинет</h3>
             <div class="privat-data" v-if="user">
               <client-only>
-                <div class="font-weight-semibold">Имя: </div>
-                <div>{{user.name}}</div>
-                <div class="font-weight-semibold">Номер телефона: </div>
-                <div>{{user.phone}}</div>
-                <div class="font-weight-semibold">День рождения: </div>
-                <div>{{user.birthday || 'Нет данных'}}</div>
-                <div class="font-weight-semibold">Email: </div>
-                <div>{{user.email || 'Нет данных'}}</div>
+                <div class="mb-3">
+                  <div class="privat-data__title font-weight-semibold">Имя: </div>
+                  <b-input-group
+                    v-click-outside="hideName">
+                    <template #append>
+                      <b-input-group-text v-if="!name.isEdit" @click="name.isEdit = true">Изменить</b-input-group-text>
+                      <b-input-group-text class="btn" v-if="name.isEdit" @click="updateName">Сохранить</b-input-group-text>
+                    </template>
+                    <b-form-input ref="name" class="privat-data__input" :value="user.name" :disabled="!name.isEdit"></b-form-input>
+                  </b-input-group>
+                </div>
+                <div class="mb-3">
+                  <div class="privat-data__title font-weight-semibold">Номер телефона: </div>
+                  <b-input-group>
+                    <b-form-input class="privat-data__input" :value="user.phone" disabled></b-form-input>
+                  </b-input-group>
+                </div>
+                <div>
+                  <div class="privat-data__title font-weight-semibold">Email: </div>
+                  <b-input-group v-click-outside="hideEmail">
+                    <template #append>
+                      <b-input-group-text v-if="!email.isEdit" @click="email.isEdit = true">Изменить</b-input-group-text>
+                      <b-input-group-text class="btn" v-if="email.isEdit" @click="updateEmail">Сохранить</b-input-group-text>
+                    </template>
+                    <b-form-input ref="email" class="privat-data__input" :value="user.email" :disabled="!email.isEdit"></b-form-input>
+                  </b-input-group>
+                </div>
               </client-only>
             </div>
           </b-card-text></b-tab>
 
           <!-- Адреса доставки (2 раздел) -->
-          <b-tab title="Адреса доставки"><b-card-text>
-            <h3>Адреса доставки</h3>
+<!--          <b-tab title="Адреса доставки"><b-card-text>-->
+<!--            <h3>Адреса доставки</h3>-->
               <!-- <b-input-group>
                 <b-form-input type="text"></b-form-input>
 
@@ -35,7 +54,7 @@
                   </b-input-group-text>
                 </b-input-group-append>
               </b-input-group> -->
-          </b-card-text></b-tab>
+<!--          </b-card-text></b-tab>-->
 
           <!-- Мои заказы (3 раздел) -->
           <b-tab title="Мои заказы"><b-card-text>
@@ -82,10 +101,16 @@
 </template>
 
 <script>
-import { mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
   data(){
     return{
+      name: {
+        isEdit: false
+      },
+      email: {
+        isEdit: false
+      },
       items: [
         {id: 1, title: 'Пицца 4 сезона', price: '350'},
         {id: 2, title: 'Пицца 4 сыра', price: '250'},
@@ -97,7 +122,31 @@ export default {
     }
   },
   middleware: 'auth',
-  methods: {},
+  methods: {
+    ...mapActions({
+      setName: 'account/setName',
+      setEmail: 'account/setEmail',
+    }),
+    edit(payload){
+      console.log(this.$refs[payload].isContentEditable)
+      this.$refs[payload].isContentEditable = true
+      this.$refs[payload].focus();
+    },
+    updateName(){
+      this.setName(this.$refs.name.$el.value)
+      this.hideName();
+    },
+    updateEmail(){
+      this.setEmail(this.$refs.email.$el.value)
+      this.hideEmail();
+    },
+    hideName(){
+      this.name.isEdit = false
+    },
+    hideEmail(){
+      this.email.isEdit = false
+    }
+  },
   computed: {
     ...mapGetters({
       user: 'account/user'
@@ -112,7 +161,7 @@ export default {
     // } catch (error) {
     //   this.$router.push('/')
     // }
-  }
+  },
 }
 </script>
 
@@ -121,17 +170,13 @@ export default {
     min-height: 100vh;
   }
   .privat-data{
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    row-gap: 5px;
-    grid-template-rows: auto;
-    align-items: center;
 
-    @media (max-width: 768px) {
-      // grid-template-columns: 1fr;
-      grid-template-columns: .5fr 1fr;
-      column-gap: 10px;
-      row-gap: 10px;
+    &__title{
+      min-width: 150px;
+    }
+
+    &__input{
+      max-width: 250px;
     }
   }
   .history-order-wrapper{

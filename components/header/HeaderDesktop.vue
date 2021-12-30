@@ -15,8 +15,8 @@
           custom-class="delivery__tooltip"
           target="tooltip-target-1"
           triggers="hover click">
-          Если не успеем доставить ваш заказ за 25 минут, <br>
-          <b>вы получите сертификат на любую пиццу из меню в подарок!</b>
+          Мы доставляем бесплатно по мкр. «Панорама». Доставку в остальные районы
+          вы можете заказать через Яндекс.Еда, Delivery, Broniboy, Антей Сервис
         </b-tooltip>
       </div>
       <div class="d-none d-md-block d-xl-block">

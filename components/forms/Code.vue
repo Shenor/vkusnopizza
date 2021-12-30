@@ -105,6 +105,7 @@ export default {
           maxAge: 60 * 60 * 24
         })
         this.$bvModal.hide('modal-code')
+        sessionStorage.removeItem('verification_code')
       } else {
         this.error = 'Неверный проверочный код'
       }

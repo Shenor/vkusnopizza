@@ -4,13 +4,12 @@
     <div class="contacts__content-wrapper d-flex flex-wrap">
       <div class="mr-5">
         <p class="text-semi-bold">Адреса ресторанов:</p>
-        <div class="mb-1 font-weight-light">г.Краснодар ул.Садовая 112</div>
-        <div class="mb-1 font-weight-light">г.краснодар ул.Красная 21</div>
+        <div class="mb-1 font-weight-light">г. Краснодар, ул. Восточно-Кругликовская, 18</div>
       </div>
       <div>
         <p class="text-semi-bold">Телефон и почта:</p>
-        <div class="mb-1 font-weight-light">+ 7 (918) 627-55-37</div>
-        <div class="mb-1 font-weight-light">hotmilks1@gmail.com</div>
+        <div class="mb-1 font-weight-light">+7(938) 888-22-55</div>
+        <div class="mb-1 font-weight-light">pizzburgkrd.online@gmail.com</div>
       </div>
     </div>
   </div>

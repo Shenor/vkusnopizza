@@ -13,6 +13,12 @@ export const mutations = {
 }
 
 export const actions = {
+  async setName({ state }, payload){
+    await this.$strapi.$clients.update(state.user.id, {name: payload})
+  },
+  async setEmail({ state }, payload){
+    await this.$strapi.$clients.update(state.user.id, {email: payload})
+  },
   async sendSMS(_, payload){
     const code = Math.floor(1000 + Math.random() * 9000).toString();
     sessionStorage.setItem('verification_code', code)

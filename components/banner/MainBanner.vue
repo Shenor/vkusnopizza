@@ -1,43 +1,68 @@
 <template>
-  <div>
+  <div class="mb-5">
       <client-only>
         <div class="container">
-        <Flicking  class="main-slider" :options="options">
-          <div class="panel">
-              <b-img class="panel-img" src="/1.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
-          </div>
-          <div class="panel">
-              <b-img class="panel-img" src="/2.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
-          </div>
-          <div class="panel">
-            <b-img class="panel-img" src="/3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
-          </div>
-          <div class="panel">
-            <b-img class="panel-img" src="/4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
-          </div>
-          <div class="panel">
-            <b-img class="panel-img" src="/5.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>
-          </div>
-        </Flicking >
-        </div>
+          <Flicking  class="main-slider" :options="options">
 
+            <div class="panel" v-for="item in banners" :key="item.id" @click="showDetails(item)">
+                <b-img class="panel-img" :src="getImage(item)" fluid alt="Fluid image" ondragstart="return false"></b-img>
+            </div>
+<!--            <div class="panel">-->
+<!--                <b-img class="panel-img" src="/1.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
+<!--            </div>-->
+<!--            <div class="panel">-->
+<!--                <b-img class="panel-img" src="/2.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
+<!--            </div>-->
+<!--            <div class="panel">-->
+<!--              <b-img class="panel-img" src="/3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
+<!--            </div>-->
+<!--            <div class="panel">-->
+<!--              <b-img class="panel-img" src="/4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
+<!--            </div>-->
+<!--            <div class="panel">-->
+<!--              <b-img class="panel-img" src="/5.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
+<!--            </div>-->
+          </Flicking >
+        </div>
         <div class="text-center" slot="placeholder">
           <b-spinner class="spinner" variant="success" label="Spinning"></b-spinner>
         </div>
       </client-only>
+
+    <BannerModal :item="item" />
     </div>
 </template>
 
 <script>
+import BannerModal from "@/components/modals/bannerModal";
+
 export default {
   name: "MainBanner",
   data() {
     return {
+      item: null,
+      banners: [],
+      STRAPI_URL: process.env.STRAPI_URL,
       options: {
         align: "prev",
         bound: true,
         horizontal: true,
       }
+    }
+  },
+  components: {
+    BannerModal
+  },
+  async fetch(){
+    this.banners = await this.$strapi.$banners.find()
+  },
+  methods: {
+    showDetails(payload){
+      this.item = payload;
+      this.$bvModal.show('modal-banners')
+    },
+    getImage(item){
+      return `${this.STRAPI_URL}${item.image.url}`
     }
   }
 }
