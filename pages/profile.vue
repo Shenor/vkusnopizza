@@ -59,36 +59,24 @@
           <!-- Мои заказы (3 раздел) -->
           <b-tab title="Мои заказы"><b-card-text>
             <h3 class="mb-3">Мои заказы</h3>
-            <div class="history-order-wrapper">
+            <div class="history-order-wrapper" v-for="order in ordersReverse" :key="order.id">
               <div class="history-order-item">
-                <b-badge variant="success">Выполнен</b-badge>
+                <b-badge v-if="isStatusPayment(order, 'succeeded')" variant="success">Выполнен</b-badge>
+<!--                <b-badge v-else-if="isStatusPayment(order, 'pending')" variant="warning">Ожидание</b-badge>-->
+<!--                <b-badge v-else-if="isStatusPayment(order, 'canceled')" variant="danger">Ожидание</b-badge>-->
+<!--                <b-badge v-else variant="success">Выполнен</b-badge>-->
                 <div class="order-info">
                   <div>
-                    <div class="order-info__date">16 августа в 15:33</div>
-                    <span class="order-info__method">самовывоз</span>
+                    <div class="order-info__date">№ {{order.number}}</div>
+                    <div class="order-info__date">{{ formatDateTime(order.date) }}</div>
+                    <span class="order-info__method">{{ order.isSelfService ? 'самовывоз' : 'доставка'}}</span>
                   </div>
-                  <div class="order-totalSum">1037 ₽</div>
+                  <div class="order-totalSum">{{ totalSum(order.cart) }} ₽</div>
                 </div>
                 <div class="order-list text-center">
-                  <div class="order-list__item" v-for="item in items" :key="item.message">
-                    <b-img class="order-list__item-img" src='/pizza.png'></b-img>
-                    <div class="order-list__item-text">{{item.title}}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="history-order-item">
-                <b-badge variant="success">Выполнен</b-badge>
-                <div class="order-info">
-                  <div>
-                    <div class="order-info__date">16 августа в 15:33</div>
-                    <span class="order-info__method">самовывоз</span>
-                  </div>
-                  <div class="order-totalSum">1037 ₽</div>
-                </div>
-                <div class="order-list text-center">
-                  <div class="order-list__item" v-for="item in items" :key="item.message">
-                    <b-img class="order-list__item-img" src='/pizza.png'></b-img>
-                    <div class="order-list__item-text">{{item.title}}</div>
+                  <div class="order-list__item" v-for="item in order.cart" :key="item.message">
+                    <b-img class="order-list__item-img" :src='getImageUrl(item)'></b-img>
+                    <div class="order-list__item-text">{{item.name}}</div>
                   </div>
                 </div>
               </div>
@@ -101,10 +89,14 @@
 </template>
 
 <script>
+import { DateTime } from "luxon";
+import { images } from '@/mixins'
 import {mapActions, mapGetters} from "vuex";
+
 export default {
   data(){
     return{
+      orders: [],
       name: {
         isEdit: false
       },
@@ -121,12 +113,27 @@ export default {
       ]
     }
   },
+  mixins: [images],
   middleware: 'auth',
   methods: {
     ...mapActions({
       setName: 'account/setName',
       setEmail: 'account/setEmail',
     }),
+    isStatusPayment(order, status){
+      if(order.paymentType === 'CASH') return true;
+      return order.yandexPayment
+        && order.yandexPayment.paid
+        && order.yandexPayment.status === status;
+    },
+    totalSum(cart){
+      return cart.reduce((sum, item) => {
+        return sum + item.amount * item.sum;
+      }, 0);
+    },
+    formatDateTime(time){
+      return new DateTime.fromSQL(time, {locale: 'ru'}).toFormat('dd MMMM yyyy HH:mm')
+    },
     edit(payload){
       console.log(this.$refs[payload].isContentEditable)
       this.$refs[payload].isContentEditable = true
@@ -150,9 +157,14 @@ export default {
   computed: {
     ...mapGetters({
       user: 'account/user'
-    })
+    }),
+    ordersReverse() {
+      return this.orders.reverse()
+    }
   },
   async mounted(){
+    this.orders = await this.$strapi.$orders.find({phone: this.user.phone});
+    console.log(this.orders)
     // this.$strapi.find('clients', {name: 'Павел', fields: 'name'})
     // try {
     //   this.$http.setToken(this.$store.getters.getToken)

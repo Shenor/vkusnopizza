@@ -39,6 +39,9 @@
         <ul class="footer__column__list">
           <li><NuxtLink to='/about'>О нас</NuxtLink></li>
         </ul>
+        <ul class="footer__column__list">
+          <li><NuxtLink to='/about'>Реквизиты</NuxtLink></li>
+        </ul>
       </div>
       <div class="footer__column">
         <div class="footer__column__title">

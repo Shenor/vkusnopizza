@@ -14,10 +14,12 @@ export const mutations = {
 
 export const actions = {
   async createPayment({ rootGetters }) {
-    const res = await this.$axios.post('/api/payment', {
+    const number = Math.floor(Math.random() * Math.floor(9999));
+    const res = await this.$axios.post(`${process.env.SITE_URL}/api/payment`, {
         sum: rootGetters["cart/totalSumCart"],
         metadata: {
-          return_url: window.location.href
+          number,
+          return_url: window.location.origin + '/payment-status'
         }
     })
     const cartModify = rootGetters['cart/cart'].map(item => {
@@ -31,7 +33,7 @@ export const actions = {
       }
     })
     await this.$strapi.$orders.create({
-      number:  Math.floor(Math.random() * Math.floor(9999)),
+      number,
       clients: rootGetters["account/user"].id,
       phone: rootGetters["account/user"].phone,
       name: rootGetters["account/user"].name,
@@ -44,17 +46,11 @@ export const actions = {
       yandexPayment: res.data
     })
     return res;
-    // return await this.$axios.post('/api/payment', {
-    //   sum: rootGetters["cart/totalSumCart"],
-    //   metadata: {
-    //     return_url: window.location.href
-    //   }
-    // })
   },
 
   async checkPayment(_, payload){
     try {
-      return await this.$axios.$get(`/api/payment/${payload}`)
+      return await this.$axios.$get(`${process.env.SITE_URL}/api/payment/${payload}`)
     } catch (e) {
       console.error(e)
     }

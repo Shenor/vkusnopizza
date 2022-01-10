@@ -139,20 +139,7 @@ export default {
     ItemCartSidebar
   },
   async mounted(){
-    this.showMap = true
-    console.log(await this.$strapi.$orders.find({yandex_payment_id: '2959a23c-000f-5000-9000-19b83dd602b9'}))
-    if(this.$strapi.$cookies.get('yandex_payment_id')){
-      const payment = await this.checkPayment(this.$strapi.$cookies.get('yandex_payment_id'));
-      if (payment.status === 'succeeded'){
-        const number = Math.floor(Math.random() * Math.floor(9999));
-        this.$strapi.$cookies.remove('yandex_payment_id')
-        console.log(payment)
-        await this.createOrder({
-          number,
-          address: payment.metadata
-        });
-      }
-    }
+    this.showMap = true;
     this.$nextTick(function () {
       $('#street').fias({
         type: $.fias.type.street,
@@ -255,14 +242,18 @@ export default {
       createPayment: 'payment/createPayment'
     }),
     isValidForm(){
-      return (!this.$v.address.home.$error && this.$v.address.home.$model != '')
-      && (!this.$v.address.street.$error && this.$v.address.street.$model != '')
+      return (!this.$v.home.$error && this.$v.home.$model != '')
+      && (!this.$v.street.$error && this.$v.street.$model != '')
     },
     async submit(){
-      // if (!this.user) return this.$bvModal.show('modal-code');
+      if (!this.user) return this.$bvModal.show('modal-code');
+      if (!this.isValidForm()) {
+        this.$v.street.$touch();
+        this.$v.home.$touch();
+        return;
+      }
 
       this.loading = true;
-      // const number = Math.floor(Math.random() * Math.floor(9999))
 
       if (this.paymentType === 'CARD') {
         const { data } = await this.createPayment()
@@ -270,18 +261,13 @@ export default {
           maxAge: 60 * 60 * 24
         })
         console.log(data)
-      //   window.location.href = data.confirmation.confirmation_url
+        window.location.href = data.confirmation.confirmation_url
         return;
       }
 
       await new Promise(resolve => setTimeout(resolve, 3000))
 
       await this.createOrder();
-
-      // this.successPayment = {
-      //   number: number,
-      //   createdTime: new Date().toLocaleString()
-      // }
 
       this.loading = false;
     },

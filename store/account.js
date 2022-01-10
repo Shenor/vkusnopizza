@@ -9,21 +9,29 @@ export const getters = {
 export const mutations = {
   SET_USER(currentState, payload){
     currentState.user = payload;
+  },
+  SET_NAME(currentState, payload){
+    currentState.user.name = payload
+  },
+  SET_EMAIL(currentState, payload){
+    currentState.user.email = payload
   }
 }
 
 export const actions = {
-  async setName({ state }, payload){
+  async setName({ state, commit }, payload){
+    commit('SET_NAME', payload)
     await this.$strapi.$clients.update(state.user.id, {name: payload})
   },
-  async setEmail({ state }, payload){
+  async setEmail({ state, commit }, payload){
+    commit('SET_EMAIL', payload)
     await this.$strapi.$clients.update(state.user.id, {email: payload})
   },
   async sendSMS(_, payload){
     const code = Math.floor(1000 + Math.random() * 9000).toString();
     sessionStorage.setItem('verification_code', code)
     try {
-      return this.$axios.get(`/api/sms?phone=${payload}&code=${code}`)
+      return this.$axios.get(`${process.env.SITE_URL}/api/sms?phone=${payload}&code=${code}`)
     } catch (e) {
       console.error(e)
     }

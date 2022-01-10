@@ -56,6 +56,9 @@ export const mutations = {
 };
 
 export const actions = {
+  SET_ADDRESS({ commit }, payload) {
+    commit('SET_ADDRESS', payload)
+  },
   SET_HOME({ commit }, payload) {
     commit('SET_HOME', payload)
   },
@@ -98,8 +101,8 @@ export const actions = {
     }
   },
 
-  async createOrder({ state, rootState, dispatch, commit }){
-    const number = Math.floor(Math.random() * Math.floor(9999));
+  async createOrder({ state, rootState, dispatch }, payload){
+    const number = payload?.number || Math.floor(Math.random() * Math.floor(9999));
     const cart = rootState.cart.cart.map(item => {
       return {
         id: item.id,
@@ -129,7 +132,11 @@ export const actions = {
 
     dispatch('SET_ORDER_NUMBER', number);
     await dispatch('sendMail', order);
-    await dispatch('addToHistory', order);
+    if (state.paymentType !== 'CARD') {
+      await dispatch('addToHistory', order);
+    }
+
+    dispatch('cart/CLEAR', null, {root: true});
 
     try {
       const token = await dispatch('getToken');
@@ -143,7 +150,7 @@ export const actions = {
 
   sendMail({ state, rootGetters }, payload){
     try {
-      return this.$axios.post('/api/mail', {
+      return this.$axios.post(`${process.env.SITE_URL}/api/mail`, {
         data: {
           number: state.orderNumber,
           totalSum: rootGetters["cart/totalSumCart"],
@@ -160,10 +167,12 @@ export const actions = {
       number: state.orderNumber,
       clients: rootGetters["account/user"].id,
       phone: rootGetters["account/user"].phone,
+      paymentType: state.paymentType,
       name: payload.customer.name,
       date: payload.order.date,
       cart: payload.order.items,
-      address: payload.order.address
+      address: payload.order.address,
+      isSelfService: state.isSelfService,
     })
   }
 };

@@ -37,11 +37,16 @@ export const mutations = {
     const candidate = cart.find(item => item.id === payload.id);
     candidate.count = +payload.count
   },
-  clear: ({cart}) => cart = [],
+  clear(state, _) {
+    state.cart = []
+  },
 }
 
 export const actions = {
-
+  CLEAR({ state, commit }) {
+    commit('clear');
+    console.log(state)
+  }
 }
 
 

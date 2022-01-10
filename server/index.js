@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 
 app.post('/mail', (req, res) => {
   const { data } = req.body;
-  console.log(data)
+  // console.log(data)
   const renderOrderList = items => {
     let order = ''
     items.forEach(({name, amount, sum}) => {
@@ -28,28 +28,33 @@ app.post('/mail', (req, res) => {
     })
     return order;
   }
-  transporter.sendMail({
-    from: "pizzburg-info@yandex.ru",
-    to: process.env.NODE_ENV === 'production' ? 'pizzburgkrd.online@gmail.com' : 'dreik757@mail.ru',
-    subject: `Поступил новый заказ ${new Date().toLocaleString()}`,
-    html: `
-      <div>Дата и время: ${new Date().toLocaleString()}</div>
-      <div>Номер заказа: ${data.number}</div>
-      <div>Имя: ${data.customer.name}</div>
-      <div>Телефон: ${data.customer.phone}</div>
-      <div>Итого к оплате: ${data.totalSum}₽</div>
-      <br>
-      <div>Город: ${data.order.address.city}</div>
-      <div>Улица: ${data.order.address.street}</div>
-      <div>Дом: ${data.order.address.home}</div>
-      <div>Подъезд: ${data.order.address.entrance}</div>
-      <div>Квартира: ${data.order.address.apartment}</div>
-      <br>
-      <div>Состав заказа:</div>
-      ${renderOrderList(data.order.items)}
-    `
-  })
-  res.send('ok');
+  try {
+    transporter.sendMail({
+      from: "pizzburg-info@yandex.ru",
+      to: process.env.CALLBACK_MAIL,
+      subject: `Поступил новый заказ ${new Date().toLocaleString()}`,
+      html: `
+        <div>Дата и время: ${new Date().toLocaleString()}</div>
+        <div>Номер заказа: ${data.number}</div>
+        <div>Имя: ${data.customer.name}</div>
+        <div>Телефон: ${data.customer.phone}</div>
+        <div>Итого к оплате: ${data.totalSum}₽</div>
+        <br>
+        <div>Город: ${data.order.address.city}</div>
+        <div>Улица: ${data.order.address.street}</div>
+        <div>Дом: ${data.order.address.home}</div>
+        <div>Подъезд: ${data.order.address.entrance}</div>
+        <div>Квартира: ${data.order.address.apartment}</div>
+        <br>
+        <div>Состав заказа:</div>
+        ${renderOrderList(data.order.items)}
+      `
+    })
+    res.send('ok');
+  } catch (e) {
+    console.log(e)
+    res.status(500).json(e)
+  }
 })
 
 app.get('/payment/:id', async (req, res) => {
@@ -80,7 +85,7 @@ app.post('/payment', async (req, res) => {
         type: 'redirect',
         return_url: metadata.return_url
       },
-      description: "Заказ №1",
+      description: `Заказ №${metadata.number}`,
       metadata: {...metadata }
     }, {
       headers: {
@@ -100,6 +105,7 @@ app.post('/payment', async (req, res) => {
 
 app.get('/sms', async (req, res) => {
   const { phone, code } = req.query;
+  console.log(process.env.SMS_API_KEY)
   const url = new URL(`${process.env.SMS_URL}?api_id=${process.env.SMS_API_KEY}&to=${phone}&msg=${code} - ваш код для входа на сайт pizzburg.ru&json=1`)
   try {
     const response = await axios.get(url.href)

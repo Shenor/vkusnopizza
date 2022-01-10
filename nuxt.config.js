@@ -1,3 +1,5 @@
+// require('dotenv').config();
+
 export default {
   /*
   ** Nuxt target
@@ -48,6 +50,7 @@ export default {
   ** Environment Nuxt
   */
   publicRuntimeConfig: {
+    ADMIN_PASS: process.env.ADMIN_PAGE_PASS,
     CALL_CENTER: '8 (938) 888-22-55'
   },
   /*
@@ -72,7 +75,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv', { filename: '.env.' + process.env.NODE_ENV }]
   ],
   /*
   ** Nuxt.js modules
@@ -85,9 +88,11 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/axios',
     '@nuxtjs/strapi',
-    '@nuxt/http'
+    '@nuxtjs/dotenv',
+    '@nuxt/http',
   ],
   strapi: {
+    url: process.env.STRAPI_URL,
     entities: ['clients', 'banners', 'orders', 'stocks']
   },
   bootstrapVue: {

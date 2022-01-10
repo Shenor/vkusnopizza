@@ -1,7 +1,7 @@
 <template>
   <div class="main container d-block text-left about">
     <b-form-group
-      v-if="pass !== '1q2w3e4R'"
+      v-if="pass !== $config.ADMIN_PASS"
       label="Введите сюда секретный пароль"
       label-for="input-formatter"
       description="Если вы не знаете пароля обратитесь к администрации сайта"
