@@ -3,25 +3,15 @@
       <client-only>
         <div class="container">
           <Flicking  class="main-slider" :options="options">
-
             <div class="panel" v-for="item in banners" :key="item.id" @click="showDetails(item)">
-                <b-img class="panel-img" :src="getImage(item)" fluid alt="Fluid image" ondragstart="return false"></b-img>
+              <b-img
+                class="panel-img"
+                :src="getImage(item)"
+                fluid
+                alt="Fluid image"
+                ondragstart="return false">
+              </b-img>
             </div>
-<!--            <div class="panel">-->
-<!--                <b-img class="panel-img" src="/1.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
-<!--            </div>-->
-<!--            <div class="panel">-->
-<!--                <b-img class="panel-img" src="/2.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
-<!--            </div>-->
-<!--            <div class="panel">-->
-<!--              <b-img class="panel-img" src="/3.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
-<!--            </div>-->
-<!--            <div class="panel">-->
-<!--              <b-img class="panel-img" src="/4.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
-<!--            </div>-->
-<!--            <div class="panel">-->
-<!--              <b-img class="panel-img" src="/5.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img>-->
-<!--            </div>-->
           </Flicking >
         </div>
         <div class="text-center" slot="placeholder">

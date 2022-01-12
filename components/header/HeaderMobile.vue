@@ -15,7 +15,8 @@
           <menu-burger :isInternalMenu="true"></menu-burger>
         </b-container>
         <b-container class=" justify-content-between">
-          <div class="d-flex justify-content-center align-items-center"><b-img left src="/Ellipse.png" alt="Ellipse"></b-img> <span>Войти</span></div>
+          <div v-if="user" class="d-flex justify-content-center align-items-center"><span>{{ user.name }}</span></div>
+          <div v-else class="d-flex justify-content-center align-items-center" v-b-toggle.sidebar-right v-b-modal.modal-code><span>Войти</span></div>
           <div id="tooltip-target-2">
             <div class="internal-menu__map d-flex align-items-center"><b-img src="/map.svg" fluid alt="Fluid image"></b-img><span>Краснодар</span></div>
             <small>доставим за 25 минут!</small>
@@ -30,17 +31,17 @@
         </b-container>
         <div class="internal-menu__content pt-4 pb-4">
           <b-container class=" internal-menu__navigation">
-            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/stocks'>Акции</NuxtLink></li>
+<!--            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/stocks'>Акции</NuxtLink></li>-->
             <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/contacts'>Контакты</NuxtLink></li>
             <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/about'>О нас</NuxtLink></li>
-            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='#'>Личный кабинет</NuxtLink></li>
+            <li class="internal-menu__navigation__item"><NuxtLink class="text-white" to='/profile'>Личный кабинет</NuxtLink></li>
           </b-container>
         </div>
         <b-container class="internal-menu__phone-wrapper justify-content-start">
           <div class="text-left">
             <div class="d-flex align-items-center position-relative">
               <b-img src="/phone.svg" fluid alt="Fluid image" class="position-absolute"></b-img>
-              <b-link href="tel:123" class="internal-menu__phone pl-4">{{ $config.CALL_CENTER }}</b-link>
+              <b-link :href="'tel:' + $config.CALL_CENTER_TRIM" class="internal-menu__phone pl-4">{{ $config.CALL_CENTER }}</b-link>
             </div>
             <small class="pl-4">звонок бесплатный!</small>
           </div>
@@ -51,11 +52,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import MenuBurger from '@/components/elements/burger-menu/index'
 
 export default {
   name: "HeaderMobile",
   components: { MenuBurger },
+  computed: {
+    ...mapGetters({
+      user: 'account/user',
+    }),
+  },
   methods: {
     q() {
       console.log('asdasd')

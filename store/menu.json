@@ -54,7 +54,7 @@
   {
     "link": "/stocks",
     "title": "Акции",
-    "class": "d-none d-md-flex d-xl-flex"
+    "class": "d-none"
   },
   {
     "link": "/contacts",

@@ -9,7 +9,7 @@
           Доставка пиццы
           <span class="delivery__city">Краснодар</span>
         </div>
-        <div id="tooltip-target-1" class="delivery__info text-left ">всего за 25 минут!</div>
+        <div id="tooltip-target-1" class="delivery__info text-left ">всего за 35 минут!</div>
         <b-tooltip
           :delay="300"
           custom-class="delivery__tooltip"

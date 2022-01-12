@@ -51,7 +51,8 @@ export default {
   */
   publicRuntimeConfig: {
     ADMIN_PASS: process.env.ADMIN_PAGE_PASS,
-    CALL_CENTER: '8 (938) 888-22-55'
+    CALL_CENTER: '8 (938) 888-22-55',
+    CALL_CENTER_TRIM: '89388882255',
   },
   /*
   ** Plugins to load before mounting the App

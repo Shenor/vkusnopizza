@@ -3,6 +3,7 @@
     <client-only>
       <b-card no-body>
         <b-tabs pills card vertical end class="text-left">
+
           <!-- Личные данные (1 раздел) -->
           <b-tab title="Личные данные"><b-card-text>
             <h3 class="mb-3">Личный кабинет</h3>
@@ -25,7 +26,7 @@
                     <b-form-input class="privat-data__input" :value="user.phone" disabled></b-form-input>
                   </b-input-group>
                 </div>
-                <div>
+                <div class="mb-5">
                   <div class="privat-data__title font-weight-semibold">Email: </div>
                   <b-input-group v-click-outside="hideEmail">
                     <template #append>
@@ -36,6 +37,9 @@
                   </b-input-group>
                 </div>
               </client-only>
+              <div>
+                <b-button variant="outline-danger" @click="exitProfile">Выйти из профиля</b-button>
+              </div>
             </div>
           </b-card-text></b-tab>
 
@@ -61,9 +65,9 @@
             <h3 class="mb-3">Мои заказы</h3>
             <div class="history-order-wrapper" v-for="order in ordersReverse" :key="order.id">
               <div class="history-order-item">
-                <b-badge v-if="isStatusPayment(order, 'succeeded')" variant="success">Выполнен</b-badge>
+                <b-badge v-if="isStatusPayment(order, 'succeeded')" variant="success">Заказ принят</b-badge>
 <!--                <b-badge v-else-if="isStatusPayment(order, 'pending')" variant="warning">Ожидание</b-badge>-->
-<!--                <b-badge v-else-if="isStatusPayment(order, 'canceled')" variant="danger">Ожидание</b-badge>-->
+                <b-badge v-else-if="isStatusPayment(order, 'canceled')" variant="danger">Заказ отменён</b-badge>
 <!--                <b-badge v-else variant="success">Выполнен</b-badge>-->
                 <div class="order-info">
                   <div>
@@ -117,13 +121,17 @@ export default {
   middleware: 'auth',
   methods: {
     ...mapActions({
+      logout: 'account/logout',
       setName: 'account/setName',
       setEmail: 'account/setEmail',
     }),
+    exitProfile(){
+      this.logout();
+      this.$router.push('/');
+    },
     isStatusPayment(order, status){
       if(order.paymentType === 'CASH') return true;
       return order.yandexPayment
-        && order.yandexPayment.paid
         && order.yandexPayment.status === status;
     },
     totalSum(cart){
@@ -133,11 +141,6 @@ export default {
     },
     formatDateTime(time){
       return new DateTime.fromSQL(time, {locale: 'ru'}).toFormat('dd MMMM yyyy HH:mm')
-    },
-    edit(payload){
-      console.log(this.$refs[payload].isContentEditable)
-      this.$refs[payload].isContentEditable = true
-      this.$refs[payload].focus();
     },
     updateName(){
       this.setName(this.$refs.name.$el.value)
@@ -164,15 +167,6 @@ export default {
   },
   async mounted(){
     this.orders = await this.$strapi.$orders.find({phone: this.user.phone});
-    console.log(this.orders)
-    // this.$strapi.find('clients', {name: 'Павел', fields: 'name'})
-    // try {
-    //   this.$http.setToken(this.$store.getters.getToken)
-    //   const {user} = await this.$http.$get(`users`)
-    //   this.user = user;
-    // } catch (error) {
-    //   this.$router.push('/')
-    // }
   },
 }
 </script>

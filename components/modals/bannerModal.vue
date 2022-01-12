@@ -14,9 +14,7 @@
 export default {
   name: "bannerModal.vue",
   data () {
-    return {
-
-    }
+    return {}
   },
   props: ['item']
 }

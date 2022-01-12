@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 
 app.post('/mail', (req, res) => {
   const { data } = req.body;
-  // console.log(data)
+  console.log(data)
   const renderOrderList = items => {
     let order = ''
     items.forEach(({name, amount, sum}) => {

@@ -57,6 +57,9 @@ export const actions = {
     })
     commit('SET_USER', res.data)
     return res.data
+  },
+  async AUTH_STRAPI () {
+    await this.$strapi.login({ identifier: 'test@test.ru', password: '1q2w3e4R' })
   }
 }
 

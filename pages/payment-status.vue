@@ -5,6 +5,11 @@
       <b-spinner class="mb-3" variant="success" label="Spinning"></b-spinner>
       <h3 class="restore-order__form-success-title"> Платеж находится в обработке </h3>
     </div>
+    <div v-if="error">
+      <b-icon class="mb-3" icon="exclamation-circle-fill" font-scale="3" variant="danger"></b-icon>
+      <h3 class="restore-order__form-success-title">{{ error.message }}</h3>
+      <h4 class="restore-order__form-success-title">{{ error.reason }}</h4>
+    </div>
     <div class="order__content-wrapper" v-if="orderNumber">
       <h3 class="restore-order__form-success-title"> Спасибо за заказ </h3>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox = "0 0 80 80" class="pt-5 pb-5" style="max-width: 150px;">
@@ -36,26 +41,40 @@ export default {
   name: "payment-status",
   data() {
     return {
-      loading: false
+      loading: false,
+      error: null,
     }
   },
   async mounted() {
     if(this.$strapi.$cookies.get('yandex_payment_id')){
       this.loading = true;
       const timer = setInterval(async () => {
-      const payment = await this.checkPayment(this.$strapi.$cookies.get('yandex_payment_id'));
-      if (payment.status === 'succeeded'){
-        const orderList = await this.$strapi.$orders.find({yandex_payment_id: this.$strapi.$cookies.get('yandex_payment_id')})
-        if(!orderList.length) return console.error(`Order with current id: ${this.$strapi.$cookies.get('yandex_payment_id')} not found`)
-        const order = orderList[0];
-        await this.$strapi.$orders.update(order.id, {yandexPayment: payment});
-        this.set_address(order.address);
-        this.setPaymentType(order.paymentType);
-        await this.createOrder({number: order.number});
-        clearInterval(timer);
-        this.$strapi.$cookies.remove('yandex_payment_id')
-        console.log('Order Update');
-      }
+        const payment = await this.checkPayment(this.$strapi.$cookies.get('yandex_payment_id'));
+        // console.log(payment)
+        if (payment.status === 'succeeded'){
+          const orderList = await this.$strapi.$orders.find({yandex_payment_id: this.$strapi.$cookies.get('yandex_payment_id')})
+          if(!orderList.length) return console.error(`Order with current id: ${this.$strapi.$cookies.get('yandex_payment_id')} not found`)
+          const order = orderList[0];
+          await this.$strapi.$orders.update(order.id, {yandexPayment: payment});
+          this.set_address(order.address);
+          this.setPaymentType(order.paymentType);
+          await this.createOrder({number: order.number});
+          clearInterval(timer);
+          this.$strapi.$cookies.remove('yandex_payment_id')
+          console.log('Order Update');
+        } else if (payment.status === 'canceled'){
+          const orderList = await this.$strapi.$orders.find({yandex_payment_id: this.$strapi.$cookies.get('yandex_payment_id')})
+          if(!orderList.length) return console.error(`Order with current id: ${this.$strapi.$cookies.get('yandex_payment_id')} not found`)
+          const order = orderList[0];
+          await this.$strapi.$orders.update(order.id, {yandexPayment: payment});
+          this.error = {
+            message: "Ошибка проведения платежа",
+            ...payment.cancellation_details
+          }
+          clearInterval(timer);
+          this.$strapi.$cookies.remove('yandex_payment_id')
+          this.loading = false;
+        }
       }, 5000)
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <MainBanner />
-<!--    <Bestsellers />-->
+    <Notice />
     <Categories />
     <Info />
   </div>
@@ -11,6 +11,7 @@ import Info from "@/components/info/index";
 import Categories from "@/components/categories/index";
 import MainBanner from "@/components/banner/MainBanner";
 import Bestsellers from "@/components/bestsellers/index";
+import Notice from "@/components/banner/NoticeBanner";
 
 export default {
   data() {
@@ -18,6 +19,7 @@ export default {
   },
   components: {
     Info,
+    Notice,
     Categories,
     MainBanner,
     Bestsellers,

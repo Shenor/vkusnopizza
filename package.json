@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nuxt --dotenv .env.development",
     "build": "nuxt build --dotenv .env.production",
-    "start": "nuxt start",
+    "start": "nuxt start --dotenv .env.production",
     "generate": "nuxt generate",
     "dev:host": "nuxt --hostname 0.0.0.0 --port 3000"
   },

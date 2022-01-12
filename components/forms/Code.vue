@@ -93,19 +93,25 @@ export default {
   methods: {
     ...mapActions({
       login: 'account/login',
-      sendSMS: 'account/sendSMS'
+      sendSMS: 'account/sendSMS',
+      auth_strapi: 'account/AUTH_STRAPI'
     }),
     async inputCode(){
       if(this.$v.code.$invalid) return
+      console.log(this.$v.code)
       const phone = this.clearePhone;
       const code = this.code.replace(/ /g, '');
       if(sessionStorage.getItem('verification_code') === code){
+        await this.auth_strapi();
         const res = await this.login(phone)
         this.$strapi.$cookies.set('strapi_user', res.id, {
           maxAge: 60 * 60 * 24
         })
         this.$bvModal.hide('modal-code')
         sessionStorage.removeItem('verification_code')
+        this.phone = '+7 '
+        this.code = ''
+        this.isSendCode = false
       } else {
         this.error = 'Неверный проверочный код'
       }

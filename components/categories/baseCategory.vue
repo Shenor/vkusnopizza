@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-container class="main-title mb-4 justify-content-start">{{ title }}</b-container>
-<!--    <client-only>-->
       <b-container class="main-content flex-wrap mb-4">
         <b-card
           v-for="item in products"
@@ -11,7 +10,6 @@
           align="left"
           img-top
         >
-<!--          @click="$emit('select-item', item)"-->
           <b-card-text>
             {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
           </b-card-text>
@@ -23,8 +21,7 @@
           </div>
         </b-card>
       </b-container>
-<!--     s-->
-<!--    </client-only>-->
+<!-- @click="$emit('select-item', item)"-->
   </div>
 </template>
 
@@ -73,7 +70,6 @@ export default {
 
   .card{
     border: none;
-    cursor: pointer;
     height: 100%;
 
     @include for-mobile {
@@ -97,7 +93,6 @@ export default {
       max-height: 250px;
       margin: auto;
       transition: all .3s;
-      cursor: pointer;
 
       &:hover{
         transform: translate(0, 5px);
