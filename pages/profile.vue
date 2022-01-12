@@ -43,23 +43,6 @@
             </div>
           </b-card-text></b-tab>
 
-          <!-- Адреса доставки (2 раздел) -->
-<!--          <b-tab title="Адреса доставки"><b-card-text>-->
-<!--            <h3>Адреса доставки</h3>-->
-              <!-- <b-input-group>
-                <b-form-input type="text"></b-form-input>
-
-                <b-input-group-append>
-                  <b-input-group-text>
-                    <img src="https://img.icons8.com/windows/22/000000/edit.png"/>
-                  </b-input-group-text>
-                  <b-input-group-text>
-                    <img src="https://img.icons8.com/windows/22/000000/delete-forever.png"/>
-                  </b-input-group-text>
-                </b-input-group-append>
-              </b-input-group> -->
-<!--          </b-card-text></b-tab>-->
-
           <!-- Мои заказы (3 раздел) -->
           <b-tab title="Мои заказы"><b-card-text>
             <h3 class="mb-3">Мои заказы</h3>

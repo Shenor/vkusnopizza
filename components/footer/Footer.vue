@@ -17,7 +17,7 @@
         <ul class="footer__column__list">
           <li><NuxtLink to='/about'>О компании</NuxtLink></li>
           <li><NuxtLink to='/'>Каталог</NuxtLink></li>
-          <li><NuxtLink to='#'>Доставка</NuxtLink></li>
+<!--          <li><NuxtLink to='#'>Доставка</NuxtLink></li>-->
 <!--          <li><NuxtLink to='#'>Оплата</NuxtLink></li>-->
         </ul>
       </div>

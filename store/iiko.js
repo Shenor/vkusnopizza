@@ -132,20 +132,20 @@ export const actions = {
 
     dispatch('SET_ORDER_NUMBER', number);
     await dispatch('sendMail', order);
-    // if (state.paymentType !== 'CARD') {
-    //   await dispatch('addToHistory', order);
-    // }
+    if (state.paymentType !== 'CARD') {
+      await dispatch('addToHistory', order);
+    }
 
-    // dispatch('cart/CLEAR', null, {root: true});
+    dispatch('cart/CLEAR', null, {root: true});
 
-    // try {
-    //   const token = await dispatch('getToken');
-    //   const data = await this.$axios.$post(`https://iiko.biz:9900/api/0/orders/add?access_token=${token}`, {...order})
-    //   console.log(data)
-    //   return data
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    try {
+      const token = await dispatch('getToken');
+      const data = await this.$axios.$post(`https://iiko.biz:9900/api/0/orders/add?access_token=${token}`, {...order})
+      console.log(data)
+      return data
+    } catch (e) {
+      console.error(e)
+    }
   },
 
   sendMail({ state, rootGetters }, payload){
