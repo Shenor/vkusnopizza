@@ -82,27 +82,6 @@
             </div>
           </div>
         </div>
-        <div class="row order__content-wrapper col col-12 d-block" v-if="orderNumber">
-          <h3 class="restore-order__form-success-title"> Спасибо за заказ </h3>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox = "0 0 80 80" class="pt-5 pb-5" style="max-width: 150px;">
-              <path fill="#bae0bd" d="M40,77.5C19.3,77.5,2.5,60.7,2.5,40S19.3,2.5,40,2.5S77.5,19.3,77.5,40S60.7,77.5,40,77.5z" />
-              <path fill="#5e9c76"
-                  d="M40,3c20.4,0,37,16.6,37,37S60.4,77,40,77S3,60.4,3,40S19.6,3,40,3 M40,2C19,2,2,19,2,40s17,38,38,38 s38-17,38-38S61,2,40,2L40,2z" />
-              <path fill="#fff" d="M34 56L20.2 42.2 24.5 38 34 47.6 58.2 23.4 62.5 27.6z" />
-          </svg>
-          <div class="" style="max-width: 70%; margin: 0 auto;">
-            <div>Ваш заказ принят в обработку</div>
-            <div class="mt-3 mb-3">
-                Номер заказа: {{ orderNumber }} <br>
-                Время заказа: {{ currentDate }}
-            </div>
-            <div>В ближайшее время с вами свяжутся для уточнения деталей и подтверждения заказа</div>
-            <div>
-                Если после оплаты заказа у Вас вознили технические проблемы или Вы обнаружили ошибку (ФИО/адрес/номер и д.р),
-                обратитесь по номеру {{ $config.CALL_CENTER }}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -268,6 +247,8 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 3000))
 
       await this.createOrder();
+
+      await this.$router.push('/order-success');
 
       this.loading = false;
     },

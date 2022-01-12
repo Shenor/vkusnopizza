@@ -20,7 +20,9 @@
         </b-tooltip>
       </div>
       <div class="d-none d-md-block d-xl-block">
-        <div class="font-weight-bold">{{ $config.CALL_CENTER }}</div>
+        <div class="font-weight-bold phone">
+          <b-link :href="'tel:' + $config.CALL_CENTER_TRIM">{{ $config.CALL_CENTER }}</b-link>
+        </div>
         <small>звонок бесплатный</small>
       </div>
   </b-container>
@@ -67,6 +69,12 @@ a{
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.07em;
+  }
+
+  .phone{
+    &:hover{
+      text-decoration: underline;
+    }
   }
 }
 

@@ -2,26 +2,19 @@
   <div>
     <b-container class="main-title mb-4 justify-content-start">{{ title }}</b-container>
       <b-container class="main-content flex-wrap mb-4">
-        <b-card
-          v-for="item in products"
-          :key="item.key"
-          :title="item.name"
-          :img-src="getImageUrl(item)"
-          align="left"
-          img-top
-        >
-          <b-card-text>
-            {{ item.description || `Some quick example text to build on the card title and make up the bulk of the card's content.`}}
-          </b-card-text>
-
-          <div class="card__footer d-flex justify-content-between align-items-center mt-auto">
+        <b-card no-body class="text-left" v-for="item in products" :key="item.key" >
+          <b-card-img-lazy :src="getImageUrl(item)" top></b-card-img-lazy>
+          <b-card-body>
+            <b-card-title>{{ item.name }}</b-card-title>
+            <b-card-text>{{ item.description }}</b-card-text>
+            <div class="card__footer d-flex justify-content-between align-items-center mt-auto">
               <div class="card__price hide-on-mobile">{{ item.price }} ₽</div>
               <b-button href="#" variant="outline-primary" class="ml-auto hide-on-mobile" @click="addind(item)">Выбрать</b-button>
               <b-button href="#" variant="outline-primary" class="show-on-mobile" @click="addind(item)">{{ item.price }} ₽</b-button>
-          </div>
+            </div>
+          </b-card-body>
         </b-card>
       </b-container>
-<!-- @click="$emit('select-item', item)"-->
   </div>
 </template>
 
@@ -107,6 +100,7 @@ export default {
     &-title{
       font-weight: 600;
       font-size: $font-size + 0.2;
+      border: none;
 
       @include for-mobile {
         font-size: $font-size + 0.1;
