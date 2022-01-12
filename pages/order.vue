@@ -3,6 +3,12 @@
     <div class="row">
       <div class="col col-12">
         <h2 class="order__title text-left">Оформление заказа</h2>
+        <b-alert show variant="danger">
+          Мы доставляем бесплатно только в зоне указанной на карте.
+          Доставку в остальные районы вы можете заказать через Яндекс.Еда,
+          Delivery, Broniboy, Антей Сервис.
+          Приносим свои извинения за доставленные неудобства.
+        </b-alert>
         <div class="row order__content-wrapper col col-12" v-if="!orderNumber">
           <div class="order__body-wrapper d-flex flex-column text-left col col-lg-8 col-md-7 col-sm-12">
 
