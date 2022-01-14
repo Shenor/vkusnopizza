@@ -14,15 +14,15 @@ import Bestsellers from "@/components/bestsellers/index";
 import Notice from "@/components/banner/NoticeBanner";
 
 export default {
-  data() {
-    return {}
-  },
   components: {
     Info,
     Notice,
     Categories,
     MainBanner,
     Bestsellers,
+  },
+  data() {
+    return {};
   },
   async mounted() {
     // await this.$strapi.login({ identifier: 'test@test.ru', password: '1q2w3e4R' })
@@ -42,12 +42,8 @@ export default {
     //   maxAge: 60 * 60 * 24
     // })
   },
-  methods: {
-
-  }
-}
+  methods: {},
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

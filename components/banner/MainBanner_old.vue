@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="slider-wrapper mb-1">
-      <i class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"></i>
-      <i class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"></i>
+      <i
+        class="slider-shadow slider-shadow-right d-none d-md-flex d-xl-flex"
+      ></i>
+      <i
+        class="slider-shadow slider-shadow-left d-none d-md-flex d-xl-flex"
+      ></i>
       <client-only>
         <flicking
           ref="mainSlider"
@@ -10,14 +14,43 @@
           class="main-slider grabbing"
           :options="options"
           :tag="'div'"
-          :viewportTag="'div'">
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
-          <div class="panel"><b-img class="panel-img" src="/banner.jpg" fluid alt="Fluid image" ondragstart="return false"></b-img></div>
+          :viewport-tag="'div'"
+        >
+          <div class="panel">
+            <b-img
+              class="panel-img"
+              src="/banner.jpg"
+              fluid
+              alt="Fluid image"
+              ondragstart="return false"
+            ></b-img>
+          </div>
+          <div class="panel">
+            <b-img
+              class="panel-img"
+              src="/banner.jpg"
+              fluid
+              alt="Fluid image"
+              ondragstart="return false"
+            ></b-img>
+          </div>
+          <div class="panel">
+            <b-img
+              class="panel-img"
+              src="/banner.jpg"
+              fluid
+              alt="Fluid image"
+              ondragstart="return false"
+            ></b-img>
+          </div>
         </flicking>
 
-        <div class="text-center" slot="placeholder">
-          <b-spinner class="spinner" variant="success" label="Spinning"></b-spinner>
+        <div slot="placeholder" class="text-center">
+          <b-spinner
+            class="spinner"
+            variant="success"
+            label="Spinning"
+          ></b-spinner>
         </div>
       </client-only>
     </div>
@@ -35,58 +68,61 @@ export default {
         gap: 30,
         zIndex: 1,
         defaultIndex: 0,
-        hanger:"50%",
-        moveType: 'snap',
+        hanger: "50%",
+        moveType: "snap",
         useOffset: true,
         autoResize: true,
         adaptive: true,
         circular: true,
-      }
-    }
+      },
+    };
+  },
+  computed: {
+    heightMainSlider() {
+      return `height: ${this.height}px`;
+    },
   },
   mounted() {
     this.$nextTick(function () {
       this.onResize();
-    })
-    window.addEventListener('resize', this.onResize)
+    });
+    window.addEventListener("resize", this.onResize);
   },
   destroyed() {
     window.removeEventListener("resize", this.onResize);
   },
   methods: {
     onResize() {
-      if(document.documentElement.clientWidth > 768){
+      if (document.documentElement.clientWidth > 768) {
         this.height = document.documentElement.clientWidth * 0.22;
-      } else if (document.documentElement.clientWidth < 768 && document.documentElement.clientWidth > 576){
-        this.options.anchor = '300px'
+      } else if (
+        document.documentElement.clientWidth < 768 &&
+        document.documentElement.clientWidth > 576
+      ) {
+        this.options.anchor = "300px";
         this.height = document.documentElement.clientWidth * 0.28;
-      } else if(document.documentElement.clientWidth < 576){
+      } else if (document.documentElement.clientWidth < 576) {
         this.height = document.documentElement.clientWidth * 0.34;
       }
-    }
+    },
   },
-  computed: {
-    heightMainSlider(){
-      return `height: ${this.height}px`;
-    }
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.grabbing{
+.grabbing {
   cursor: grab;
 
-  &:active{
+  &:active {
     cursor: grabbing;
   }
 }
 
-.slider-wrapper{
+.slider-wrapper {
   position: relative;
   overflow: hidden;
 
-  .slider-shadow{
+  .slider-shadow {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -99,22 +135,30 @@ export default {
     pointer-events: none;
   }
 
-  .slider-shadow-right{
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
+  .slider-shadow-right {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgb(255, 255, 255) 100%
+    );
     right: 0;
   }
 
-  .slider-shadow-left{
-    background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
+  .slider-shadow-left {
+    background-image: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgb(255, 255, 255) 100%
+    );
     left: 0;
   }
 }
 
-.main-slider{
+.main-slider {
   position: relative;
   outline: none;
 
-  .panel{
+  .panel {
     width: 60%;
 
     @media (max-width: 576px) {
@@ -125,7 +169,7 @@ export default {
       width: 80%;
     }
 
-    &-img{
+    &-img {
       border-radius: 20px;
 
       @media (max-width: 576px) {

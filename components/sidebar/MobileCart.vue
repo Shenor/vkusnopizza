@@ -1,32 +1,34 @@
 <template>
-  <div class="mobile-btn-cart d-flex d-sm-flex d-md-none" role="button" v-b-toggle.cart-sidebar>
+  <div
+    v-b-toggle.cart-sidebar
+    class="mobile-btn-cart d-flex d-sm-flex d-md-none"
+    role="button"
+  >
     <cart :fill="'fff'"></cart>
-    <span class="mobile-btn-cart__counter">{{getItemCountAllCart}}</span>
+    <span class="mobile-btn-cart__counter">{{ getItemCountAllCart }}</span>
   </div>
 </template>
 
 <script>
-import Cart from '@/components/Cart'
+import Cart from "@/components/Cart";
 export default {
-  data(){
-    return {
-
-    }
+  components: {
+    Cart,
+  },
+  data() {
+    return {};
   },
   computed: {
-    getItemCountAllCart(){
-     return this.$store.getters["cart/allItemsCart"];
-    }
+    getItemCountAllCart() {
+      return this.$store.getters["cart/allItemsCart"];
+    },
   },
-  components: {
-    Cart
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.mobile-btn-cart{
-  content: '';
+.mobile-btn-cart {
+  content: "";
   position: fixed;
   display: flex;
   justify-content: center;
@@ -39,8 +41,8 @@ export default {
   border-radius: 50%;
   background-color: $primary-color;
 
-  &__counter{
-    content: '';
+  &__counter {
+    content: "";
     position: absolute;
     display: flex;
     justify-content: center;

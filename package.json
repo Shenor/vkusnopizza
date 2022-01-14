@@ -7,6 +7,8 @@
     "build": "nuxt build --dotenv .env.production",
     "start": "nuxt start --dotenv .env.production",
     "generate": "nuxt generate",
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "fix-lint": "eslint --fix --ext .js,.jsx,.vue --ignore-path .gitignore .",
     "dev:host": "nuxt --hostname 0.0.0.0 --port 3000"
   },
   "dependencies": {
@@ -41,8 +43,14 @@
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/eslint-config": "^8.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-nuxt": "^3.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "sass-loader": "^10.2.0"
   }
 }

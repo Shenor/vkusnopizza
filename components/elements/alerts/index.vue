@@ -3,7 +3,7 @@
     class="info-buy"
     :show="dismissCountDown"
     variant="light"
-    @dismissed="dismissCountDown=0"
+    @dismissed="dismissCountDown = 0"
     @dismiss-count-down="countDownChanged"
   >
     <span>Товар добавлен в корзину</span>
@@ -16,24 +16,24 @@ export default {
   data() {
     return {
       dismissCountDown: 0,
-    }
+    };
+  },
+  created() {
+    this.$eventHub.$on("buyEvent", this.countDownChanged);
+  },
+  destroyed() {
+    this.$eventHub.$off("buyEvent");
   },
   methods: {
     countDownChanged() {
-      this.dismissCountDown = 2
+      this.dismissCountDown = 2;
     },
   },
-  created(){
-    this.$eventHub.$on('buyEvent', this.countDownChanged)
-  },
-  destroyed(){
-    this.$eventHub.$off('buyEvent')
-  },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.info-buy{
+.info-buy {
   position: absolute;
   bottom: -65px;
   right: 15%;
@@ -46,7 +46,7 @@ export default {
   @include for-mobile {
     width: 250px;
     right: 50%;
-    transform: translate(50%, 0)
+    transform: translate(50%, 0);
   }
 }
 </style>

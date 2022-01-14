@@ -9,8 +9,8 @@
     >
       <b-form-input
         id="input-formatter"
-        type="password"
         v-model="pass"
+        type="password"
         placeholder="Enter your name"
       ></b-form-input>
     </b-form-group>
@@ -19,41 +19,50 @@
       <draggable
         v-model="menu"
         group="people"
-        @start="drag=true"
-        @end="drag=false">
-         <div class="item" v-for="element in menu" :key="element.key">{{element.title}}</div>
+        @start="drag = true"
+        @end="drag = false"
+      >
+        <div v-for="element in menu" :key="element.key" class="item">
+          {{ element.title }}
+        </div>
       </draggable>
-      <button type="button" class="btn btn-primary rounded-pill mt-3" @click="save">Сохранить</button>
+      <button
+        type="button"
+        class="btn btn-primary rounded-pill mt-3"
+        @click="save"
+      >
+        Сохранить
+      </button>
     </template>
   </div>
 </template>
 
 <script>
-import data from '@/store/menu.json';
+import data from "@/store/menu.json";
 
 export default {
-  data(){
+  data() {
     return {
-      pass: '',
-      menu: data
-    }
+      pass: "",
+      menu: data,
+    };
   },
   methods: {
-    async save(){
-     await this.$axios.post('/api/json', {
-        data: this.menu
-     })
-    }
-  }
-}
+    async save() {
+      await this.$axios.post("/api/json", {
+        data: this.menu,
+      });
+    },
+  },
+};
 </script>
 
-<style lang='scss' scoped>
-.main{
+<style lang="scss" scoped>
+.main {
   min-height: 100vh;
 }
 
-.item{
+.item {
   padding: 8px 10px;
   border: 1px solid #ddd;
   margin-bottom: 2px;

@@ -1,57 +1,78 @@
 <template>
   <div>
-    <b-container class="main-title mb-4 justify-content-start">{{ title }}</b-container>
-      <b-container class="main-content flex-wrap mb-4">
-        <b-card no-body class="text-left" v-for="item in products" :key="item.key" >
-          <b-card-img-lazy :src="getImageUrl(item)" top></b-card-img-lazy>
-          <b-card-body>
-            <b-card-title>{{ item.name }}</b-card-title>
-            <b-card-text>{{ item.description }}</b-card-text>
-            <div class="card__footer d-flex justify-content-between align-items-center mt-auto">
-              <div class="card__price hide-on-mobile">{{ item.price }} ₽</div>
-              <b-button href="#" variant="outline-primary" class="ml-auto hide-on-mobile" @click="addind(item)">Выбрать</b-button>
-              <b-button href="#" variant="outline-primary" class="show-on-mobile" @click="addind(item)">{{ item.price }} ₽</b-button>
-            </div>
-          </b-card-body>
-        </b-card>
-      </b-container>
+    <b-container class="main-title mb-4 justify-content-start">{{
+      title
+    }}</b-container>
+    <b-container class="main-content flex-wrap mb-4">
+      <b-card
+        v-for="item in products"
+        :key="item.key"
+        no-body
+        class="text-left"
+      >
+        <b-card-img-lazy :src="getImageUrl(item)" top></b-card-img-lazy>
+        <b-card-body>
+          <b-card-title>{{ item.name }}</b-card-title>
+          <b-card-text>{{ item.description }}</b-card-text>
+          <div
+            class="card__footer d-flex justify-content-between align-items-center mt-auto"
+          >
+            <div class="card__price hide-on-mobile">{{ item.price }} ₽</div>
+            <b-button
+              href="#"
+              variant="outline-primary"
+              class="ml-auto hide-on-mobile"
+              @click="addind(item)"
+              >Выбрать</b-button
+            >
+            <b-button
+              href="#"
+              variant="outline-primary"
+              class="show-on-mobile"
+              @click="addind(item)"
+              >{{ item.price }} ₽</b-button
+            >
+          </div>
+        </b-card-body>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
 <script>
-import { images } from '@/mixins';
-import {mapMutations} from "vuex";
+import { mapMutations } from "vuex";
+import { images } from "@/mixins";
 
 export default {
-  name: "baseCategory",
+  name: "BaseCategory",
   mixins: [images],
-  data(){
-    return{}
-  },
   props: {
     title: {
       type: String,
-      default: ''
+      default: "",
     },
     products: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
+  },
+  data() {
+    return {};
   },
   methods: {
     ...mapMutations({
-      add: 'cart/add'
+      add: "cart/add",
     }),
-    addind(item){
-      this.add(item)
-      this.$eventHub.$emit('buyEvent');
-    }
-  }
-}
+    addind(item) {
+      this.add(item);
+      this.$eventHub.$emit("buyEvent");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.main-content{
+.main-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   row-gap: 50px;
@@ -61,7 +82,7 @@ export default {
     row-gap: 30px;
   }
 
-  .card{
+  .card {
     border: none;
     height: 100%;
 
@@ -69,7 +90,7 @@ export default {
       flex-direction: unset;
     }
 
-    &-body{
+    &-body {
       display: flex;
       flex-direction: column;
       min-height: 230px;
@@ -81,13 +102,13 @@ export default {
       }
     }
 
-    &-img-top{
+    &-img-top {
       max-width: 270px;
       max-height: 250px;
       margin: auto;
-      transition: all .3s;
+      transition: all 0.3s;
 
-      &:hover{
+      &:hover {
         transform: translate(0, 5px);
       }
 
@@ -97,7 +118,7 @@ export default {
       }
     }
 
-    &-title{
+    &-title {
       font-weight: 600;
       font-size: $font-size + 0.2;
       border: none;
@@ -107,7 +128,7 @@ export default {
       }
     }
 
-    &-text{
+    &-text {
       font-size: $font-size;
       font-weight: 300;
       min-height: 65px;
@@ -118,14 +139,14 @@ export default {
       }
     }
 
-    &__footer{
-      @include for-mobile{
+    &__footer {
+      @include for-mobile {
         margin: 0 !important;
       }
     }
 
-    &__price{
-      font-size: $font-size + .2;
+    &__price {
+      font-size: $font-size + 0.2;
       font-weight: 600;
     }
   }

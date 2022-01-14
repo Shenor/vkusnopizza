@@ -1,14 +1,19 @@
 <template>
   <div class="info">
-    <b-container class="main-title mb-4 justify-content-start">Доставка и оплата</b-container>
+    <b-container class="main-title mb-4 justify-content-start"
+      >Доставка и оплата</b-container
+    >
     <b-container
+      :class="{ 'info--isActive': isVisible }"
+      class="text-left flex-column justify-content-start align-items-start info__description mb-5"
       @click="isVisible = true"
-      :class="{'info--isActive': isVisible }"
-      class="text-left flex-column justify-content-start align-items-start info__description mb-5">
+    >
       <p>
-        На сегодняшний день бесплатная доставка осуществляется нами в Краснодаре по мкр. Панорама (Смотрите на карте).
-        <br>
-        Доставку в другие районы вы можете заказать у наших партнеров: «Бронибой», «Яндекс Еда», «Деливери» и «Антей Сервис»
+        На сегодняшний день бесплатная доставка осуществляется нами в Краснодаре
+        по мкр. Панорама (Смотрите на карте).
+        <br />
+        Доставку в другие районы вы можете заказать у наших партнеров:
+        «Бронибой», «Яндекс Еда», «Деливери» и «Антей Сервис»
       </p>
     </b-container>
   </div>
@@ -17,18 +22,18 @@
 <script>
 export default {
   name: "Info",
-  data(){
-    return{
-      isVisible: false
-    }
-  }
-}
+  data() {
+    return {
+      isVisible: false,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.info{
-  &__description{
-    font-size: .75rem;
+.info {
+  &__description {
+    font-size: 0.75rem;
     font-weight: 300;
     //height: 250px;
     position: relative;
@@ -45,11 +50,11 @@ export default {
     //}
   }
 
-  &--isActive{
+  &--isActive {
     height: auto;
     overflow: visible;
 
-    &::before{
+    &::before {
       display: none;
     }
   }

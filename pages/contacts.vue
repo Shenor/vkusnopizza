@@ -4,7 +4,9 @@
     <div class="contacts__content-wrapper d-flex flex-wrap">
       <div class="mr-5">
         <p class="text-semi-bold">Адреса ресторанов:</p>
-        <div class="mb-1 font-weight-light">г. Краснодар, ул. Восточно-Кругликовская, 18</div>
+        <div class="mb-1 font-weight-light">
+          г. Краснодар, ул. Восточно-Кругликовская, 18
+        </div>
       </div>
       <div>
         <p class="text-semi-bold">Телефон и почта:</p>
@@ -16,21 +18,18 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style lang='scss' scoped>
-.main{
+<style lang="scss" scoped>
+.main {
   min-height: 100vh;
 }
 
-.text-light{
-
+.text-light {
 }
 
-.text-semi-bold{
+.text-semi-bold {
   font-weight: 600;
 }
 </style>

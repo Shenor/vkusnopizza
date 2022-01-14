@@ -1,30 +1,40 @@
 <template>
   <b-container class="header justify-content-start menu">
-      <NuxtLink class="navbar-brand mr-4" to="/">
-        <b-img class="mb-2" src="/pizzburg_logo.png" fluid alt="Fluid image"></b-img>
-        <div class="sub-title text-right">Готовим вкусное настроение</div>
-      </NuxtLink>
-      <div class="delivery d-none d-md-block d-xl-block">
-        <div class="text-left">
-          Доставка пиццы
-          <span class="delivery__city">Краснодар</span>
-        </div>
-        <div id="tooltip-target-1" class="delivery__info text-left ">всего за 35 минут!</div>
-        <b-tooltip
-          :delay="300"
-          custom-class="delivery__tooltip"
-          target="tooltip-target-1"
-          triggers="hover click">
-          Мы доставляем бесплатно по мкр. «Панорама». Доставку в остальные районы
-          вы можете заказать через Яндекс.Еда, Delivery, Broniboy, Антей Сервис
-        </b-tooltip>
+    <NuxtLink class="navbar-brand mr-4" to="/">
+      <b-img
+        class="mb-2"
+        src="/pizzburg_logo.png"
+        fluid
+        alt="Fluid image"
+      ></b-img>
+      <div class="sub-title text-right">Готовим вкусное настроение</div>
+    </NuxtLink>
+    <div class="delivery d-none d-md-block d-xl-block">
+      <div class="text-left">
+        Доставка пиццы
+        <span class="delivery__city">Краснодар</span>
       </div>
-      <div class="d-none d-md-block d-xl-block">
-        <div class="font-weight-bold phone">
-          <b-link :href="'tel:' + $config.CALL_CENTER_TRIM">{{ $config.CALL_CENTER }}</b-link>
-        </div>
-        <small>звонок бесплатный</small>
+      <div id="tooltip-target-1" class="delivery__info text-left">
+        всего за 35 минут!
       </div>
+      <b-tooltip
+        :delay="300"
+        custom-class="delivery__tooltip"
+        target="tooltip-target-1"
+        triggers="hover click"
+      >
+        Мы доставляем бесплатно по мкр. «Панорама». Доставку в остальные районы
+        вы можете заказать через Яндекс.Еда, Delivery, Broniboy, Антей Сервис
+      </b-tooltip>
+    </div>
+    <div class="d-none d-md-block d-xl-block">
+      <div class="font-weight-bold phone">
+        <b-link :href="'tel:' + $config.CALL_CENTER_TRIM">{{
+          $config.CALL_CENTER
+        }}</b-link>
+      </div>
+      <small>звонок бесплатный</small>
+    </div>
   </b-container>
 </template>
 
@@ -32,19 +42,19 @@
 export default {
   name: "HeaderDesktop",
   data() {
-    return {}
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style lang='scss' scoped>
-a{
+<style lang="scss" scoped>
+a {
   color: inherit;
   text-decoration: none;
 }
 
-.navbar-brand{
-  @include for-mobile{
+.navbar-brand {
+  @include for-mobile {
     margin: 0 !important;
   }
 
@@ -53,7 +63,7 @@ a{
     text-transform: uppercase;
   }
 
-  img{
+  img {
     max-width: 240px;
   }
 }
@@ -61,7 +71,7 @@ a{
 .menu {
   padding: 10px 15px;
 
-  @include for-mobile{
+  @include for-mobile {
     padding: 5px 0px;
   }
 
@@ -71,33 +81,33 @@ a{
     letter-spacing: 0.07em;
   }
 
-  .phone{
-    &:hover{
+  .phone {
+    &:hover {
       text-decoration: underline;
     }
   }
 }
 
-.delivery{
+.delivery {
   margin-right: 45px;
 
-  @include for-desktop-down{
+  @include for-desktop-down {
     margin-right: 20px;
   }
-  &__city{
+  &__city {
     font-weight: 600;
-    color: #EB5757;
+    color: #eb5757;
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-  &__info{
+  &__info {
     font-weight: 600;
   }
 
-  &__tooltip::v-deep{
-    .tooltip-inner{
+  &__tooltip::v-deep {
+    .tooltip-inner {
       border-radius: 10px;
-      padding: .5rem .75rem;
+      padding: 0.5rem 0.75rem;
     }
   }
 }
