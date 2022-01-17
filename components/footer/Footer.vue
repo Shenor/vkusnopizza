@@ -54,9 +54,6 @@
       class="footer__additional-info d-block d-sm-block d-md-none text-white text-left pt-4 pb-4"
     >
       <div class="footer__additional-info__text mb-1">
-        Краснодар, ул. Красная, 29
-      </div>
-      <div class="footer__additional-info__text mb-1">
         Краснодар, ул. Восточно-Кругликовская, 18
       </div>
       <client-only>
@@ -64,7 +61,7 @@
           {{ $config.CALL_CENTER }}
         </div>
       </client-only>
-      <div class="footer__additional-info__text mb-1">с 10:00 до 24:00</div>
+      <div class="footer__additional-info__text mb-1">с 10:00 до 23:00</div>
       <p class="mt-4">
         Готовим вкусное настроение, мы всегда удивим вас качеством и ценами
       </p>

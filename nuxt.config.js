@@ -113,8 +113,13 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/strapi",
     "@nuxtjs/dotenv",
+    '@nuxtjs/gtm',
     "@nuxt/http",
   ],
+  gtm: {
+    id: 'GTM-K6NQRGZ',
+    enabled: true
+  },
   strapi: {
     url: process.env.STRAPI_URL,
     entities: ["clients", "banners", "orders", "stocks"],

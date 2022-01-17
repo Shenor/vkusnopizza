@@ -19,4 +19,6 @@ $ npm run start
 $ npm run generate
 ```
 
+Node version: v14.18.1
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
