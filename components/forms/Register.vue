@@ -190,11 +190,11 @@ export default {
     isValidRegistrForm() {
       return (
         !this.$v.registr.name.$error &&
-        this.$v.registr.name.$model != "" &&
+        this.$v.registr.name.$model !== "" &&
         !this.$v.registr.phone.$error &&
-        this.$v.registr.phone.$model != "" &&
+        this.$v.registr.phone.$model !== "" &&
         !this.$v.registr.password.$error &&
-        this.$v.registr.password.$model != "" &&
+        this.$v.registr.password.$model !== "" &&
         !this.$v.registr.email.$error &&
         !this.$v.registr.date.$error
       );

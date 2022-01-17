@@ -21,9 +21,9 @@ app.use(bodyParser.json());
 app.post("/mail", (req, res) => {
   const { data } = req.body;
   const paymentType = new Map()
-    .set('CASH', 'Наличными')
-    .set('CARD', 'Картой онланй')
-    .set('TRANSFER', 'Онлайн перевод при получении')
+    .set("CASH", "Наличными")
+    .set("CARD", "Картой онланй")
+    .set("TRANSFER", "Онлайн перевод при получении");
 
   const renderOrderList = (items) => {
     let order = "";
@@ -41,8 +41,12 @@ app.post("/mail", (req, res) => {
         <div>Дата и время: ${new Date().toLocaleString("ru-RU")}</div>
         <div>Номер заказа: ${data.number}</div>
         <div>Имя: ${data.customer.name}</div>
-        <div>Телефон: <a href="tel:${data.customer.phone}">${data.customer.phone}</a></div>
-        <div>Тип оплаты: ${paymentType.get(data.paymentType) || 'Неизветсно'}</div>
+        <div>Телефон: <a href="tel:${data.customer.phone}">${
+        data.customer.phone
+      }</a></div>
+        <div>Тип оплаты: ${
+          paymentType.get(data.paymentType) || "Неизветсно"
+        }</div>
         <div>Итого к оплате: ${data.totalSum}₽</div>
         <br>
         <div>Город: ${data.order.address.city}</div>
@@ -50,6 +54,7 @@ app.post("/mail", (req, res) => {
         <div>Дом: ${data.order.address.home}</div>
         <div>Подъезд: ${data.order.address.entrance}</div>
         <div>Квартира: ${data.order.address.apartment}</div>
+        <div>Комментарий: ${data.order.address.comment}</div>
         <br>
         <div>Состав заказа:</div>
         ${renderOrderList(data.order.items)}
@@ -108,7 +113,7 @@ app.post("/payment", async (req, res) => {
         },
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     res.json({ ...response.data });
   } catch (e) {
     res.status(400).json(e);

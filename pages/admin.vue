@@ -34,7 +34,9 @@
         Сохранить
       </button>
 
-      <b-alert class="alert text-center" variant="success" :show="isShow">Сохранено</b-alert>
+      <b-alert class="alert text-center" variant="success" :show="isShow"
+        >Сохранено</b-alert
+      >
     </template>
   </div>
 </template>
@@ -57,11 +59,13 @@ export default {
           data: this.menu,
         });
         this.isShow = true;
-        await new Promise((resolve => setTimeout(() => { resolve ()}, 3000)))
+        await new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, 3000)
+        );
         this.isShow = false;
-      } catch (e) {
-
-      }
+      } catch (e) {}
     },
   },
 };

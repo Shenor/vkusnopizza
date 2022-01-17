@@ -169,6 +169,17 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters({
+      user: "account/user",
+    }),
+    ordersReverse() {
+      return this.orders.reverse();
+    },
+  },
+  async mounted() {
+    this.orders = await this.$strapi.$orders.find({ phone: this.user.phone });
+  },
   methods: {
     ...mapActions({
       logout: "account/logout",
@@ -207,17 +218,6 @@ export default {
     hideEmail() {
       this.email.isEdit = false;
     },
-  },
-  computed: {
-    ...mapGetters({
-      user: "account/user",
-    }),
-    ordersReverse() {
-      return this.orders.reverse();
-    },
-  },
-  async mounted() {
-    this.orders = await this.$strapi.$orders.find({ phone: this.user.phone });
   },
 };
 </script>

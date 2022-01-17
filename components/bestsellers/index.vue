@@ -75,8 +75,8 @@ export default {
     getNewsItem() {
       return data.nomenclature.products.filter(
         (i) =>
-          i.productCategoryId == "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a" &&
-          i.type == "dish"
+          i.productCategoryId === "7ba3f2a8-fa96-c6ad-0174-b5ba1356019a" &&
+          i.type === "dish"
       );
     },
   },

@@ -116,16 +116,6 @@ export default {
     }
   },
   fetchOnServer: true,
-  methods: {
-    ...mapActions({
-      getNomenclature: "iiko/getNomenclature",
-    }),
-    showModal(payload) {
-      return false;
-      // this.activeProduct = payload
-      // this.$bvModal.show('modal-product')
-    },
-  },
   computed: {
     pizzaSmall() {
       if (!Object.keys(this.nomenclature).length) return [];
@@ -216,6 +206,16 @@ export default {
       return this.nomenclature.products.filter(
         (item) => item.parentGroup === "b9737194-2a9a-472a-b7a3-82372ef86a37"
       );
+    },
+  },
+  methods: {
+    ...mapActions({
+      getNomenclature: "iiko/getNomenclature",
+    }),
+    showModal(payload) {
+      return false;
+      // this.activeProduct = payload
+      // this.$bvModal.show('modal-product')
     },
   },
 };

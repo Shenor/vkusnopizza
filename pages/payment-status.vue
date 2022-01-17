@@ -17,8 +17,9 @@
       <h3 class="restore-order__form-success-title">{{ error.message }}</h3>
       <h4 class="restore-order__form-success-title">{{ error.reason }}</h4>
     </div>
-    <div v-if="orderNumber" class="order__content-wrapper">
-      <h3 class="restore-order__form-success-title">Спасибо за заказ</h3>
+    <div v-if="orderNumber" class="success-payment">
+      <h3 class="success-payment__title">Спасибо за заказ</h3>
+      <div>Ваш заказ принят в обработку</div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 80 80"
@@ -39,8 +40,7 @@
         />
       </svg>
       <div class="" style="max-width: 70%; margin: 0 auto">
-        <div>Ваш заказ принят в обработку</div>
-        <div class="mt-3 mb-3">
+        <div class="success-payment__details mt-3 mb-3">
           Номер заказа: {{ number }} <br />
           Время заказа: {{ date }}
         </div>
@@ -51,7 +51,9 @@
         <div>
           Если после оплаты заказа у Вас вознили технические проблемы или Вы
           обнаружили ошибку (ФИО/адрес/номер и д.р), обратитесь по номеру:
-          {{ $config.CALL_CENTER }}
+          <b-link :href="'tel:' + $config.CALL_CENTER_TRIM">{{
+            $config.CALL_CENTER
+          }}</b-link>
         </div>
       </div>
     </div>
@@ -70,15 +72,30 @@ export default {
       error: null,
     };
   },
+  computed: {
+    ...mapGetters({
+      user: "account/user",
+      orderNumber: "iiko/orderNumber",
+    }),
+    number: {
+      get() {
+        return this.orderNumber;
+      },
+      set(value) {
+        this.setOrderNumber(value);
+      },
+    },
+    currentDate: () => new Date().toLocaleString(),
+  },
   async mounted() {
-    if (sessionStorage.getItem("order_details")){
+    if (sessionStorage.getItem("order_details")) {
       this.viewCacheOrder();
     } else if (this.$strapi.$cookies.get("yandex_payment_id")) {
       this.loading = true;
       const timer = setInterval(async () => {
         const paymentId = this.$strapi.$cookies.get("yandex_payment_id");
         const payment = await this.checkPayment(paymentId);
-        console.log(payment)
+        // console.log(payment)
         if (payment.status === "succeeded") {
           this.$strapi.$cookies.remove("yandex_payment_id");
           clearInterval(timer);
@@ -95,39 +112,24 @@ export default {
       await this.$router.push("/");
     }
   },
-  computed: {
-    ...mapGetters({
-      user: "account/user",
-      orderNumber: "iiko/orderNumber",
-    }),
-    number: {
-      get() {
-        return this.orderNumber
-      },
-      set(value){
-        this.setOrderNumber(value)
-      }
-    },
-    currentDate: () => new Date().toLocaleString(),
-  },
   methods: {
     ...mapActions({
-      setName: 'iiko/SET_NAME',
-      setPhone: 'iiko/SET_PHONE',
+      setName: "iiko/SET_NAME",
+      setPhone: "iiko/SET_PHONE",
       createOrder: "iiko/createOrder",
       setAddress: "iiko/SET_ADDRESS",
       setPaymentType: "iiko/SET_PAYMENT_TYPE",
       checkPayment: "payment/checkPayment",
       setOrderNumber: "iiko/SET_ORDER_NUMBER",
     }),
-    viewCacheOrder(){
+    viewCacheOrder() {
       this.loading = true;
       const order = JSON.parse(sessionStorage.getItem("order_details"));
       this.number = order.number;
       this.date = order.date;
       this.loading = false;
     },
-    saveOrderDetails(){
+    saveOrderDetails() {
       sessionStorage.setItem(
         "order_details",
         JSON.stringify({
@@ -136,7 +138,7 @@ export default {
         })
       );
     },
-    async success(payment){
+    async success(payment) {
       const orderList = await this.$strapi.$orders.find({
         yandex_payment_id: payment.id,
       });
@@ -156,7 +158,7 @@ export default {
       this.setAddress(order.address);
       this.setPaymentType(order.paymentType);
       await this.createOrder({ number: order.number });
-      this.date = this.currentDate
+      this.date = this.currentDate;
       this.saveOrderDetails();
     },
     async canceled(payment) {
@@ -175,9 +177,9 @@ export default {
       });
       this.error = {
         message: "Ошибка проведения платежа",
-        reason: payment?.cancellation_details?.reason
+        reason: payment?.cancellation_details?.reason,
       };
-    }
+    },
   },
 };
 </script>
@@ -192,9 +194,20 @@ export default {
 
   &__title {
     font-weight: 600;
-    font-size: 2.1rem;
+    font-size: $font-size + 1.2;
     margin-top: 10px;
     margin-bottom: 40px;
+  }
+}
+
+.success-payment {
+  &__title {
+    font-weight: 600;
+    font-size: $font-size + 0.5;
+  }
+
+  &__details {
+    font-size: $font-size + 0.3;
   }
 }
 </style>

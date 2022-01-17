@@ -53,7 +53,9 @@ export default {
     },
     products: {
       type: Array,
-      default: [],
+      default() {
+        return [];
+      },
     },
   },
   data() {

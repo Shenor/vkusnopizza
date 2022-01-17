@@ -41,8 +41,7 @@ export const mutations = {
 };
 
 export const actions = {
-  CLEAR({ state, commit }) {
+  CLEAR({ commit }) {
     commit("clear");
-    console.log(state);
   },
 };

@@ -30,12 +30,9 @@ export default {
       },
     ],
     script: [
-      // {
-      //   src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
-      // },
-      // {
-      //   src: "https://cdn.jsdelivr.net/gh/Shenor/cartography_api@master/jquery.fias.min.js",
-      // },
+      {
+        src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+      },
     ],
     link: [
       { rel: "preconnect", href: "https://iiko.biz:9900" },
@@ -60,10 +57,6 @@ export default {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700;900&display=swap",
       },
-      // {
-      //   rel: "stylesheet",
-      //   href: "https://cdn.jsdelivr.net/gh/Shenor/cartography_api@master/jquery.fias.min.css",
-      // },
     ],
   },
   /*

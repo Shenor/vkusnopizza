@@ -54,8 +54,8 @@
                     "
                   >
                     <b-form-input
-                      ref="phone"
                       id="phone"
+                      ref="phone"
                       v-model.trim="$v.phone.$model"
                       v-maska="'+7 (###) ###-##-##'"
                       maxlength="18"
@@ -79,28 +79,32 @@
                   >
                     <b-form-input
                       id="street"
-                      list="street-list"
                       v-model.trim="$v.street.$model"
+                      list="street-list"
                       class="pt-3 pb-3 mb-2"
                       :class="{ 'is-invalid': $v.street.$error }"
                       placeholder="Введите улицу"
                       autocomplete="off"
                     ></b-form-input>
                     <datalist id="street-list">
-                      <option v-for="(_, name) in streetList">{{ name }}</option>
+                      <option v-for="(_, name) in streetList">
+                        {{ name }}
+                      </option>
                     </datalist>
                   </b-form-group>
 
-                  <div class="d-flex">
+                  <div class="d-flex mb-3">
                     <b-form-input
-                      list="home-list"
                       v-model.trim="$v.home.$model"
+                      list="home-list"
                       class="pt-3 pb-3 mr-2"
                       :class="{ 'is-invalid': $v.home.$error }"
                       placeholder="Дом"
                     ></b-form-input>
                     <datalist id="home-list">
-                      <option v-for="home in streetList[street]">{{ home }}</option>
+                      <option v-for="home in streetList[street]">
+                        {{ home }}
+                      </option>
                     </datalist>
                     <b-form-input
                       v-model.trim="entrance"
@@ -113,6 +117,13 @@
                       placeholder="Квартира"
                     ></b-form-input>
                   </div>
+
+                  <b-form-textarea
+                    v-model="comment"
+                    placeholder="Комментарий..."
+                    rows="3"
+                    no-resize
+                  />
                 </div>
               </div>
 
@@ -243,25 +254,44 @@ export default {
         { text: "Самовывоз", value: true },
       ],
       streetList: {
-        'Восточно-Кругликовская':
-          [
-            '18', '18/1', '20', '22',
-            '22/1', '22/2', '22/3', '24', '26',
-            '28', '28/1', '28/2', '28/3', '30',
-            '30А', '30/1', '30/2', '32', '34'
-          ],
-        'Жлобы': ['139', '141', '143', '145',],
-        'Героев-Разведчиков':
-          [
-            '2', '6к1', '6к2', '6к3',
-            '6к4', '8к1', '8к2', '8к3',
-            '8к4', '10', '12/1', '12/1к1',
-          ],
-        'Героя Сарабеева': [
-          '3', '3/1', '5', '5к1',
-          '5к2', '5к3', '5к4', '5к5'
-        ]
-      }
+        "Восточно-Кругликовская": [
+          "18",
+          "18/1",
+          "20",
+          "22",
+          "22/1",
+          "22/2",
+          "22/3",
+          "24",
+          "26",
+          "28",
+          "28/1",
+          "28/2",
+          "28/3",
+          "30",
+          "30А",
+          "30/1",
+          "30/2",
+          "32",
+          "34",
+        ],
+        Жлобы: ["139", "141", "143", "145"],
+        "Героев-Разведчиков": [
+          "2",
+          "6к1",
+          "6к2",
+          "6к3",
+          "6к4",
+          "8к1",
+          "8к2",
+          "8к3",
+          "8к4",
+          "10",
+          "12/1",
+          "12/1к1",
+        ],
+        "Героя Сарабеева": ["3", "3/1", "5", "5к1", "5к2", "5к3", "5к4", "5к5"],
+      },
     };
   },
   validations: {
@@ -296,6 +326,7 @@ export default {
       getHome: "iiko/home",
       getStreet: "iiko/street",
       delivery: "iiko/delivery",
+      getComment: "iiko/comment",
       getEntrance: "iiko/entrance",
       getApartment: "iiko/apartment",
       getPaymentType: "iiko/paymentType",
@@ -351,6 +382,14 @@ export default {
         this.setApartment(value);
       },
     },
+    comment: {
+      get() {
+        return this.getComment;
+      },
+      set(value) {
+        this.setComment(value);
+      },
+    },
     paymentType: {
       get() {
         return this.getPaymentType;
@@ -377,6 +416,7 @@ export default {
       setPhone: "iiko/SET_PHONE",
       setHome: "iiko/SET_HOME",
       setStreet: "iiko/SET_STREET",
+      setComment: "iiko/SET_COMMENT",
       setEntrance: "iiko/SET_ENTRANCE",
       setApartment: "iiko/SET_APARTMENT",
       setPaymentType: "iiko/SET_PAYMENT_TYPE",
@@ -473,7 +513,8 @@ export default {
       max-width: 350px;
       min-width: 200px;
 
-      input {
+      input,
+      textarea {
         height: auto;
         border-radius: 10px;
 

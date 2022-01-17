@@ -22,7 +22,11 @@
 
 <script>
 export default {
-  props: ["isInternalMenu"],
+  props: {
+    isInternalMenu: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       isOpen: !!this.isInternalMenu,

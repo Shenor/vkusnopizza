@@ -111,11 +111,7 @@ export default {
       user: "account/user",
     }),
   },
-  methods: {
-    q() {
-      console.log("asdasd");
-    },
-  },
+  methods: {},
 };
 </script>
 

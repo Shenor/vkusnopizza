@@ -14,6 +14,7 @@ export const state = () => ({
     home: "",
     entrance: "",
     apartment: "",
+    comment: "",
   },
 });
 
@@ -25,8 +26,9 @@ export const getters = {
   street: ({ address }) => address.street,
   home: ({ address }) => address.home,
   entrance: ({ address }) => address.entrance,
-  delivery: ({ delivery }) => delivery,
   apartment: ({ address }) => address.apartment,
+  comment: ({ address }) => address.comment,
+  delivery: ({ delivery }) => delivery,
   orderNumber: ({ orderNumber }) => orderNumber,
   paymentType: ({ paymentType }) => paymentType,
   isSelfService: ({ isSelfService }) => isSelfService,
@@ -47,6 +49,9 @@ export const mutations = {
   },
   SET_STREET(state, payload) {
     state.address.street = payload;
+  },
+  SET_COMMENT(state, payload) {
+    state.address.comment = payload;
   },
   SET_ENTRANCE(state, payload) {
     state.address.entrance = payload;
@@ -86,6 +91,9 @@ export const actions = {
   },
   SET_APARTMENT({ commit }, payload) {
     commit("SET_APARTMENT", payload);
+  },
+  SET_COMMENT({ commit }, payload) {
+    commit("SET_COMMENT", payload);
   },
   SET_PAYMENT_TYPE({ commit }, payload) {
     commit("SET_PAYMENT_TYPE", payload);
@@ -166,7 +174,7 @@ export const actions = {
         `https://iiko.biz:9900/api/0/orders/add?access_token=${token}`,
         { ...order }
       );
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (e) {
       console.error(e);

@@ -54,13 +54,12 @@ export default {
       const modifiers = this.item.groupModifiers[0].childModifiers.map(
         (item) => {
           return data.nomenclature.products.find((product) => {
-            return product.id == item.modifierId;
+            return product.id === item.modifierId;
           });
         }
       );
       this.selectedModifiers = modifiers[0].id;
       this.groupModifiers = modifiers;
-      console.log(modifiers);
       return modifiers;
     },
     priceSelectedModifiers() {

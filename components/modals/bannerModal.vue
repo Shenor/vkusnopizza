@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "bannerModal.vue",
+  name: "BannerModal",
   props: ["item"],
   data() {
     return {};

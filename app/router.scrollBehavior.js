@@ -1,4 +1,4 @@
-export default async function (to, from, savedPosition) {
+export default function (to, from, savedPosition) {
   if (to.hash) {
     setTimeout(() => {
       $("html, body").animate(

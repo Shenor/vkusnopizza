@@ -110,9 +110,9 @@ export default {
     isValidLoginForm() {
       return (
         !this.$v.login.phone.$error &&
-        this.$v.login.phone.$model != "" &&
+        this.$v.login.phone.$model !== "" &&
         !this.$v.login.password.$error &&
-        this.$v.login.password.$model != ""
+        this.$v.login.password.$model !== ""
       );
     },
     async enter() {

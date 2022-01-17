@@ -23,10 +23,10 @@
           <b-form-group label="Проверочный код" label-for="phone-input">
             <the-mask
               id="code-input"
+              v-model.trim="$v.code.$model"
               class="form-control text-center"
               :class="{ 'is-invalid': error }"
               placeholder="_ _ _ _"
-              v-model.trim="$v.code.$model"
               :mask="['####']"
               :masked="true"
               required
@@ -91,7 +91,7 @@ export default {
     }),
     async inputCode() {
       if (this.$v.code.$invalid) return;
-      console.log(this.$v.code);
+      // console.log(this.$v.code);
       const phone = this.clearePhone;
       const code = this.code.replace(/ /g, "");
       if (sessionStorage.getItem("verification_code") === code) {
