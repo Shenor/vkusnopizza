@@ -41,8 +41,8 @@
       <div class="" style="max-width: 70%; margin: 0 auto">
         <div>Ваш заказ принят в обработку</div>
         <div class="mt-3 mb-3">
-          Номер заказа: {{ orderNumber }} <br />
-          Время заказа: {{ currentDate }}
+          Номер заказа: {{ number }} <br />
+          Время заказа: {{ date }}
         </div>
         <div>
           В ближайшее время с вами свяжутся для уточнения деталей и
@@ -65,61 +65,34 @@ export default {
   name: "PaymentStatus",
   data() {
     return {
+      date: null,
       loading: false,
       error: null,
     };
   },
   async mounted() {
-    if (this.$strapi.$cookies.get("yandex_payment_id")) {
+    if (sessionStorage.getItem("order_details")){
+      this.viewCacheOrder();
+    } else if (this.$strapi.$cookies.get("yandex_payment_id")) {
       this.loading = true;
       const timer = setInterval(async () => {
-        const payment = await this.checkPayment(
-          this.$strapi.$cookies.get("yandex_payment_id")
-        );
-        // console.log(payment)
+        const paymentId = this.$strapi.$cookies.get("yandex_payment_id");
+        const payment = await this.checkPayment(paymentId);
+        console.log(payment)
         if (payment.status === "succeeded") {
-          const orderList = await this.$strapi.$orders.find({
-            yandex_payment_id: this.$strapi.$cookies.get("yandex_payment_id"),
-          });
-          if (!orderList.length)
-            return console.error(
-              `Order with current id: ${this.$strapi.$cookies.get(
-                "yandex_payment_id"
-              )} not found`
-            );
-          const order = orderList[0];
-          await this.$strapi.$orders.update(order.id, {
-            yandexPayment: payment,
-          });
-          this.set_address(order.address);
-          this.setPaymentType(order.paymentType);
-          await this.createOrder({ number: order.number });
-          clearInterval(timer);
           this.$strapi.$cookies.remove("yandex_payment_id");
-          console.log("Order Update");
+          clearInterval(timer);
+          await this.success(payment);
+          this.loading = false;
         } else if (payment.status === "canceled") {
-          const orderList = await this.$strapi.$orders.find({
-            yandex_payment_id: this.$strapi.$cookies.get("yandex_payment_id"),
-          });
-          if (!orderList.length)
-            return console.error(
-              `Order with current id: ${this.$strapi.$cookies.get(
-                "yandex_payment_id"
-              )} not found`
-            );
-          const order = orderList[0];
-          await this.$strapi.$orders.update(order.id, {
-            yandexPayment: payment,
-          });
-          this.error = {
-            message: "Ошибка проведения платежа",
-            ...payment.cancellation_details,
-          };
-          clearInterval(timer);
           this.$strapi.$cookies.remove("yandex_payment_id");
+          clearInterval(timer);
+          await this.canceled(payment);
           this.loading = false;
         }
       }, 5000);
+    } else {
+      await this.$router.push("/");
     }
   },
   computed: {
@@ -127,15 +100,84 @@ export default {
       user: "account/user",
       orderNumber: "iiko/orderNumber",
     }),
+    number: {
+      get() {
+        return this.orderNumber
+      },
+      set(value){
+        this.setOrderNumber(value)
+      }
+    },
     currentDate: () => new Date().toLocaleString(),
   },
   methods: {
     ...mapActions({
+      setName: 'iiko/SET_NAME',
+      setPhone: 'iiko/SET_PHONE',
       createOrder: "iiko/createOrder",
-      set_address: "iiko/SET_ADDRESS",
+      setAddress: "iiko/SET_ADDRESS",
       setPaymentType: "iiko/SET_PAYMENT_TYPE",
       checkPayment: "payment/checkPayment",
+      setOrderNumber: "iiko/SET_ORDER_NUMBER",
     }),
+    viewCacheOrder(){
+      this.loading = true;
+      const order = JSON.parse(sessionStorage.getItem("order_details"));
+      this.number = order.number;
+      this.date = order.date;
+      this.loading = false;
+    },
+    saveOrderDetails(){
+      sessionStorage.setItem(
+        "order_details",
+        JSON.stringify({
+          date: this.date,
+          number: this.orderNumber,
+        })
+      );
+    },
+    async success(payment){
+      const orderList = await this.$strapi.$orders.find({
+        yandex_payment_id: payment.id,
+      });
+      if (!orderList.length) {
+        return console.error(
+          `Order with current id: ${this.$strapi.$cookies.get(
+            "yandex_payment_id"
+          )} not found`
+        );
+      }
+      const order = orderList[0];
+      await this.$strapi.$orders.update(order.id, {
+        yandexPayment: payment,
+      });
+      this.setName(order.name);
+      this.setPhone(order.phone);
+      this.setAddress(order.address);
+      this.setPaymentType(order.paymentType);
+      await this.createOrder({ number: order.number });
+      this.date = this.currentDate
+      this.saveOrderDetails();
+    },
+    async canceled(payment) {
+      const orderList = await this.$strapi.$orders.find({
+        yandex_payment_id: payment.id,
+      });
+      if (!orderList.length)
+        return console.error(
+          `Order with current id: ${this.$strapi.$cookies.get(
+            "yandex_payment_id"
+          )} not found`
+        );
+      const order = orderList[0];
+      await this.$strapi.$orders.update(order.id, {
+        yandexPayment: payment,
+      });
+      this.error = {
+        message: "Ошибка проведения платежа",
+        reason: payment?.cancellation_details?.reason
+      };
+    }
   },
 };
 </script>

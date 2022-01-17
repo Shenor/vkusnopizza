@@ -9,7 +9,7 @@
           Broniboy, Антей Сервис. Приносим свои извинения за доставленные
           неудобства.
         </b-alert>
-        <div v-if="!orderNumber" class="row order__content-wrapper col col-12">
+        <div class="row order__content-wrapper col col-12">
           <div
             class="order__body-wrapper d-flex flex-column text-left col col-lg-8 col-md-7 col-sm-12"
           >
@@ -39,7 +39,7 @@
                       v-model.trim="$v.name.$model"
                       class="pt-3 pb-3 mb-2"
                       :class="{ 'is-invalid': $v.name.$error }"
-                      placeholder="Введите имя"
+                      placeholder="Ваше имя"
                       autocomplete="off"
                     ></b-form-input>
                   </b-form-group>
@@ -54,13 +54,15 @@
                     "
                   >
                     <b-form-input
+                      ref="phone"
                       id="phone"
                       v-model.trim="$v.phone.$model"
-                      v-mask="'+7 (###) ###-##-##'"
+                      v-maska="'+7 (###) ###-##-##'"
+                      maxlength="18"
                       class="pt-3 pb-3 mb-2"
                       type="tel"
                       :class="{ 'is-invalid': $v.phone.$error }"
-                      placeholder="+7"
+                      placeholder="Ваш телефон"
                       autocomplete="off"
                     ></b-form-input>
                   </b-form-group>
@@ -77,20 +79,29 @@
                   >
                     <b-form-input
                       id="street"
+                      list="street-list"
                       v-model.trim="$v.street.$model"
                       class="pt-3 pb-3 mb-2"
                       :class="{ 'is-invalid': $v.street.$error }"
                       placeholder="Введите улицу"
                       autocomplete="off"
                     ></b-form-input>
+                    <datalist id="street-list">
+                      <option v-for="(_, name) in streetList">{{ name }}</option>
+                    </datalist>
                   </b-form-group>
+
                   <div class="d-flex">
                     <b-form-input
+                      list="home-list"
                       v-model.trim="$v.home.$model"
                       class="pt-3 pb-3 mr-2"
                       :class="{ 'is-invalid': $v.home.$error }"
                       placeholder="Дом"
                     ></b-form-input>
+                    <datalist id="home-list">
+                      <option v-for="home in streetList[street]">{{ home }}</option>
+                    </datalist>
                     <b-form-input
                       v-model.trim="entrance"
                       class="pt-3 pb-3 mr-2"
@@ -122,7 +133,7 @@
                 <b-form-radio
                   v-model="paymentType"
                   name="payment-radios"
-                  value="CARD1"
+                  value="TRANSFER"
                   >Онлайн перевод при получении</b-form-radio
                 >
               </b-form-group>
@@ -231,6 +242,26 @@ export default {
         { text: "Доставка", value: false },
         { text: "Самовывоз", value: true },
       ],
+      streetList: {
+        'Восточно-Кругликовская':
+          [
+            '18', '18/1', '20', '22',
+            '22/1', '22/2', '22/3', '24', '26',
+            '28', '28/1', '28/2', '28/3', '30',
+            '30А', '30/1', '30/2', '32', '34'
+          ],
+        'Жлобы': ['139', '141', '143', '145',],
+        'Героев-Разведчиков':
+          [
+            '2', '6к1', '6к2', '6к3',
+            '6к4', '8к1', '8к2', '8к3',
+            '8к4', '10', '12/1', '12/1к1',
+          ],
+        'Героя Сарабеева': [
+          '3', '3/1', '5', '5к1',
+          '5к2', '5к3', '5к4', '5к5'
+        ]
+      }
     };
   },
   validations: {
@@ -239,8 +270,8 @@ export default {
     },
     phone: {
       required,
-      minLength: minLength(18),
-      maxLength: maxLength(18),
+      minLength: minLength(11),
+      maxLength: maxLength(11),
     },
     home: {
       required,
@@ -254,26 +285,6 @@ export default {
   },
   async mounted() {
     this.showMap = true;
-    this.$nextTick(function () {
-      $("#street").fias({
-        type: $.fias.type.street,
-        parentType: $.fias.type.city,
-        parentId: 2300000100000,
-        spinner: false,
-        verify: true,
-        select() {
-          $("#street").val("");
-        },
-        check: (street) => {
-          if (!street) return (this.streetState = false);
-          this.street = street.name;
-          this.streetState = true;
-        },
-        change: (street) => {
-          this.street = street.name;
-        },
-      });
-    });
   },
   computed: {
     ...mapGetters({
@@ -305,7 +316,7 @@ export default {
         return this.getPhone;
       },
       set(value) {
-        this.setPhone(value);
+        this.setPhone(value.replace(/-|\(|\)|\+| /g, ""));
       },
     },
     home: {
@@ -377,16 +388,20 @@ export default {
     }),
     isValidForm() {
       return (
+        !this.$v.name.$error &&
+        this.$v.name.$model !== "" &&
+        !this.$v.phone.$error &&
+        this.$v.phone.$model !== "" &&
         !this.$v.home.$error &&
-        this.$v.home.$model != "" &&
+        this.$v.home.$model !== "" &&
         !this.$v.street.$error &&
-        this.$v.street.$model != ""
+        this.$v.street.$model !== ""
       );
     },
     async submit() {
-      // if (!this.user) return this.$bvModal.show('modal-code');
-
       if (!this.isValidForm()) {
+        this.$v.name.$touch();
+        this.$v.phone.$touch();
         this.$v.street.$touch();
         this.$v.home.$touch();
         return;

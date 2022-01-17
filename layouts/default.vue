@@ -34,21 +34,25 @@ export default {
     return {};
   },
   async mounted() {
-    if (this.$strapi.$cookies.get("strapi_user")) {
-      const id = this.$strapi.$cookies.get("strapi_user");
-      try {
-        await this.$strapi.login({
-          identifier: "test@test.ru",
-          password: "1q2w3e4R",
-        });
-        const res = await this.$strapi.find("clients", { id });
-        if (!res.length) return;
-        return this.$store.commit("account/SET_USER", res[0]);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    this.$store.commit("account/SET_USER", null);
+    await this.$strapi.login({
+      identifier: "test@test.ru",
+      password: "1q2w3e4R",
+    });
+    // if (this.$strapi.$cookies.get("strapi_user")) {
+    //   const id = this.$strapi.$cookies.get("strapi_user");
+    //   try {
+    //     await this.$strapi.login({
+    //       identifier: "test@test.ru",
+    //       password: "1q2w3e4R",
+    //     });
+    //     const res = await this.$strapi.find("clients", { id });
+    //     if (!res.length) return;
+    //     return this.$store.commit("account/SET_USER", res[0]);
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // }
+    // this.$store.commit("account/SET_USER", null);
   },
 };
 </script>

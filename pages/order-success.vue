@@ -57,7 +57,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "account/user",
       orderNumber: "iiko/orderNumber",
     }),
     currentDate: () => new Date().toLocaleString(),

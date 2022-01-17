@@ -33,6 +33,8 @@
       >
         Сохранить
       </button>
+
+      <b-alert class="alert text-center" variant="success" :show="isShow">Сохранено</b-alert>
     </template>
   </div>
 </template>
@@ -43,15 +45,23 @@ import data from "@/store/menu.json";
 export default {
   data() {
     return {
+      isShow: false,
       pass: "",
       menu: data,
     };
   },
   methods: {
     async save() {
-      await this.$axios.post("/api/json", {
-        data: this.menu,
-      });
+      try {
+        await this.$axios.post(`${process.env.SITE_URL}/api/json`, {
+          data: this.menu,
+        });
+        this.isShow = true;
+        await new Promise((resolve => setTimeout(() => { resolve ()}, 3000)))
+        this.isShow = false;
+      } catch (e) {
+
+      }
     },
   },
 };
@@ -60,6 +70,14 @@ export default {
 <style lang="scss" scoped>
 .main {
   min-height: 100vh;
+}
+
+.alert {
+  z-index: 100000;
+  position: fixed;
+  top: 12%;
+  right: 5%;
+  min-width: 200px;
 }
 
 .item {

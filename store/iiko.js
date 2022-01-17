@@ -135,12 +135,12 @@ export const actions = {
     const order = {
       organization: process.env.ORHANIZATION_ID,
       customer: {
-        name: rootState.account.user.name,
-        phone: "+" + rootState.account.user.phone,
+        name: state.name,
+        phone: "+" + state.phone,
       },
       order: {
         date: DateTime.now().toFormat("yyyy-LL-dd HH:mm:ss"),
-        phone: "+" + rootState.account.user.phone,
+        phone: "+" + state.phone,
         isSelfService: state.isSelfService,
         items: cart,
         address: state.isSelfService
@@ -153,6 +153,7 @@ export const actions = {
 
     dispatch("SET_ORDER_NUMBER", number);
     await dispatch("sendMail", order);
+
     if (state.paymentType !== "CARD") {
       await dispatch("addToHistory", order);
     }
@@ -177,6 +178,7 @@ export const actions = {
       return this.$axios.post(`${process.env.SITE_URL}/api/mail`, {
         data: {
           number: state.orderNumber,
+          paymentType: state.paymentType,
           totalSum: rootGetters["cart/totalSumCart"],
           ...payload,
         },
@@ -189,13 +191,12 @@ export const actions = {
   async addToHistory({ state, rootGetters }, payload) {
     await this.$strapi.$orders.create({
       number: state.orderNumber,
-      clients: rootGetters["account/user"].id,
-      phone: rootGetters["account/user"].phone,
-      paymentType: state.paymentType,
-      name: payload.customer.name,
+      phone: state.phone,
+      name: state.name,
       date: payload.order.date,
       cart: payload.order.items,
       address: payload.order.address,
+      paymentType: state.paymentType,
       isSelfService: state.isSelfService,
     });
   },

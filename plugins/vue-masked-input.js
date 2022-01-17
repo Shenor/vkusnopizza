@@ -1,4 +1,4 @@
 import Vue from "vue";
-import VueTheMask from "vue-the-mask";
+import Maska from 'maska'
 
-Vue.use(VueTheMask);
+Vue.use(Maska);

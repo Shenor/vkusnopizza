@@ -28,9 +28,8 @@ export const actions = {
     });
     await this.$strapi.$orders.create({
       number,
-      clients: rootGetters["account/user"].id,
-      phone: rootGetters["account/user"].phone,
-      name: rootGetters["account/user"].name,
+      phone: rootGetters["iiko/phone"],
+      name: rootGetters["iiko/name"],
       paymentType: rootGetters["iiko/paymentType"],
       isSelfService: rootGetters["iiko/isSelfService"],
       date: DateTime.now().toFormat("yyyy-LL-dd HH:mm:ss"),

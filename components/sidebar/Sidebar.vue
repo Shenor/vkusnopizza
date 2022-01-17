@@ -24,7 +24,6 @@
         v-else
         class="cart-empty d-flex flex-column h-100 justify-content-center align-items-center px-3 py-4"
       >
-        >
         <div class="cart-empty__title">Ой, пусто</div>
         <div class="text-center">
           Ваша корзина пуста, откройте «Меню» <br />

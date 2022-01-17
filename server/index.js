@@ -20,7 +20,11 @@ app.use(bodyParser.json());
 
 app.post("/mail", (req, res) => {
   const { data } = req.body;
-  console.log(data);
+  const paymentType = new Map()
+    .set('CASH', 'Наличными')
+    .set('CARD', 'Картой онланй')
+    .set('TRANSFER', 'Онлайн перевод при получении')
+
   const renderOrderList = (items) => {
     let order = "";
     items.forEach(({ name, amount, sum }) => {
@@ -37,9 +41,8 @@ app.post("/mail", (req, res) => {
         <div>Дата и время: ${new Date().toLocaleString("ru-RU")}</div>
         <div>Номер заказа: ${data.number}</div>
         <div>Имя: ${data.customer.name}</div>
-        <div>Телефон: <a href="${data.customer.phone}">${
-        data.customer.phone
-      }</a></div>
+        <div>Телефон: <a href="tel:${data.customer.phone}">${data.customer.phone}</a></div>
+        <div>Тип оплаты: ${paymentType.get(data.paymentType) || 'Неизветсно'}</div>
         <div>Итого к оплате: ${data.totalSum}₽</div>
         <br>
         <div>Город: ${data.order.address.city}</div>
@@ -114,7 +117,6 @@ app.post("/payment", async (req, res) => {
 
 app.get("/sms", async (req, res) => {
   const { phone, code } = req.query;
-  console.log(process.env.SMS_API_KEY);
   const url = new URL(
     `${process.env.SMS_URL}?api_id=${process.env.SMS_API_KEY}&to=${phone}&msg=${code} - ваш код для входа на сайт pizzburg.ru&json=1`
   );
